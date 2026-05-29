@@ -13,7 +13,7 @@ import { Pricing } from './pages/Pricing';
 import { Privacy } from './pages/Privacy';
 import './i18n';
 
-const PAYPAL_CLIENT_ID = 'AZ9_fTxDCFmM13jPyYO4BO5Ao6-PvOsyOHIb87jThSWBdGAb3AGG0JG1mnKrJfbuPxi6rqENO1qznueP';
+const PAYPAL_CLIENT_ID = 'AZBgo9iER_uT3SZASbg_N5EYCnKCYNaRygyxhheO5I4OLGO5Ko6smDFlhAdxklXMrdya0oTevGjvQeLt';
 
 function App() {
   const { isPremium } = usePremiumStore();
@@ -25,8 +25,7 @@ function App() {
           clientId: PAYPAL_CLIENT_ID,
           components: ["buttons"],
           intent: "subscription",
-          vault: true,
-          environment: "production"
+          vault: true
         }}
       >
         <Router>
