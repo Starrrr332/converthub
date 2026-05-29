@@ -13,16 +13,15 @@
         "Formatos: PNG, JPEG, WebP, BMP, GIF",
         "PDF: Solo Unir y crear desde imágenes",
         "Audio: Solo MP3 y WAV",
-        "CSV: Solo CSV ↔ XLSX",
-        "Anuncios estáticos"
+        "CSV: Solo CSV ↔ XLSX"
       ]
     },
     "premium": {
       "name": "Premium",
-      "price": "$4.990",
-      "period": "CLP/mes",
-      "annualPrice": "$39.900",
-      "annualPeriod": "CLP/año",
+      "price": "$5.50",
+      "period": "USD/mes",
+      "annualPrice": "$44.00",
+      "annualPeriod": "USD/año",
       "cta": "Upgrade a Premium",
       "badge": "Popular",
       "features": [
@@ -32,7 +31,6 @@
         "PDF: Todas las herramientas",
         "Audio: MP3, WAV, OGG, FLAC, AAC",
         "CSV/Excel: Todas las conversiones",
-        "Sin anuncios",
         "Soporte prioritario"
       ]
     }

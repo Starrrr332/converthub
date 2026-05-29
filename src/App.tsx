@@ -44,7 +44,7 @@ function App() {
               </Routes>
             </main>
             
-            <Footer isPremium={isPremium()} />
+            <Footer />
           </div>
         </Router>
       </PayPalScriptProvider>

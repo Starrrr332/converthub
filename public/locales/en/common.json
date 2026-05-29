@@ -38,11 +38,21 @@
       "description": "Basic conversions at no cost"
     }
   },
+  "privacy": {
+    "banner": {
+      "strong": "Your files are processed in your browser",
+      "text": "and never sent to any server. Your privacy is guaranteed.",
+      "link": "Privacy Policy",
+      "accept": "Got it"
+    }
+  },
   "footer": {
     "copyright": "© 2026 ConvertHub. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms of Service",
-    "contact": "Contact"
+    "contact": "Contact",
+    "privacy": "100% Private",
+    "privacyNote": "Your files never leave your browser"
   },
   "language": {
     "es": "Español",
