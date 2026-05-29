@@ -1,0 +1,41 @@
+{
+  "app": {
+    "name": "ConvertHub",
+    "tagline": "Convierte tus imágenes sin salir del navegador"
+  },
+  "nav": {
+    "home": "Inicio",
+    "converter": "Convertir",
+    "pricing": "Precios",
+    "privacy": "Privacidad"
+  },
+  "hero": {
+    "title": "Convierte imágenes de forma segura y privada",
+    "subtitle": "Todos tus archivos se procesan en tu navegador. Nunca salen de tu dispositivo.",
+    "cta": "Empezar a convertir"
+  },
+  "features": {
+    "privacy": {
+      "title": "100% Privado",
+      "description": "Tus archivos nunca salen de tu navegador"
+    },
+    "fast": {
+      "title": "Ultra rápido",
+      "description": "Conversión instantánea sin subir archivos"
+    },
+    "free": {
+      "title": "Gratis",
+      "description": "Conversiones básicas sin costo"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 ConvertHub. Todos los derechos reservados.",
+    "privacyPolicy": "Política de Privacidad",
+    "terms": "Términos de Uso",
+    "contact": "Contacto"
+  },
+  "language": {
+    "es": "Español",
+    "en": "English"
+  }
+}

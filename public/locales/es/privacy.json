@@ -1,0 +1,30 @@
+{
+  "title": "Política de Privacidad",
+  "lastUpdated": "Última actualización: 1 de enero de 2026",
+  "sections": [
+    {
+      "heading": "Resumen",
+      "content": "ConvertHub procesa todos los archivos directamente en tu navegador. Nunca enviamos tus archivos a nuestros servidores. Tu privacidad es nuestra prioridad."
+    },
+    {
+      "heading": "Qué datos recopilamos",
+      "content": "Solo recopilamos datos esenciales para el funcionamiento del servicio. No recopilamos contenido de archivos."
+    },
+    {
+      "heading": "Cómo procesamos archivos",
+      "content": "Todos los archivos se procesan 100% client-side usando Canvas API del navegador. Los archivos nunca salen de tu dispositivo."
+    },
+    {
+      "heading": "Anuncios",
+      "content": "Los usuarios gratuitos ven banners estáticos. No utilizamos rastreo publicitario ni compartimos datos con terceros."
+    },
+    {
+      "heading": "Pagos",
+      "content": "Los pagos son procesados por MercadoPago. No almacenamos información de tarjetas de crédito."
+    },
+    {
+      "heading": "Tus derechos",
+      "content": "Puedes solicitar eliminación de datos en cualquier momento. Contáctanos a privacy@converthub.com."
+    }
+  ]
+}

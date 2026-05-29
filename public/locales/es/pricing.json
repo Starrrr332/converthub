@@ -1,0 +1,68 @@
+{
+  "title": "Elige tu plan",
+  "subtitle": "Convierte imágenes sin límites con Premium",
+  "plans": {
+    "free": {
+      "name": "Gratis",
+      "price": "$0",
+      "period": "para siempre",
+      "cta": "Plan actual",
+      "features": [
+        "8 conversiones básicas",
+        "Tamaño máximo: 10MB",
+        "PNG, JPEG, WebP, BMP, GIF",
+        "Sin batch processing",
+        "Anuncios estáticos"
+      ]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "$4.990",
+      "period": "CLP/mes",
+      "annualPrice": "$39.900",
+      "annualPeriod": "CLP/año",
+      "cta": "Upgrade a Premium",
+      "badge": "Popular",
+      "features": [
+        "Conversiones ilimitadas",
+        "Tamaño máximo: 100MB",
+        "Todos los formatos incluidos",
+        "Batch processing",
+        "Sin anuncios",
+        "Herramientas de edición",
+        "Soporte prioritario",
+        "Historial 90 días"
+      ]
+    }
+  },
+  "comparison": {
+    "title": "Comparar planes",
+    "features": {
+      "conversions": "Conversiones diarias",
+      "fileSize": "Tamaño máximo",
+      "formats": "Formatos soportados",
+      "batch": "Batch processing",
+      "editing": "Herramientas de edición",
+      "ads": "Anuncios",
+      "support": "Soporte",
+      "history": "Historial"
+    }
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "questions": [
+      {
+        "q": "¿Puedo cancelar en cualquier momento?",
+        "a": "Sí, puedes cancelar tu suscripción en cualquier momento sin penalización."
+      },
+      {
+        "q": "¿Mis archivos están seguros?",
+        "a": "Absolutamente. Tus archivos nunca salen de tu navegador. No tenemos acceso a ellos."
+      },
+      {
+        "q": "¿Qué formatos incluye Premium?",
+        "a": "Premium incluye todos los formatos: SVG, ICO, AVIF, HEIC, y todas las herramientas de edición."
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "dropzone": {
+    "title": "Drag your images here",
+    "subtitle": "or click to select",
+    "acceptedFormats": "Accepted formats: PNG, JPEG, WebP, BMP, GIF",
+    "maxSize": "Max size: {{size}}",
+    "dragActive": "Drop your files here"
+  },
+  "formats": {
+    "input": "Input format",
+    "output": "Output format",
+    "premium": "Premium"
+  },
+  "options": {
+    "quality": "Quality",
+    "resize": "Resize",
+    "width": "Width",
+    "height": "Height",
+    "maintainAspect": "Maintain aspect ratio",
+    "rotate": "Rotate",
+    "crop": "Crop",
+    "dpi": "Resolution (DPI)",
+    "compress": "Compress"
+  },
+  "progress": {
+    "converting": "Converting...",
+    "complete": "Conversion complete!",
+    "error": "Conversion error",
+    "idle": "Ready to convert"
+  },
+  "limits": {
+    "remaining": "{{count}} conversions left today",
+    "limitReached": "Daily limit reached",
+    "upgradeToPremium": "Upgrade to Premium for unlimited conversions",
+    "fileTooLarge": "File exceeds {{size}} limit"
+  },
+  "batch": {
+    "title": "Batch processing",
+    "filesSelected": "{{count}} files selected",
+    "converting": "Converting file {{current}} of {{total}}...",
+    "downloadAll": "Download all (ZIP)"
+  },
+  "preview": {
+    "original": "Original",
+    "converted": "Converted",
+    "originalSize": "Original size",
+    "convertedSize": "Converted size",
+    "reduction": "{{percent}}% reduction"
+  },
+  "actions": {
+    "convert": "Convert",
+    "download": "Download",
+    "reset": "Clear",
+    "addMore": "Add more files"
+  }
+}

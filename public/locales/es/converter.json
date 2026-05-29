@@ -1,0 +1,56 @@
+{
+  "dropzone": {
+    "title": "Arrastra tus imágenes aquí",
+    "subtitle": "o haz clic para seleccionar",
+    "acceptedFormats": "Formatos aceptados: PNG, JPEG, WebP, BMP, GIF",
+    "maxSize": "Tamaño máximo: {{size}}",
+    "dragActive": "Suelta tus archivos aquí"
+  },
+  "formats": {
+    "input": "Formato de entrada",
+    "output": "Formato de salida",
+    "premium": "Premium"
+  },
+  "options": {
+    "quality": "Calidad",
+    "resize": "Redimensionar",
+    "width": "Ancho",
+    "height": "Alto",
+    "maintainAspect": "Mantener proporción",
+    "rotate": "Rotar",
+    "crop": "Recortar",
+    "dpi": "Resolución (DPI)",
+    "compress": "Comprimir"
+  },
+  "progress": {
+    "converting": "Convirtiendo...",
+    "complete": "¡Conversión completada!",
+    "error": "Error en la conversión",
+    "idle": "Listo para convertir"
+  },
+  "limits": {
+    "remaining": "Quedan {{count}} conversiones hoy",
+    "limitReached": "Límite diario alcanzado",
+    "upgradeToPremium": "Actualiza a Premium para conversiones ilimitadas",
+    "fileTooLarge": "El archivo supera el límite de {{size}}"
+  },
+  "batch": {
+    "title": "Procesamiento múltiple",
+    "filesSelected": "{{count}} archivos seleccionados",
+    "converting": "Convirtiendo archivo {{current}} de {{total}}...",
+    "downloadAll": "Descargar todo (ZIP)"
+  },
+  "preview": {
+    "original": "Original",
+    "converted": "Convertido",
+    "originalSize": "Tamaño original",
+    "convertedSize": "Tamaño convertido",
+    "reduction": "Reducción de {{percent}}%"
+  },
+  "actions": {
+    "convert": "Convertir",
+    "download": "Descargar",
+    "reset": "Limpiar",
+    "addMore": "Agregar más archivos"
+  }
+}
