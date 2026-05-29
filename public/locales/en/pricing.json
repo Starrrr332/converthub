@@ -1,6 +1,6 @@
 {
   "title": "Choose your plan",
-  "subtitle": "Convert images without limits with Premium",
+  "subtitle": "Convert files without limits with Premium",
   "plans": {
     "free": {
       "name": "Free",
@@ -8,10 +8,12 @@
       "period": "forever",
       "cta": "Current plan",
       "features": [
-        "8 basic conversions",
+        "Basic conversions",
         "Max size: 10MB",
-        "PNG, JPEG, WebP, BMP, GIF",
-        "No batch processing",
+        "Formats: PNG, JPEG, WebP, BMP, GIF",
+        "PDF: Merge and create from images only",
+        "Audio: MP3 and WAV only",
+        "CSV: CSV ↔ XLSX only",
         "Static ads"
       ]
     },
@@ -26,27 +28,29 @@
       "features": [
         "Unlimited conversions",
         "Max size: 100MB",
-        "All formats included",
-        "Batch processing",
+        "All image formats",
+        "PDF: All tools",
+        "Audio: MP3, WAV, OGG, FLAC, AAC",
+        "CSV/Excel: All conversions",
         "No ads",
-        "Editing tools",
-        "Priority support",
-        "90-day history"
+        "Priority support"
       ]
     }
   },
-  "comparison": {
-    "title": "Compare plans",
-    "features": {
-      "conversions": "Daily conversions",
-      "fileSize": "Max file size",
-      "formats": "Supported formats",
-      "batch": "Batch processing",
-      "editing": "Editing tools",
-      "ads": "Ads",
-      "support": "Support",
-      "history": "History"
-    }
+  "checkout": {
+    "title": "Complete your purchase",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "pay": "Pay now",
+    "cancel": "Cancel"
+  },
+  "success": {
+    "title": "Welcome to Premium!",
+    "message": "Your subscription is active. Enjoy all features without limits.",
+    "cta": "Start converting"
+  },
+  "security": {
+    "message": "Secure payments powered by PayPal"
   },
   "faq": {
     "title": "Frequently asked questions",
@@ -61,7 +65,7 @@
       },
       {
         "q": "What formats does Premium include?",
-        "a": "Premium includes all formats: SVG, ICO, AVIF, HEIC, and all editing tools."
+        "a": "Premium includes all formats: SVG, ICO, AVIF, HEIC, OGG, FLAC, AAC, and all editing tools."
       }
     ]
   }
