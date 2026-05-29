@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Upload, Download, FileText, Trash2 } from 'lucide-react';
+import { Upload, Download, FileText, Trash2, Info, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { UpgradeModal } from '../ui/UpgradeModal';
+import { ToolInfoModal } from '../ui/ToolInfoModal';
 import { 
   mergePdfs, 
   splitPdf, 
@@ -16,19 +18,39 @@ interface PdfToolContentProps {
   isPremium: boolean;
 }
 
-export function PdfToolContent({ tool, isPremium: _isPremium }: PdfToolContentProps) {
+// Premium-only tools
+const PREMIUM_TOOLS: PdfTool[] = ['split', 'compress', 'protect', 'watermark'];
+
+export function PdfToolContent({ tool, isPremium }: PdfToolContentProps) {
   const { t } = useTranslation('converter');
   const [files, setFiles] = useState<File[]>([]);
   const [result, setResult] = useState<PdfConversionResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showToolInfo, setShowToolInfo] = useState(false);
   
   // Watermark options
   const [watermarkText, setWatermarkText] = useState('WATERMARK');
   const [watermarkOpacity, setWatermarkOpacity] = useState(0.3);
   
+  const isPremiumTool = PREMIUM_TOOLS.includes(tool);
+  
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
+    
+    // Check file limits for free users
+    if (!isPremium) {
+      if (tool === 'merge' && selectedFiles.length > 2) {
+        setError(t('pdf.limits.mergeFree'));
+        return;
+      }
+      if (tool === 'images-to-pdf' && selectedFiles.length > 3) {
+        setError(t('pdf.limits.imagesFree'));
+        return;
+      }
+    }
+    
     setFiles(selectedFiles);
     setResult(null);
     setError(null);
@@ -36,6 +58,12 @@ export function PdfToolContent({ tool, isPremium: _isPremium }: PdfToolContentPr
   
   const handleConvert = async () => {
     if (files.length === 0) return;
+    
+    // Check premium access
+    if (isPremiumTool && !isPremium) {
+      setShowUpgradeModal(true);
+      return;
+    }
     
     setLoading(true);
     setError(null);
@@ -68,7 +96,6 @@ export function PdfToolContent({ tool, isPremium: _isPremium }: PdfToolContentPr
       }
       
       if (Array.isArray(conversionResult)) {
-        // For split, take the first result
         setResult(conversionResult[0]);
       } else {
         setResult(conversionResult);
@@ -112,7 +139,35 @@ export function PdfToolContent({ tool, isPremium: _isPremium }: PdfToolContentPr
   
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-bold text-gray-900">{getTitle()}</h3>
+      {/* Header with info button */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <h3 className="text-xl font-bold text-gray-900">{getTitle()}</h3>
+          {isPremiumTool && !isPremium && (
+            <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
+              <Lock className="w-3 h-3" />
+              Premium
+            </span>
+          )}
+        </div>
+        <button
+          onClick={() => setShowToolInfo(true)}
+          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+          title={t('toolInfo.about')}
+        >
+          <Info className="w-5 h-5" />
+        </button>
+      </div>
+      
+      {/* Free user limit notice */}
+      {!isPremium && (tool === 'merge' || tool === 'images-to-pdf') && (
+        <div className="p-3 bg-blue-50 text-blue-700 text-sm rounded-lg">
+          {tool === 'merge' 
+            ? t('pdf.limits.mergeFreeNotice')
+            : t('pdf.limits.imagesFreeNotice')
+          }
+        </div>
+      )}
       
       {/* File Input */}
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
@@ -221,6 +276,18 @@ export function PdfToolContent({ tool, isPremium: _isPremium }: PdfToolContentPr
           </p>
         </div>
       )}
+      
+      {/* Modals */}
+      <UpgradeModal 
+        isOpen={showUpgradeModal} 
+        onClose={() => setShowUpgradeModal(false)}
+        feature={getTitle()}
+      />
+      <ToolInfoModal 
+        isOpen={showToolInfo} 
+        onClose={() => setShowToolInfo(false)}
+        tool="pdf"
+      />
     </div>
   );
 }

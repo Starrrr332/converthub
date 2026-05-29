@@ -53,6 +53,28 @@
     "reset": "Clear",
     "addMore": "Add more files"
   },
+  "upgrade": {
+    "title": "Premium Feature",
+    "subtitle": "Unlock all features with Premium",
+    "featureLocked": "This feature is available for Premium users only",
+    "benefits": {
+      "unlimited": "Unlimited conversions",
+      "noAds": "No ads",
+      "allFormats": "All formats available",
+      "largeFiles": "Files up to 100MB"
+    },
+    "priceLabel": "Starting at only",
+    "annualDeal": "Save 33% with annual plan!",
+    "cta": "View Premium plans",
+    "notNow": "Not now"
+  },
+  "toolInfo": {
+    "poweredBy": "Technology used",
+    "about": "About",
+    "features": "Features",
+    "privacy": "Privacy",
+    "learnMore": "Learn more"
+  },
   "pdf": {
     "title": "PDF Tools",
     "subtitle": "Edit, split, merge and protect your PDF files",

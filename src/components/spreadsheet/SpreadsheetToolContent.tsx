@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Upload, Download, Table, FileSpreadsheet, FileJson } from 'lucide-react';
+import { Upload, Download, Table, FileSpreadsheet, FileJson, Info, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { UpgradeModal } from '../ui/UpgradeModal';
+import { ToolInfoModal } from '../ui/ToolInfoModal';
 import { 
   csvToXlsx, 
   xlsxToCsv, 
@@ -17,13 +19,20 @@ interface SpreadsheetToolContentProps {
   isPremium: boolean;
 }
 
-export function SpreadsheetToolContent({ tool, isPremium: _isPremium }: SpreadsheetToolContentProps) {
+// Free tools: csv-to-xlsx, xlsx-to-csv
+const FREE_TOOLS: SpreadsheetTool[] = ['csv-to-xlsx', 'xlsx-to-csv'];
+
+export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolContentProps) {
   const { t } = useTranslation('converter');
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<SpreadsheetConversionResult | null>(null);
   const [preview, setPreview] = useState<SpreadsheetPreviewResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showToolInfo, setShowToolInfo] = useState(false);
+  
+  const isFreeTool = FREE_TOOLS.includes(tool);
   
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -44,6 +53,12 @@ export function SpreadsheetToolContent({ tool, isPremium: _isPremium }: Spreadsh
   
   const handleConvert = async () => {
     if (!file) return;
+    
+    // Check premium access
+    if (!isFreeTool && !isPremium) {
+      setShowUpgradeModal(true);
+      return;
+    }
     
     setLoading(true);
     setError(null);
@@ -112,6 +127,26 @@ export function SpreadsheetToolContent({ tool, isPremium: _isPremium }: Spreadsh
   
   return (
     <div className="space-y-6">
+      {/* Header with info button */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <h3 className="text-xl font-bold text-gray-900">{t('spreadsheet.title')}</h3>
+          {!isFreeTool && !isPremium && (
+            <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
+              <Lock className="w-3 h-3" />
+              Premium
+            </span>
+          )}
+        </div>
+        <button
+          onClick={() => setShowToolInfo(true)}
+          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+          title={t('toolInfo.about')}
+        >
+          <Info className="w-5 h-5" />
+        </button>
+      </div>
+      
       {/* File Input */}
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
@@ -199,6 +234,18 @@ export function SpreadsheetToolContent({ tool, isPremium: _isPremium }: Spreadsh
           </p>
         </div>
       )}
+      
+      {/* Modals */}
+      <UpgradeModal 
+        isOpen={showUpgradeModal} 
+        onClose={() => setShowUpgradeModal(false)}
+        feature={t(`spreadsheet.tools.${tool}`)}
+      />
+      <ToolInfoModal 
+        isOpen={showToolInfo} 
+        onClose={() => setShowToolInfo(false)}
+        tool="spreadsheet"
+      />
     </div>
   );
 }

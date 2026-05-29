@@ -1,16 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield } from 'lucide-react';
+import { usePremiumStore } from '../../store/premiumStore';
+import { AdBanner } from '../ads/AdBanner';
 
 interface FooterProps {
   isPremium: boolean;
 }
 
-export function Footer({ isPremium }: FooterProps) {
+export function Footer(_props: FooterProps) {
   const { t } = useTranslation();
+  const premium = usePremiumStore();
   
   return (
     <footer className="bg-white border-t mt-auto">
+      {/* Ad Banner for free users */}
+      {!premium.isPremium() && (
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <AdBanner position="bottom" />
+        </div>
+      )}
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
@@ -69,17 +79,6 @@ export function Footer({ isPremium }: FooterProps) {
           </p>
         </div>
       </div>
-      
-      {/* Ad Banner for free users */}
-      {!isPremium && (
-        <div className="bg-gray-100 py-4">
-          <div className="max-w-7xl mx-auto px-4 text-center">
-            <p className="text-xs text-gray-500">
-              Espacio publicitario
-            </p>
-          </div>
-        </div>
-      )}
     </footer>
   );
 }

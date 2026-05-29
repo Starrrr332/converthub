@@ -53,6 +53,28 @@
     "reset": "Limpiar",
     "addMore": "Agregar más archivos"
   },
+  "upgrade": {
+    "title": "Función Premium",
+    "subtitle": "Desbloquea todas las funciones con Premium",
+    "featureLocked": "Esta función está disponible solo para usuarios Premium",
+    "benefits": {
+      "unlimited": "Conversiones ilimitadas",
+      "noAds": "Sin anuncios",
+      "allFormats": "Todos los formatos disponibles",
+      "largeFiles": "Archivos hasta 100MB"
+    },
+    "priceLabel": "Desde solo",
+    "annualDeal": "¡Ahorra 33% con plan anual!",
+    "cta": "Ver planes Premium",
+    "notNow": "Ahora no"
+  },
+  "toolInfo": {
+    "poweredBy": "Tecnología utilizada",
+    "about": "Acerca de",
+    "features": "Características",
+    "privacy": "Privacidad",
+    "learnMore": "Más información"
+  },
   "pdf": {
     "title": "Herramientas PDF",
     "subtitle": "Edita, divide, combina y protege tus archivos PDF",

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Download, Music, Trash2, Loader2 } from 'lucide-react';
+import { Download, Music, Trash2, Loader2, Info, Lock } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { UpgradeModal } from '../ui/UpgradeModal';
+import { ToolInfoModal } from '../ui/ToolInfoModal';
 import { 
   convertAudio, 
   validateAudioFile, 
@@ -14,15 +16,18 @@ interface AudioToolContentProps {
   isPremium: boolean;
 }
 
-const AUDIO_FORMATS: Array<{ value: AudioFormat; label: string; mime: string }> = [
-  { value: 'mp3', label: 'MP3', mime: 'audio/mpeg' },
-  { value: 'wav', label: 'WAV', mime: 'audio/wav' },
-  { value: 'ogg', label: 'OGG', mime: 'audio/ogg' },
-  { value: 'flac', label: 'FLAC', mime: 'audio/flac' },
-  { value: 'aac', label: 'AAC', mime: 'audio/aac' },
+// Free formats: mp3, wav only
+const FREE_FORMATS: AudioFormat[] = ['mp3', 'wav'];
+
+const ALL_FORMATS: Array<{ value: AudioFormat; label: string }> = [
+  { value: 'mp3', label: 'MP3' },
+  { value: 'wav', label: 'WAV' },
+  { value: 'ogg', label: 'OGG' },
+  { value: 'flac', label: 'FLAC' },
+  { value: 'aac', label: 'AAC' },
 ];
 
-export function AudioToolContent(_props: AudioToolContentProps) {
+export function AudioToolContent({ isPremium }: AudioToolContentProps) {
   const { t } = useTranslation('converter');
   const [file, setFile] = useState<File | null>(null);
   const [targetFormat, setTargetFormat] = useState<AudioFormat>('mp3');
@@ -31,6 +36,8 @@ export function AudioToolContent(_props: AudioToolContentProps) {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showToolInfo, setShowToolInfo] = useState(false);
   
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -52,6 +59,14 @@ export function AudioToolContent(_props: AudioToolContentProps) {
       setDuration(audio.duration);
       URL.revokeObjectURL(audio.src);
     };
+  };
+  
+  const handleFormatSelect = (format: AudioFormat) => {
+    if (!isPremium && !FREE_FORMATS.includes(format)) {
+      setShowUpgradeModal(true);
+      return;
+    }
+    setTargetFormat(format);
   };
   
   const handleConvert = async () => {
@@ -96,6 +111,26 @@ export function AudioToolContent(_props: AudioToolContentProps) {
   
   return (
     <div className="space-y-6">
+      {/* Header with info button */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <h3 className="text-xl font-bold text-gray-900">{t('audio.title')}</h3>
+          {!isPremium && (
+            <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
+              <Lock className="w-3 h-3" />
+              Free: MP3, WAV
+            </span>
+          )}
+        </div>
+        <button
+          onClick={() => setShowToolInfo(true)}
+          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+          title={t('toolInfo.about')}
+        >
+          <Info className="w-5 h-5" />
+        </button>
+      </div>
+      
       {/* File Input */}
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
@@ -145,20 +180,33 @@ export function AudioToolContent(_props: AudioToolContentProps) {
             {t('audio.outputFormat')}
           </label>
           <div className="flex flex-wrap gap-2">
-            {AUDIO_FORMATS.map((format) => (
-              <button
-                key={format.value}
-                onClick={() => setTargetFormat(format.value)}
-                className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                  targetFormat === format.value
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                {format.label}
-              </button>
-            ))}
+            {ALL_FORMATS.map((format) => {
+              const isFree = FREE_FORMATS.includes(format.value);
+              const isSelected = targetFormat === format.value;
+              
+              return (
+                <button
+                  key={format.value}
+                  onClick={() => handleFormatSelect(format.value)}
+                  className={`px-4 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
+                    isSelected
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  {format.label}
+                  {!isPremium && !isFree && (
+                    <Lock className="w-3 h-3 text-yellow-500" />
+                  )}
+                </button>
+              );
+            })}
           </div>
+          {!isPremium && (
+            <p className="text-xs text-gray-500 mt-2">
+              Free: MP3, WAV | Premium: + OGG, FLAC, AAC
+            </p>
+          )}
         </div>
       )}
       
@@ -219,6 +267,18 @@ export function AudioToolContent(_props: AudioToolContentProps) {
           </p>
         </div>
       )}
+      
+      {/* Modals */}
+      <UpgradeModal 
+        isOpen={showUpgradeModal} 
+        onClose={() => setShowUpgradeModal(false)}
+        feature="Audio Format"
+      />
+      <ToolInfoModal 
+        isOpen={showToolInfo} 
+        onClose={() => setShowToolInfo(false)}
+        tool="audio"
+      />
     </div>
   );
 }
