@@ -1,16 +1,26 @@
 {
   "app": {
     "name": "ConvertHub",
-    "tagline": "Convierte tus imágenes sin salir del navegador"
+    "tagline": "Convierte tus archivos sin salir del navegador"
   },
   "nav": {
     "home": "Inicio",
-    "converter": "Convertir",
+    "convert": "Convertir",
     "pricing": "Precios",
-    "privacy": "Privacidad"
+    "privacy": "Privacidad",
+    "converters": {
+      "image": "Imagen",
+      "imageDesc": "PNG, JPEG, WebP, BMP, GIF",
+      "pdf": "PDF",
+      "pdfDesc": "Merge, Split, Compress, Protect",
+      "csv": "CSV / Excel",
+      "csvDesc": "CSV ↔ XLSX ↔ JSON",
+      "audio": "Audio",
+      "audioDesc": "MP3, WAV, OGG, FLAC, AAC"
+    }
   },
   "hero": {
-    "title": "Convierte imágenes de forma segura y privada",
+    "title": "Convierte archivos de forma segura y privada",
     "subtitle": "Todos tus archivos se procesan en tu navegador. Nunca salen de tu dispositivo.",
     "cta": "Empezar a convertir"
   },

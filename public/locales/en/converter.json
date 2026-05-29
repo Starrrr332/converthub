@@ -52,5 +52,56 @@
     "download": "Download",
     "reset": "Clear",
     "addMore": "Add more files"
+  },
+  "pdf": {
+    "title": "PDF Tools",
+    "subtitle": "Edit, split, merge and protect your PDF files",
+    "tools": {
+      "merge": "Merge PDFs",
+      "split": "Split PDF",
+      "compress": "Compress PDF",
+      "imagesToPdf": "Images to PDF",
+      "protect": "Protect PDF",
+      "watermark": "Watermark"
+    },
+    "dropzone": {
+      "pdf": "Drag your PDF file here",
+      "images": "Drag your images here (PNG, JPG)"
+    },
+    "watermark": {
+      "text": "Watermark text",
+      "opacity": "Opacity"
+    },
+    "result": {
+      "ready": "File ready to download"
+    }
+  },
+  "spreadsheet": {
+    "title": "CSV / Excel Converter",
+    "subtitle": "Convert between CSV, XLSX and JSON",
+    "dropzone": "Drag your file here (CSV, XLSX, JSON)",
+    "preview": "Data preview",
+    "previewMore": "And {{count}} more rows...",
+    "tools": {
+      "csvToXlsx": "CSV to XLSX",
+      "xlsxToCsv": "XLSX to CSV",
+      "csvToJson": "CSV to JSON",
+      "jsonToCsv": "JSON to CSV"
+    },
+    "result": {
+      "ready": "File ready to download"
+    }
+  },
+  "audio": {
+    "title": "Audio Converter",
+    "subtitle": "Convert between MP3, WAV, OGG, FLAC and AAC",
+    "dropzone": "Drag your audio file here",
+    "outputFormat": "Output format",
+    "error": {
+      "invalidFormat": "Unsupported audio format"
+    },
+    "result": {
+      "ready": "Audio ready to download"
+    }
   }
 }

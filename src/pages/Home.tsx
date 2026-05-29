@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Shield, Zap, Gift, ArrowRight } from 'lucide-react';
+import { Shield, Zap, Gift, ArrowRight, Image, FileText, Table, Music } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PrivacyBanner } from '../components/converter/PrivacyBanner';
 
@@ -25,6 +25,37 @@ export function Home() {
     }
   ];
   
+  const converters = [
+    {
+      icon: Image,
+      title: t('nav.converters.image'),
+      description: t('nav.converters.imageDesc'),
+      path: '/converter/image',
+      color: 'bg-blue-100 text-blue-600'
+    },
+    {
+      icon: FileText,
+      title: t('nav.converters.pdf'),
+      description: t('nav.converters.pdfDesc'),
+      path: '/converter/pdf',
+      color: 'bg-red-100 text-red-600'
+    },
+    {
+      icon: Table,
+      title: t('nav.converters.csv'),
+      description: t('nav.converters.csvDesc'),
+      path: '/converter/csv',
+      color: 'bg-green-100 text-green-600'
+    },
+    {
+      icon: Music,
+      title: t('nav.converters.audio'),
+      description: t('nav.converters.audioDesc'),
+      path: '/converter/audio',
+      color: 'bg-purple-100 text-purple-600'
+    }
+  ];
+  
   return (
     <div className="py-12">
       {/* Hero Section */}
@@ -37,7 +68,7 @@ export function Home() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/converter">
+          <Link to="/converter/image">
             <Button size="lg">
               {t('hero.cta')}
               <ArrowRight className="w-5 h-5 ml-2" />
@@ -56,6 +87,32 @@ export function Home() {
         <PrivacyBanner />
       </section>
       
+      {/* Converters Grid */}
+      <section className="max-w-6xl mx-auto mt-16 px-4">
+        <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
+          {t('nav.convert')}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {converters.map((converter, index) => (
+            <Link
+              key={index}
+              to={converter.path}
+              className="card text-center hover:shadow-xl transition-shadow group"
+            >
+              <div className={`inline-flex p-4 rounded-full mb-4 ${converter.color} group-hover:scale-110 transition-transform`}>
+                <converter.icon className="w-8 h-8" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {converter.title}
+              </h3>
+              <p className="text-sm text-gray-600">
+                {converter.description}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+      
       {/* Features */}
       <section className="max-w-6xl mx-auto mt-16 px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -71,23 +128,6 @@ export function Home() {
                 {feature.description}
               </p>
             </div>
-          ))}
-        </div>
-      </section>
-      
-      {/* Supported Formats */}
-      <section className="max-w-4xl mx-auto mt-16 px-4 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">
-          Formatos soportados
-        </h2>
-        <div className="flex flex-wrap justify-center gap-4">
-          {['PNG', 'JPEG', 'WebP', 'BMP', 'GIF'].map((format) => (
-            <span
-              key={format}
-              className="px-4 py-2 bg-gray-100 rounded-lg text-gray-700 font-medium"
-            >
-              {format}
-            </span>
           ))}
         </div>
       </section>

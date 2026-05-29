@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Image as ImageIcon, Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { DropdownMenu } from './DropdownMenu';
 import { useState } from 'react';
 
 interface HeaderProps {
@@ -12,12 +13,6 @@ export function Header({ isPremium }: HeaderProps) {
   const { t } = useTranslation();
   const location = window.location;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  const navItems = [
-    { path: '/', label: t('nav.home') },
-    { path: '/converter', label: t('nav.converter') },
-    { path: '/pricing', label: t('nav.pricing') }
-  ];
   
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -38,19 +33,29 @@ export function Header({ isPremium }: HeaderProps) {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            <Link
+              to="/"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === '/'
+                  ? 'text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {t('nav.home')}
+            </Link>
+            
+            <DropdownMenu />
+            
+            <Link
+              to="/pricing"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === '/pricing'
+                  ? 'text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {t('nav.pricing')}
+            </Link>
           </nav>
           
           {/* Right side */}
@@ -74,20 +79,39 @@ export function Header({ isPremium }: HeaderProps) {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block py-2 text-sm font-medium ${
-                  location.pathname === item.path
-                    ? 'text-blue-600'
-                    : 'text-gray-600'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-sm font-medium text-gray-600"
+            >
+              {t('nav.home')}
+            </Link>
+            
+            <div className="py-2">
+              <p className="text-sm font-medium text-gray-900 mb-2">{t('nav.convert')}</p>
+              <div className="pl-4 space-y-2">
+                <Link to="/converter/image" onClick={() => setMobileMenuOpen(false)} className="block py-1 text-sm text-gray-600">
+                  {t('nav.converters.image')}
+                </Link>
+                <Link to="/converter/pdf" onClick={() => setMobileMenuOpen(false)} className="block py-1 text-sm text-gray-600">
+                  {t('nav.converters.pdf')}
+                </Link>
+                <Link to="/converter/csv" onClick={() => setMobileMenuOpen(false)} className="block py-1 text-sm text-gray-600">
+                  {t('nav.converters.csv')}
+                </Link>
+                <Link to="/converter/audio" onClick={() => setMobileMenuOpen(false)} className="block py-1 text-sm text-gray-600">
+                  {t('nav.converters.audio')}
+                </Link>
+              </div>
+            </div>
+            
+            <Link
+              to="/pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block py-2 text-sm font-medium text-gray-600"
+            >
+              {t('nav.pricing')}
+            </Link>
           </nav>
         )}
       </div>

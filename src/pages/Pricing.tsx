@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { PricingCard } from '../components/pricing/PricingCard';
 import { usePremiumStore } from '../store/premiumStore';
+import { Shield, CreditCard } from 'lucide-react';
 
 export function Pricing() {
   const { t } = useTranslation('pricing');
@@ -8,8 +9,8 @@ export function Pricing() {
   
   const handleSelectPlan = (plan: 'free' | 'premium') => {
     if (plan === 'premium') {
-      // TODO: Integrate MercadoPago
-      console.log('Redirect to MercadoPago checkout');
+      // PayPal integration will be handled here
+      console.log('Redirect to PayPal checkout');
     }
   };
   
@@ -48,6 +49,22 @@ export function Pricing() {
             onSelect={() => handleSelectPlan('premium')}
             badge={t('plans.premium.badge')}
           />
+        </div>
+        
+        {/* PayPal Notice */}
+        <div className="mt-8 text-center">
+          <div className="inline-flex items-center gap-2 text-gray-500 text-sm">
+            <CreditCard className="w-4 h-4" />
+            <span>Pagos seguros procesados por PayPal</span>
+          </div>
+        </div>
+        
+        {/* Security Badge */}
+        <div className="mt-6 flex justify-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm">
+            <Shield className="w-4 h-4" />
+            <span>Tus archivos nunca salen de tu navegador</span>
+          </div>
         </div>
         
         {/* FAQ */}

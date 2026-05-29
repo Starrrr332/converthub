@@ -1,6 +1,6 @@
 {
   "dropzone": {
-    "title": "Arrastra tus imágenes aquí",
+    "title": "Arrastra tus archivos aquí",
     "subtitle": "o haz clic para seleccionar",
     "acceptedFormats": "Formatos aceptados: PNG, JPEG, WebP, BMP, GIF",
     "maxSize": "Tamaño máximo: {{size}}",
@@ -52,5 +52,56 @@
     "download": "Descargar",
     "reset": "Limpiar",
     "addMore": "Agregar más archivos"
+  },
+  "pdf": {
+    "title": "Herramientas PDF",
+    "subtitle": "Edita, divide, combina y protege tus archivos PDF",
+    "tools": {
+      "merge": "Unir PDFs",
+      "split": "Dividir PDF",
+      "compress": "Comprimir PDF",
+      "imagesToPdf": "Imágenes a PDF",
+      "protect": "Proteger PDF",
+      "watermark": "Marca de agua"
+    },
+    "dropzone": {
+      "pdf": "Arrastra tu archivo PDF aquí",
+      "images": "Arrastra tus imágenes aquí (PNG, JPG)"
+    },
+    "watermark": {
+      "text": "Texto de marca de agua",
+      "opacity": "Opacidad"
+    },
+    "result": {
+      "ready": "Archivo listo para descargar"
+    }
+  },
+  "spreadsheet": {
+    "title": "Convertidor CSV / Excel",
+    "subtitle": "Convierte entre CSV, XLSX y JSON",
+    "dropzone": "Arrastra tu archivo aquí (CSV, XLSX, JSON)",
+    "preview": "Vista previa de datos",
+    "previewMore": "Y {{count}} filas más...",
+    "tools": {
+      "csvToXlsx": "CSV a XLSX",
+      "xlsxToCsv": "XLSX a CSV",
+      "csvToJson": "CSV a JSON",
+      "jsonToCsv": "JSON a CSV"
+    },
+    "result": {
+      "ready": "Archivo listo para descargar"
+    }
+  },
+  "audio": {
+    "title": "Convertidor de Audio",
+    "subtitle": "Convierte entre MP3, WAV, OGG, FLAC y AAC",
+    "dropzone": "Arrastra tu archivo de audio aquí",
+    "outputFormat": "Formato de salida",
+    "error": {
+      "invalidFormat": "Formato de audio no soportado"
+    },
+    "result": {
+      "ready": "Audio listo para descargar"
+    }
   }
 }

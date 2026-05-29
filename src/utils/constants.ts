@@ -69,7 +69,7 @@ export function isFormatSupported(format: string, isPremium: boolean): boolean {
 
 export function getOutputFormats(inputFormat: string, isPremium: boolean): ImageFormat[] {
   const formats = isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
-  return formats.filter(f => f !== inputFormat);
+  return formats.filter((f: ImageFormat) => f !== inputFormat);
 }
 
 export function getMaxFileSize(isPremium: boolean): number {
