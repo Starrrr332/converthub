@@ -25,7 +25,8 @@ function App() {
           clientId: PAYPAL_CLIENT_ID,
           components: ["buttons"],
           intent: "subscription",
-          vault: true
+          vault: true,
+          environment: "production"
         }}
       >
         <Router>

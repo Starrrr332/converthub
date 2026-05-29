@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PricingCard } from '../components/pricing/PricingCard';
 import { usePremiumStore } from '../store/premiumStore';
-import { Shield, CreditCard, Check } from 'lucide-react';
+import { Shield, CreditCard, Check, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 const PAYPAL_MONTHLY_PLAN = 'P-1YC31238NG798380PNINA63A';
@@ -13,9 +13,12 @@ export function Pricing() {
   const premium = usePremiumStore();
   const [showPayPal, setShowPayPal] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'annual'>('monthly');
+  const [buttonsReady, setButtonsReady] = useState(false);
 
   const handlePaymentSuccess = useCallback(() => {
+    console.log('Payment approved!');
     const expiry = selectedPlan === 'monthly'
       ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
@@ -28,11 +31,14 @@ export function Pricing() {
   useEffect(() => {
     if (!showPayPal) return;
 
+    let cancelled = false;
+
     const loadButtons = () => {
       const container = document.getElementById('paypal-button-container');
-      if (!container) return;
+      if (!container || cancelled) return;
 
-      const paypal = (window as unknown as Record<string, unknown>).paypal as { Buttons?: (config: Record<string, unknown>) => { render: (sel: string) => void } } | undefined;
+      const w = window as unknown as Record<string, unknown>;
+      const paypal = w.paypal as { Buttons?: (config: Record<string, unknown>) => { render: (sel: string) => void } } | undefined;
 
       if (!paypal?.Buttons) {
         setTimeout(loadButtons, 500);
@@ -40,6 +46,7 @@ export function Pricing() {
       }
 
       container.innerHTML = '';
+      setButtonsReady(true);
 
       const planId = selectedPlan === 'monthly' ? PAYPAL_MONTHLY_PLAN : PAYPAL_ANNUAL_PLAN;
 
@@ -47,25 +54,34 @@ export function Pricing() {
         style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'subscribe' },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         createSubscription: (_data: unknown, actions: any) => {
+          console.log('Creating subscription for plan:', planId);
           return actions.subscription.create({ plan_id: planId });
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onApprove: (_data: unknown, _actions: any) => {
+        onApprove: (data: any, _actions: any) => {
+          console.log('Payment approved, subscription ID:', data?.subscriptionID);
           handlePaymentSuccess();
         },
-        onError: (err: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (err: any) => {
           console.error('PayPal error:', err);
+          setPaymentError(err?.message || 'Error en el pago. Intenta de nuevo.');
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onCancel: (data: any) => {
+          console.log('Payment cancelled:', data);
         }
       }).render('#paypal-button-container');
     };
 
     const timer = setTimeout(loadButtons, 300);
-    return () => clearTimeout(timer);
+    return () => { cancelled = true; clearTimeout(timer); };
   }, [showPayPal, selectedPlan, handlePaymentSuccess]);
 
   const handleSelectPlan = (plan: 'free' | 'premium') => {
     if (plan === 'premium') {
       setShowPayPal(true);
+      setPaymentError(null);
     }
   };
 
@@ -137,11 +153,20 @@ export function Pricing() {
                 </button>
               </div>
 
-              <div id="paypal-button-container" className="mb-4 min-h-[50px]">
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <CreditCard className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">Cargando botones de PayPal...</p>
+              {paymentError && (
+                <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                  <p className="text-sm">{paymentError}</p>
                 </div>
+              )}
+
+              <div id="paypal-button-container" className="mb-4 min-h-[50px]">
+                {!buttonsReady && (
+                  <div className="text-center p-4 bg-gray-50 rounded-lg">
+                    <CreditCard className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500">Cargando botones de PayPal...</p>
+                  </div>
+                )}
               </div>
 
               <button onClick={() => setShowPayPal(false)} className="w-full mt-3 py-2 text-gray-500 hover:text-gray-700">
