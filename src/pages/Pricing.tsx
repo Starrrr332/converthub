@@ -5,8 +5,8 @@ import { usePremiumStore } from '../store/premiumStore';
 import { Shield, Check, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
-const PAYPAL_MONTHLY_PLAN = 'P-1YC31238NG798380PNINA63A';
-const PAYPAL_ANNUAL_PLAN = 'P-2Y616961WD955583WNINA6LY';
+const PAYPAL_MONTHLY_PLAN = import.meta.env.VITE_PAYPAL_MONTHLY_PLAN;
+const PAYPAL_ANNUAL_PLAN = import.meta.env.VITE_PAYPAL_ANNUAL_PLAN;
 
 export function Pricing() {
   const { t } = useTranslation('pricing');
@@ -17,7 +17,6 @@ export function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'annual'>('monthly');
 
   const handlePaymentSuccess = useCallback(() => {
-    console.log('Payment approved!');
     const expiry = selectedPlan === 'monthly'
       ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
       : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
@@ -57,12 +56,10 @@ export function Pricing() {
         style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'subscribe' },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         createSubscription: (_data: unknown, actions: any) => {
-          console.log('Creating subscription for plan:', planId);
           return actions.subscription.create({ plan_id: planId });
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onApprove: (data: any) => {
-          console.log('Payment approved, subscription ID:', data?.subscriptionID);
+        onApprove: (_data: any) => {
           handlePaymentSuccess();
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

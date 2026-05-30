@@ -14,7 +14,7 @@ import { Privacy } from './pages/Privacy';
 import { DevToolsPage } from './pages/DevToolsPage';
 import './i18n';
 
-const PAYPAL_CLIENT_ID = 'AZBgo9iER_uT3SZASbg_N5EYCnKCYNaRygyxhheO5I4OLGO5Ko6smDFlhAdxklXMrdya0oTevGjvQeLt';
+const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
 
 function App() {
   const { isPremium } = usePremiumStore();
