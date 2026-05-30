@@ -15,10 +15,6 @@
       "content": "All files are processed 100% client-side using the browser's Canvas API. Files never leave your device."
     },
     {
-      "heading": "Ads",
-      "content": "Free users see static banners. We do not use advertising tracking or share data with third parties."
-    },
-    {
       "heading": "Payments",
       "content": "Payments are processed by PayPal. We do not store credit card information."
     },

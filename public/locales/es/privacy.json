@@ -15,10 +15,6 @@
       "content": "Todos los archivos se procesan 100% client-side usando Canvas API del navegador. Los archivos nunca salen de tu dispositivo."
     },
     {
-      "heading": "Anuncios",
-      "content": "Los usuarios gratuitos ven banners estáticos. No utilizamos rastreo publicitario ni compartimos datos con terceros."
-    },
-    {
       "heading": "Pagos",
       "content": "Los pagos son procesados por PayPal. No almacenamos información de tarjetas de crédito."
     },
