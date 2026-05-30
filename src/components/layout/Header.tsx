@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Image as ImageIcon, Menu, X } from 'lucide-react';
+import { Image as ImageIcon, Menu, X, Wrench } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { DropdownMenu } from './DropdownMenu';
 import { useState } from 'react';
@@ -45,6 +45,18 @@ export function Header({ isPremium }: HeaderProps) {
             </Link>
             
             <DropdownMenu />
+            
+            <Link
+              to="/devtools"
+              className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+                location.pathname === '/devtools'
+                  ? 'text-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <Wrench className="w-4 h-4" />
+              DevTools
+            </Link>
             
             <Link
               to="/pricing"
@@ -104,6 +116,15 @@ export function Header({ isPremium }: HeaderProps) {
                 </Link>
               </div>
             </div>
+            
+            <Link
+              to="/devtools"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-2 text-sm font-medium text-gray-600"
+            >
+              <Wrench className="w-4 h-4" />
+              DevTools
+            </Link>
             
             <Link
               to="/pricing"

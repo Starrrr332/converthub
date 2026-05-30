@@ -11,6 +11,7 @@ import { SpreadsheetConverter } from './pages/SpreadsheetConverter';
 import { AudioConverter } from './pages/AudioConverter';
 import { Pricing } from './pages/Pricing';
 import { Privacy } from './pages/Privacy';
+import { DevToolsPage } from './pages/DevToolsPage';
 import './i18n';
 
 const PAYPAL_CLIENT_ID = 'AZBgo9iER_uT3SZASbg_N5EYCnKCYNaRygyxhheO5I4OLGO5Ko6smDFlhAdxklXMrdya0oTevGjvQeLt';
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/converter/csv" element={<SpreadsheetConverter />} />
                 <Route path="/converter/audio" element={<AudioConverter />} />
                 <Route path="/pricing" element={<Pricing />} />
+                <Route path="/devtools" element={<DevToolsPage />} />
                 <Route path="/privacy" element={<Privacy />} />
               </Routes>
             </main>
