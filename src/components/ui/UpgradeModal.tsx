@@ -60,7 +60,7 @@ export function UpgradeModal({ isOpen, onClose, feature }: UpgradeModalProps) {
           {/* Price */}
           <div className="text-center p-4 bg-gray-50 rounded-xl mb-6">
             <p className="text-sm text-gray-500">{t('upgrade.priceLabel')}</p>
-            <p className="text-3xl font-bold text-gray-900">$4.990 <span className="text-sm font-normal">CLP/mes</span></p>
+            <p className="text-3xl font-bold text-gray-900">$5.50 <span className="text-sm font-normal">USD/mes</span></p>
             <p className="text-sm text-green-600 mt-1">{t('upgrade.annualDeal')}</p>
           </div>
           
