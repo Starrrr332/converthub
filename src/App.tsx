@@ -30,8 +30,7 @@ function App() {
         options={{
           clientId: PAYPAL_CLIENT_ID,
           components: ["buttons"],
-          intent: "subscription",
-          vault: true
+          currency: "USD"
         }}
       >
         <Router>
