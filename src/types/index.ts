@@ -61,7 +61,10 @@ export type PdfTool =
   | 'compress' 
   | 'images-to-pdf' 
   | 'protect' 
-  | 'watermark';
+  | 'watermark'
+  | 'rotate'
+  | 'page-numbers'
+  | 'unlock';
 
 export interface PdfMergeOptions {
   files: File[];

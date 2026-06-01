@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Upload, Download, Table, FileSpreadsheet, FileJson, Info, Lock } from 'lucide-react';
+import { Upload, Download, Table, FileSpreadsheet, FileJson, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { UpgradeModal } from '../ui/UpgradeModal';
 import { ToolInfoModal } from '../ui/ToolInfoModal';
 import { 
   csvToXlsx, 
@@ -16,23 +15,17 @@ import type { SpreadsheetTool, SpreadsheetConversionResult, SpreadsheetPreviewRe
 
 interface SpreadsheetToolContentProps {
   tool: SpreadsheetTool;
-  isPremium: boolean;
+  isPremium?: boolean;
 }
 
-// Free tools: csv-to-xlsx, xlsx-to-csv
-const FREE_TOOLS: SpreadsheetTool[] = ['csv-to-xlsx', 'xlsx-to-csv'];
-
-export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolContentProps) {
+export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
   const { t } = useTranslation('converter');
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<SpreadsheetConversionResult | null>(null);
   const [preview, setPreview] = useState<SpreadsheetPreviewResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showToolInfo, setShowToolInfo] = useState(false);
-  
-  const isFreeTool = FREE_TOOLS.includes(tool);
   
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -42,7 +35,6 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
     setResult(null);
     setError(null);
     
-    // Generate preview
     try {
       const previewData = await previewSpreadsheet(selectedFile);
       setPreview(previewData);
@@ -53,12 +45,6 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
   
   const handleConvert = async () => {
     if (!file) return;
-    
-    // Check premium access
-    if (!isFreeTool && !isPremium) {
-      setShowUpgradeModal(true);
-      return;
-    }
     
     setLoading(true);
     setError(null);
@@ -127,17 +113,8 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
   
   return (
     <div className="space-y-6">
-      {/* Header with info button */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h3 className="text-xl font-bold text-gray-900">{t('spreadsheet.title')}</h3>
-          {!isFreeTool && !isPremium && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
-              <Lock className="w-3 h-3" />
-              Premium
-            </span>
-          )}
-        </div>
+        <h3 className="text-xl font-bold text-gray-900">{t('spreadsheet.title')}</h3>
         <button
           onClick={() => setShowToolInfo(true)}
           className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -147,7 +124,6 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
         </button>
       </div>
       
-      {/* File Input */}
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
           type="file"
@@ -164,7 +140,6 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
         </label>
       </div>
       
-      {/* Data Preview */}
       {preview && preview.headers.length > 0 && (
         <div className="overflow-x-auto">
           <h4 className="text-sm font-medium text-gray-700 mb-2">
@@ -200,14 +175,12 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
         </div>
       )}
       
-      {/* Error */}
       {error && (
         <div className="p-4 bg-red-50 text-red-700 rounded-lg">
           {error}
         </div>
       )}
       
-      {/* Actions */}
       <div className="flex gap-4">
         <Button
           onClick={handleConvert}
@@ -226,7 +199,6 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
         )}
       </div>
       
-      {/* Result Info */}
       {result && (
         <div className="p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-green-700">
@@ -235,12 +207,6 @@ export function SpreadsheetToolContent({ tool, isPremium }: SpreadsheetToolConte
         </div>
       )}
       
-      {/* Modals */}
-      <UpgradeModal 
-        isOpen={showUpgradeModal} 
-        onClose={() => setShowUpgradeModal(false)}
-        feature={t(`spreadsheet.tools.${tool}`)}
-      />
       <ToolInfoModal 
         isOpen={showToolInfo} 
         onClose={() => setShowToolInfo(false)}

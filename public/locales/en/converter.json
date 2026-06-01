@@ -84,7 +84,10 @@
       "compress": "Compress PDF",
       "imagesToPdf": "Images to PDF",
       "protect": "Protect PDF",
-      "watermark": "Watermark"
+      "watermark": "Watermark",
+      "rotate": "Rotate PDF",
+      "pageNumbers": "Page Numbers",
+      "unlock": "Unlock PDF"
     },
     "dropzone": {
       "pdf": "Drag your PDF file here",

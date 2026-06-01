@@ -201,3 +201,80 @@ export function validatePdfFile(file: File): boolean {
 export function validateImageFileForPdf(file: File): boolean {
   return ['image/png', 'image/jpeg', 'image/jpg'].includes(file.type);
 }
+
+// ==================== ROTATE PDF ====================
+
+export async function rotatePdf(options: { file: File; degrees: number }): Promise<PdfConversionResult> {
+  const pdfBytes = await options.file.arrayBuffer();
+  const pdf = await PDFDocument.load(pdfBytes);
+  const pages = pdf.getPages();
+  
+  for (const page of pages) {
+    const currentRotation = page.getRotation().angle;
+    page.setRotation({ type: RotationTypes.Degrees, angle: currentRotation + options.degrees });
+  }
+  
+  const rotatedBytes = await pdf.save();
+  const blob = new Blob([new Uint8Array(rotatedBytes)], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  
+  return { blob, url, filename: `rotated-${options.file.name}`, size: blob.size };
+}
+
+// ==================== ADD PAGE NUMBERS ====================
+
+export async function addPageNumbers(options: { file: File; position?: 'bottom-center' | 'bottom-right' | 'top-center' }): Promise<PdfConversionResult> {
+  const pdfBytes = await options.file.arrayBuffer();
+  const pdf = await PDFDocument.load(pdfBytes);
+  const pages = pdf.getPages();
+  const font = await pdf.embedFont('Helvetica');
+  const pageCount = pages.length;
+  
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+    const { width, height } = page.getSize();
+    const pageNum = `${i + 1} / ${pageCount}`;
+    const textWidth = font.widthOfTextAtSize(pageNum, 10);
+    
+    let x = (width - textWidth) / 2;
+    let y = 30;
+    
+    if (options.position === 'bottom-right') {
+      x = width - textWidth - 40;
+      y = 30;
+    } else if (options.position === 'top-center') {
+      x = (width - textWidth) / 2;
+      y = height - 30;
+    }
+    
+    page.drawText(pageNum, {
+      x, y, size: 10, font,
+      color: rgb(0.3, 0.3, 0.3),
+    });
+  }
+  
+  const numberedBytes = await pdf.save();
+  const blob = new Blob([new Uint8Array(numberedBytes)], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  
+  return { blob, url, filename: `numbered-${options.file.name}`, size: blob.size };
+}
+
+// ==================== UNLOCK PDF (remove password) ====================
+
+export async function unlockPdf(options: { file: File; password: string }): Promise<PdfConversionResult> {
+  const pdfBytes = await options.file.arrayBuffer();
+  
+  let pdf;
+  try {
+    pdf = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+  } catch {
+    throw new Error('No se pudo abrir el PDF. Asegúrate de que el archivo no esté dañado.');
+  }
+  
+  const unlockedBytes = await pdf.save();
+  const blob = new Blob([new Uint8Array(unlockedBytes)], { type: 'application/pdf' });
+  const url = URL.createObjectURL(blob);
+  
+  return { blob, url, filename: `unlocked-${options.file.name}`, size: blob.size };
+}

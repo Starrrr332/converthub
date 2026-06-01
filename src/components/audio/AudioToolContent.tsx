@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Download, Music, Trash2, Loader2, Info, Lock } from 'lucide-react';
+import { Download, Music, Trash2, Loader2, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { UpgradeModal } from '../ui/UpgradeModal';
 import { ToolInfoModal } from '../ui/ToolInfoModal';
 import { 
   convertAudio, 
@@ -13,11 +12,8 @@ import {
 import type { AudioFormat, AudioConversionResult } from '../../types';
 
 interface AudioToolContentProps {
-  isPremium: boolean;
+  isPremium?: boolean;
 }
-
-// Free formats: mp3, wav only
-const FREE_FORMATS: AudioFormat[] = ['mp3', 'wav'];
 
 const ALL_FORMATS: Array<{ value: AudioFormat; label: string }> = [
   { value: 'mp3', label: 'MP3' },
@@ -27,7 +23,7 @@ const ALL_FORMATS: Array<{ value: AudioFormat; label: string }> = [
   { value: 'aac', label: 'AAC' },
 ];
 
-export function AudioToolContent({ isPremium }: AudioToolContentProps) {
+export function AudioToolContent(_props: AudioToolContentProps) {
   const { t } = useTranslation('converter');
   const [file, setFile] = useState<File | null>(null);
   const [targetFormat, setTargetFormat] = useState<AudioFormat>('mp3');
@@ -36,7 +32,6 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [showToolInfo, setShowToolInfo] = useState(false);
   
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,21 +47,12 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
     setResult(null);
     setError(null);
     
-    // Get duration
     const audio = new Audio();
     audio.src = URL.createObjectURL(selectedFile);
     audio.onloadedmetadata = () => {
       setDuration(audio.duration);
       URL.revokeObjectURL(audio.src);
     };
-  };
-  
-  const handleFormatSelect = (format: AudioFormat) => {
-    if (!isPremium && !FREE_FORMATS.includes(format)) {
-      setShowUpgradeModal(true);
-      return;
-    }
-    setTargetFormat(format);
   };
   
   const handleConvert = async () => {
@@ -111,17 +97,8 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
   
   return (
     <div className="space-y-6">
-      {/* Header with info button */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h3 className="text-xl font-bold text-gray-900">{t('audio.title')}</h3>
-          {!isPremium && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
-              <Lock className="w-3 h-3" />
-              Free: MP3, WAV
-            </span>
-          )}
-        </div>
+        <h3 className="text-xl font-bold text-gray-900">{t('audio.title')}</h3>
         <button
           onClick={() => setShowToolInfo(true)}
           className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
@@ -131,7 +108,6 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
         </button>
       </div>
       
-      {/* File Input */}
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
           type="file"
@@ -149,7 +125,6 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
         </label>
       </div>
       
-      {/* File Info */}
       {file && (
         <div className="p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center justify-between">
@@ -173,7 +148,6 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
         </div>
       )}
       
-      {/* Format Selector */}
       {file && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -181,13 +155,12 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
           </label>
           <div className="flex flex-wrap gap-2">
             {ALL_FORMATS.map((format) => {
-              const isFree = FREE_FORMATS.includes(format.value);
               const isSelected = targetFormat === format.value;
               
               return (
                 <button
                   key={format.value}
-                  onClick={() => handleFormatSelect(format.value)}
+                  onClick={() => setTargetFormat(format.value)}
                   className={`px-4 py-2 rounded-lg border-2 transition-all flex items-center gap-2 ${
                     isSelected
                       ? 'border-blue-500 bg-blue-50 text-blue-700'
@@ -195,22 +168,13 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
                   }`}
                 >
                   {format.label}
-                  {!isPremium && !isFree && (
-                    <Lock className="w-3 h-3 text-yellow-500" />
-                  )}
                 </button>
               );
             })}
           </div>
-          {!isPremium && (
-            <p className="text-xs text-gray-500 mt-2">
-              Free: MP3, WAV | Premium: + OGG, FLAC, AAC
-            </p>
-          )}
         </div>
       )}
       
-      {/* Progress */}
       {loading && progress > 0 && (
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
@@ -226,14 +190,12 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
         </div>
       )}
       
-      {/* Error */}
       {error && (
         <div className="p-4 bg-red-50 text-red-700 rounded-lg">
           {error}
         </div>
       )}
       
-      {/* Actions */}
       <div className="flex gap-4">
         <Button
           onClick={handleConvert}
@@ -259,7 +221,6 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
         )}
       </div>
       
-      {/* Result Info */}
       {result && (
         <div className="p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-green-700">
@@ -268,12 +229,6 @@ export function AudioToolContent({ isPremium }: AudioToolContentProps) {
         </div>
       )}
       
-      {/* Modals */}
-      <UpgradeModal 
-        isOpen={showUpgradeModal} 
-        onClose={() => setShowUpgradeModal(false)}
-        feature="Audio Format"
-      />
       <ToolInfoModal 
         isOpen={showToolInfo} 
         onClose={() => setShowToolInfo(false)}

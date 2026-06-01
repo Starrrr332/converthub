@@ -1,21 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield } from 'lucide-react';
-import { usePremiumStore } from '../../store/premiumStore';
-import { AdBanner } from '../ads/AdBanner';
 
 export function Footer() {
   const { t } = useTranslation();
-  const premium = usePremiumStore();
   
   return (
     <footer className="bg-white border-t mt-auto">
-      {!premium.isPremium() && (
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <AdBanner position="bottom" />
-        </div>
-      )}
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>

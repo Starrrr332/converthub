@@ -84,7 +84,10 @@
       "compress": "Comprimir PDF",
       "imagesToPdf": "Imágenes a PDF",
       "protect": "Proteger PDF",
-      "watermark": "Marca de agua"
+      "watermark": "Marca de agua",
+      "rotate": "Rotar PDF",
+      "pageNumbers": "Números de página",
+      "unlock": "Desbloquear PDF"
     },
     "dropzone": {
       "pdf": "Arrastra tu archivo PDF aquí",

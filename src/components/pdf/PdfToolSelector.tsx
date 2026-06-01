@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { FileText, Scissors, Minimize2, Image, Lock, Droplets } from 'lucide-react';
+import { FileText, Scissors, Minimize2, Image, Lock, Droplets, RotateCw, Hash, Unlock } from 'lucide-react';
 import type { PdfTool } from '../../types';
 
 interface PdfToolSelectorProps {
@@ -10,13 +10,16 @@ interface PdfToolSelectorProps {
 export function PdfToolSelector({ selectedTool, onSelect }: PdfToolSelectorProps) {
   const { t } = useTranslation('converter');
   
-  const tools: Array<{ id: PdfTool; icon: React.ReactNode; label: string; free: boolean }> = [
-    { id: 'merge', icon: <FileText className="w-5 h-5" />, label: t('pdf.tools.merge'), free: true },
-    { id: 'split', icon: <Scissors className="w-5 h-5" />, label: t('pdf.tools.split'), free: false },
-    { id: 'compress', icon: <Minimize2 className="w-5 h-5" />, label: t('pdf.tools.compress'), free: false },
-    { id: 'images-to-pdf', icon: <Image className="w-5 h-5" />, label: t('pdf.tools.imagesToPdf'), free: true },
-    { id: 'protect', icon: <Lock className="w-5 h-5" />, label: t('pdf.tools.protect'), free: false },
-    { id: 'watermark', icon: <Droplets className="w-5 h-5" />, label: t('pdf.tools.watermark'), free: false },
+  const tools: Array<{ id: PdfTool; icon: React.ReactNode; label: string; description: string }> = [
+    { id: 'merge', icon: <FileText className="w-5 h-5" />, label: t('pdf.tools.merge'), description: 'Unir varios PDF' },
+    { id: 'split', icon: <Scissors className="w-5 h-5" />, label: t('pdf.tools.split'), description: 'Dividir PDF en partes' },
+    { id: 'compress', icon: <Minimize2 className="w-5 h-5" />, label: t('pdf.tools.compress'), description: 'Reducir tamaño PDF' },
+    { id: 'images-to-pdf', icon: <Image className="w-5 h-5" />, label: t('pdf.tools.imagesToPdf'), description: 'Convertir imágenes a PDF' },
+    { id: 'rotate', icon: <RotateCw className="w-5 h-5" />, label: t('pdf.tools.rotate'), description: 'Rotar páginas PDF' },
+    { id: 'watermark', icon: <Droplets className="w-5 h-5" />, label: t('pdf.tools.watermark'), description: 'Agregar marca de agua' },
+    { id: 'page-numbers', icon: <Hash className="w-5 h-5" />, label: t('pdf.tools.pageNumbers'), description: 'Insertar números de página' },
+    { id: 'protect', icon: <Lock className="w-5 h-5" />, label: t('pdf.tools.protect'), description: 'Proteger con contraseña' },
+    { id: 'unlock', icon: <Unlock className="w-5 h-5" />, label: t('pdf.tools.unlock'), description: 'Quitar contraseña PDF' },
   ];
   
   return (
@@ -33,9 +36,7 @@ export function PdfToolSelector({ selectedTool, onSelect }: PdfToolSelectorProps
         >
           {tool.icon}
           <span className="text-sm font-medium text-center">{tool.label}</span>
-          {!tool.free && (
-            <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Premium</span>
-          )}
+          <span className="text-xs text-gray-400 text-center">{tool.description}</span>
         </button>
       ))}
     </div>

@@ -12,6 +12,11 @@ import { AudioConverter } from './pages/AudioConverter';
 import { Pricing } from './pages/Pricing';
 import { Privacy } from './pages/Privacy';
 import { DevToolsPage } from './pages/DevToolsPage';
+import { ImageEditorPage } from './pages/ImageEditorPage';
+import { TextEditorPage } from './pages/TextEditorPage';
+import { JsonFormatterPage } from './pages/JsonFormatterPage';
+import { MarkdownEditorPage } from './pages/MarkdownEditorPage';
+import { SpreadsheetEditorPage } from './pages/SpreadsheetEditorPage';
 import './i18n';
 
 const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
@@ -40,6 +45,11 @@ function App() {
                 <Route path="/converter/pdf" element={<PdfConverter />} />
                 <Route path="/converter/csv" element={<SpreadsheetConverter />} />
                 <Route path="/converter/audio" element={<AudioConverter />} />
+                <Route path="/editor/image" element={<ImageEditorPage />} />
+                <Route path="/editor/text" element={<TextEditorPage />} />
+                <Route path="/editor/json" element={<JsonFormatterPage />} />
+                <Route path="/editor/markdown" element={<MarkdownEditorPage />} />
+                <Route path="/editor/spreadsheet" element={<SpreadsheetEditorPage />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/devtools" element={<DevToolsPage />} />
                 <Route path="/privacy" element={<Privacy />} />
