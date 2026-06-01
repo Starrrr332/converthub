@@ -1,52 +1,147 @@
 @import "tailwindcss";
 
-/* Custom styles */
+/* ─── Design Tokens ─────────────────────────────────── */
+/* Paleta: slate neutro + indigo como acento principal  */
+/* Tipografía: system-ui stack (Plus Jakarta Sans via HTML) */
+/* Sombras: solo 3 niveles (sm, md, lg) */
+
+@theme {
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-card-hover: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+  --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+  --shadow-glass: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+
+  --radius-card: 0.75rem;
+  --radius-button: 0.5rem;
+  --radius-full: 9999px;
+}
+
+/* ─── Base ──────────────────────────────────────────── */
 @layer base {
-  body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+  html {
+    scroll-behavior: smooth;
   }
-  
+
+  body {
+    @apply bg-surface-secondary text-text antialiased;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
   #root {
     @apply min-h-screen flex flex-col;
   }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
 }
 
+/* ─── Component Classes ─────────────────────────────── */
 @layer components {
-  .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
-  }
-  
-  .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
-  }
-  
+  /* Cards */
   .card {
-    @apply bg-white rounded-xl shadow-lg p-6;
+    @apply bg-surface rounded-xl p-6;
+    box-shadow: var(--shadow-card);
   }
-  
+  .card-hover {
+    @apply transition-all duration-200;
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Interactive cards (clickable) */
+  .card-interactive {
+    @apply bg-surface rounded-xl p-5 cursor-pointer transition-all duration-200 border border-transparent;
+    box-shadow: var(--shadow-card);
+  }
+  .card-interactive:hover {
+    @apply border-brand-100;
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Tool tabs */
+  .tool-tab {
+    @apply px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150;
+    @apply text-text-secondary hover:bg-brand-50 hover:text-brand-700;
+  }
+  .tool-tab-active {
+    @apply bg-brand-50 text-brand-700 font-semibold;
+  }
+
+  /* Content panels (used inside tool pages) */
+  .content-panel {
+    @apply bg-surface rounded-xl;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Dropzone */
   .dropzone {
-    @apply border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 cursor-pointer;
+    @apply border-2 border-dashed border-border rounded-xl p-8 text-center cursor-pointer transition-all duration-200;
+    @apply hover:border-brand-300 hover:bg-brand-50/30;
   }
-  
   .dropzone-active {
-    @apply border-blue-500 bg-blue-50;
+    @apply border-brand-400 bg-brand-50/50;
   }
-  
+
+  /* Input fields */
   .input-field {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-200;
+    @apply w-full px-4 py-2.5 border border-border rounded-lg transition-all duration-150;
+    @apply focus:border-brand-400 focus:ring-2 focus:ring-brand-100 outline-none;
   }
-  
+
+  /* Badge */
   .badge-premium {
-    @apply bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full;
+    @apply bg-brand-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider;
   }
-  
   .badge-free {
-    @apply bg-gray-200 text-gray-700 text-xs font-medium px-2 py-1 rounded-full;
+    @apply bg-slate-100 text-slate-600 text-xs font-medium px-2 py-0.5 rounded-full;
+  }
+
+  /* Glass navigation effect */
+  .glass-nav {
+    @apply bg-surface/80 backdrop-blur-md border-b border-border/50;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section spacing */
+  .section-heading {
+    @apply text-2xl sm:text-3xl font-bold text-text tracking-tight;
+  }
+  .section-subheading {
+    @apply text-text-secondary mt-2 max-w-2xl;
   }
 }
 
+/* ─── Utilities ─────────────────────────────────────── */
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-500 to-brand-700 bg-clip-text text-transparent;
   }
 }

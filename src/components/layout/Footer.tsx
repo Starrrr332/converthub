@@ -1,41 +1,64 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Shield } from 'lucide-react';
+import { Shield, Heart } from 'lucide-react';
 
 export function Footer() {
   const { t } = useTranslation();
-  
+
   return (
-    <footer className="bg-white border-t mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-lg font-bold text-gray-900">{t('app.name')}</h3>
-            <p className="text-sm text-gray-600 mt-2">{t('app.tagline')}</p>
+    <footer className="bg-surface border-t border-border mt-auto">
+      <div className="page-container py-10 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="text-base font-bold text-text">{t('app.name')}</h3>
+            <p className="text-sm text-text-secondary mt-1.5 max-w-xs">{t('app.tagline')}</p>
+            <Link to="/pricing" className="inline-flex items-center gap-1.5 mt-4 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors">
+              <Heart className="w-3.5 h-3.5" />
+              Donar
+            </Link>
           </div>
-          
+
+          {/* Convertidores */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Legal</h4>
+            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Convertidores</h4>
             <ul className="space-y-2">
-              <li><Link to="/privacy" className="text-sm text-gray-600 hover:text-gray-900">{t('footer.privacyPolicy')}</Link></li>
-              <li><a href="#" className="text-sm text-gray-600 hover:text-gray-900">{t('footer.terms')}</a></li>
-              <li><a href="mailto:contact@converthub.com" className="text-sm text-gray-600 hover:text-gray-900">{t('footer.contact')}</a></li>
+              <li><Link to="/converter/image" className="text-sm text-text-secondary hover:text-text transition-colors">Imágenes</Link></li>
+              <li><Link to="/converter/pdf" className="text-sm text-text-secondary hover:text-text transition-colors">PDF</Link></li>
+              <li><Link to="/converter/audio" className="text-sm text-text-secondary hover:text-text transition-colors">Audio</Link></li>
+              <li><Link to="/converter/video" className="text-sm text-text-secondary hover:text-text transition-colors">Video</Link></li>
             </ul>
           </div>
-          
-          <div className="flex flex-col items-start md:items-end">
-            <div className="flex items-center gap-2 text-green-600">
-              <Shield className="w-5 h-5" />
-              <span className="text-sm font-medium">{t('footer.privacy')}</span>
+
+          {/* Editores */}
+          <div>
+            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Editores</h4>
+            <ul className="space-y-2">
+              <li><Link to="/editor/image" className="text-sm text-text-secondary hover:text-text transition-colors">Imágenes</Link></li>
+              <li><Link to="/editor/text" className="text-sm text-text-secondary hover:text-text transition-colors">Texto</Link></li>
+              <li><Link to="/editor/json" className="text-sm text-text-secondary hover:text-text transition-colors">JSON</Link></li>
+              <li><Link to="/editor/markdown" className="text-sm text-text-secondary hover:text-text transition-colors">Markdown</Link></li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Legal</h4>
+            <ul className="space-y-2">
+              <li><Link to="/privacy" className="text-sm text-text-secondary hover:text-text transition-colors">{t('footer.privacyPolicy')}</Link></li>
+              <li><Link to="/devtools" className="text-sm text-text-secondary hover:text-text transition-colors">DevTools</Link></li>
+              <li><Link to="/tools/utilities" className="text-sm text-text-secondary hover:text-text transition-colors">Utilidades</Link></li>
+            </ul>
+            <div className="flex items-center gap-1.5 mt-4 text-xs text-green-600">
+              <Shield className="w-3.5 h-3.5" />
+              <span>{t('footer.privacy')}</span>
             </div>
-            <p className="text-xs text-gray-500 mt-2 text-left md:text-right">
-              {t('footer.privacyNote')}
-            </p>
           </div>
         </div>
-        
-        <div className="mt-8 pt-8 border-t">
-          <p className="text-sm text-gray-500 text-center">{t('footer.copyright')}</p>
+
+        <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-2">
+          <p className="text-xs text-text-muted">{t('footer.copyright')}</p>
+          <p className="text-xs text-text-muted">{t('footer.privacyNote')}</p>
         </div>
       </div>
     </footer>
