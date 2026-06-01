@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload, Download, RotateCw, RotateCcw, FlipHorizontal, FlipVertical, Crop, SunMedium, Droplets, Undo2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { PageLayout } from '../components/layout/PageLayout';
 
 type Tool = 'resize' | 'rotate' | 'flip' | 'crop' | 'filters' | 'compress';
 
@@ -27,6 +29,7 @@ const defaultFilters: FilterOptions = {
 };
 
 export function ImageEditorPage() {
+  const { t } = useTranslation('common');
   const [selectedTool, setSelectedTool] = useState<Tool>('resize');
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -134,15 +137,14 @@ export function ImageEditorPage() {
   ];
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Editor de Imágenes</h1>
-          <p className="text-gray-600">Edita, redimensiona, rota y aplica filtros a tus imágenes</p>
-        </div>
-
+    <PageLayout
+      wide
+      title={t('nav.editors.image')}
+      subtitle={t('nav.editors.imageDesc')}
+      breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.image') }]}
+    >
         {!image ? (
-          <div className="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-blue-500 transition-colors">
+          <div className="dropzone p-12">
             <input
               type="file"
               accept="image/*"
@@ -160,7 +162,7 @@ export function ImageEditorPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Tool Selector */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-lg p-4">
+              <div className="content-panel p-4">
                 <h3 className="font-semibold text-gray-900 mb-3">Herramientas</h3>
                 <div className="space-y-2">
                   {tools.map((tool) => (
@@ -169,8 +171,8 @@ export function ImageEditorPage() {
                       onClick={() => setSelectedTool(tool.id)}
                       className={`w-full p-3 rounded-lg flex items-center gap-3 transition-all ${
                         selectedTool === tool.id
-                          ? 'bg-blue-50 text-blue-700 border-2 border-blue-500'
-                          : 'hover:bg-gray-50 border-2 border-transparent'
+                          ? 'bg-indigo-50 text-indigo-700 border-2 border-indigo-500'
+                          : 'hover:bg-slate-50 border-2 border-transparent'
                       }`}
                     >
                       {tool.icon}
@@ -360,7 +362,6 @@ export function ImageEditorPage() {
         )}
 
         <canvas ref={canvasRef} className="hidden" />
-      </div>
-    </div>
+    </PageLayout>
   );
 }

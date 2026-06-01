@@ -6,23 +6,67 @@
   "nav": {
     "home": "Home",
     "convert": "Convert",
-    "pricing": "Pricing",
+    "edit": "Edit",
+    "pricing": "Donate",
     "privacy": "Privacy",
+    "devtools": "DevTools",
     "converters": {
       "image": "Image",
       "imageDesc": "PNG, JPEG, WebP, BMP, GIF",
       "pdf": "PDF",
-      "pdfDesc": "Merge, Split, Compress, Protect",
+      "pdfDesc": "Merge, split, compress and more",
       "csv": "CSV / Excel",
       "csvDesc": "CSV ↔ XLSX ↔ JSON",
       "audio": "Audio",
-      "audioDesc": "MP3, WAV, OGG, FLAC, AAC"
+      "audioDesc": "MP3, WAV, OGG, FLAC, AAC",
+      "video": "Video",
+      "videoDesc": "Convert, compress and trim"
+    },
+    "more": "More",
+    "devtoolsDesc": "Base64, Hash, QR, SQL, JWT…",
+    "tools": {
+      "units": "Units",
+      "unitsDesc": "Length, weight, temperature…",
+      "utilities": "Utilities",
+      "utilitiesDesc": "Passwords, UUID, Lorem…"
+    },
+    "editors": {
+      "image": "Image editor",
+      "imageDesc": "Resize, rotate and filters",
+      "text": "Text editor",
+      "textDesc": "Notepad with search and stats",
+      "json": "JSON Formatter",
+      "jsonDesc": "Format, validate and minify",
+      "markdown": "Markdown",
+      "markdownDesc": "Live preview",
+      "spreadsheet": "Spreadsheet",
+      "spreadsheetDesc": "Edit CSV in the browser"
     }
   },
   "hero": {
-    "title": "Convert files securely and privately",
-    "subtitle": "All your files are processed in your browser. They never leave your device.",
-    "cta": "Start converting"
+    "title": "Convert and edit files",
+    "titleHighlight": "without uploading to any server",
+    "subtitle": "Online tools that process everything in your browser. Private, fast and free.",
+    "cta": "Start converting",
+    "donate": "Support the project",
+    "searchPlaceholder": "Search for a tool…",
+    "stats": {
+      "tools": "15+ tools",
+      "privacy": "100% local",
+      "free": "No signup"
+    }
+  },
+  "home": {
+    "converters": "Converters",
+    "convertersDesc": "Transform image, PDF, audio and spreadsheet formats",
+    "editors": "Online editors",
+    "editorsDesc": "Edit and format without installing software",
+    "pdfTools": "PDF tools",
+    "pdfToolsDesc": "Quick access to the most used operations",
+    "why": "Why ConvertHub?",
+    "viewAllPdf": "View all PDF tools",
+    "allTools": "All",
+    "noResults": "No tools match your search"
   },
   "features": {
     "privacy": {
@@ -47,6 +91,7 @@
     }
   },
   "footer": {
+    "legal": "Legal",
     "copyright": "© 2026 ConvertHub. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms of Service",

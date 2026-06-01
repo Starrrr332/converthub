@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Binary, Link, Hash, QrCode, Palette, Database, FileDiff, Regex, Key, FileCode } from 'lucide-react';
+import { PageLayout } from '../components/layout/PageLayout';
 import { Base64Tool } from '../components/devtools/Base64Tool';
 import { UrlEncoderTool } from '../components/devtools/UrlEncoderTool';
 import { HashGeneratorTool } from '../components/devtools/HashGeneratorTool';
@@ -8,17 +10,17 @@ import { ColorConverterTool } from '../components/devtools/ColorConverterTool';
 
 type Tool = 'base64' | 'url' | 'hash' | 'qrcode' | 'color' | 'sql' | 'diff' | 'regex' | 'jwt' | 'jsfmt';
 
-const tools: Array<{ id: Tool; icon: React.ReactNode; label: string; description: string }> = [
-  { id: 'base64', icon: <Binary className="w-5 h-5" />, label: 'Base64', description: 'Encode/Decode text' },
-  { id: 'url', icon: <Link className="w-5 h-5" />, label: 'URL Encoder', description: 'Encode/Decode URLs' },
-  { id: 'hash', icon: <Hash className="w-5 h-5" />, label: 'Hash Generator', description: 'MD5, SHA-1, SHA-256' },
-  { id: 'qrcode', icon: <QrCode className="w-5 h-5" />, label: 'QR Code', description: 'Generate QR codes' },
-  { id: 'color', icon: <Palette className="w-5 h-5" />, label: 'Color Converter', description: 'HEX ↔ RGB ↔ HSL' },
-  { id: 'sql', icon: <Database className="w-5 h-5" />, label: 'SQL Formatter', description: 'Format and prettify SQL' },
-  { id: 'diff', icon: <FileDiff className="w-5 h-5" />, label: 'Diff Checker', description: 'Compare text differences' },
-  { id: 'regex', icon: <Regex className="w-5 h-5" />, label: 'Regex Tester', description: 'Test regular expressions' },
-  { id: 'jwt', icon: <Key className="w-5 h-5" />, label: 'JWT Decoder', description: 'Decode JWT tokens' },
-  { id: 'jsfmt', icon: <FileCode className="w-5 h-5" />, label: 'JS Formatter', description: 'Format JavaScript code' },
+const tools: Array<{ id: Tool; icon: React.ReactNode; label: string }> = [
+  { id: 'base64', icon: <Binary className="w-5 h-5" />, label: 'Base64' },
+  { id: 'url', icon: <Link className="w-5 h-5" />, label: 'URL' },
+  { id: 'hash', icon: <Hash className="w-5 h-5" />, label: 'Hash' },
+  { id: 'qrcode', icon: <QrCode className="w-5 h-5" />, label: 'QR' },
+  { id: 'color', icon: <Palette className="w-5 h-5" />, label: 'Color' },
+  { id: 'sql', icon: <Database className="w-5 h-5" />, label: 'SQL' },
+  { id: 'diff', icon: <FileDiff className="w-5 h-5" />, label: 'Diff' },
+  { id: 'regex', icon: <Regex className="w-5 h-5" />, label: 'Regex' },
+  { id: 'jwt', icon: <Key className="w-5 h-5" />, label: 'JWT' },
+  { id: 'jsfmt', icon: <FileCode className="w-5 h-5" />, label: 'JS' },
 ];
 
 // SQL Formatter
@@ -241,47 +243,56 @@ function JsFormatterTool() {
 }
 
 export function DevToolsPage() {
+  const { t } = useTranslation('common');
   const [selectedTool, setSelectedTool] = useState<Tool>('base64');
 
   const renderTool = () => {
     switch (selectedTool) {
-      case 'base64': return <Base64Tool />;
-      case 'url': return <UrlEncoderTool />;
-      case 'hash': return <HashGeneratorTool />;
-      case 'qrcode': return <QrCodeTool />;
-      case 'color': return <ColorConverterTool />;
-      case 'sql': return <SqlFormatterTool />;
-      case 'diff': return <DiffCheckerTool />;
-      case 'regex': return <RegexTesterTool />;
-      case 'jwt': return <JwtDecoderTool />;
-      case 'jsfmt': return <JsFormatterTool />;
+      case 'base64':
+        return <Base64Tool />;
+      case 'url':
+        return <UrlEncoderTool />;
+      case 'hash':
+        return <HashGeneratorTool />;
+      case 'qrcode':
+        return <QrCodeTool />;
+      case 'color':
+        return <ColorConverterTool />;
+      case 'sql':
+        return <SqlFormatterTool />;
+      case 'diff':
+        return <DiffCheckerTool />;
+      case 'regex':
+        return <RegexTesterTool />;
+      case 'jwt':
+        return <JwtDecoderTool />;
+      case 'jsfmt':
+        return <JsFormatterTool />;
     }
   };
 
   return (
-    <div className="py-8">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Developer Tools</h1>
-          <p className="text-gray-600">Free tools for developers. No login required.</p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
-          {tools.map((tool) => (
-            <button key={tool.id} onClick={() => setSelectedTool(tool.id)}
-              className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${
-                selectedTool === tool.id ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200 hover:border-gray-300 text-gray-600'
-              }`}>
-              {tool.icon}
-              <span className="text-xs font-medium text-center">{tool.label}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          {renderTool()}
-        </div>
+    <PageLayout
+      title={t('nav.devtools')}
+      subtitle="Herramientas para desarrolladores. Sin registro."
+      showPrivacyBanner={false}
+      breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.devtools') }]}
+    >
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-8">
+        {tools.map((tool) => (
+          <button
+            key={tool.id}
+            type="button"
+            onClick={() => setSelectedTool(tool.id)}
+            className={`tool-tab ${selectedTool === tool.id ? 'tool-tab-active' : ''}`}
+          >
+            {tool.icon}
+            <span className="text-sm font-medium">{tool.label}</span>
+          </button>
+        ))}
       </div>
-    </div>
+
+      <div className="content-panel">{renderTool()}</div>
+    </PageLayout>
   );
 }

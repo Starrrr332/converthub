@@ -23,14 +23,21 @@ import './i18n';
 
 function App() {
   const { isPremium } = usePremiumStore();
-  
+
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-slate-50">
+          <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+          <p className="text-sm text-slate-500 font-medium">ConvertHub</p>
+        </div>
+      }
+    >
       <Router>
-        <div className="min-h-screen flex flex-col bg-gray-50">
+        <div className="app-shell">
           <Header isPremium={isPremium()} />
-          
-          <main className="flex-1">
+
+          <main className="flex-1 w-full">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/converter/image" element={<ImageConverter />} />
@@ -50,7 +57,7 @@ function App() {
               <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </main>
-          
+
           <Footer />
         </div>
       </Router>

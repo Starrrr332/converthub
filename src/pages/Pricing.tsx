@@ -97,37 +97,34 @@ export function Pricing() {
 
   if (paymentSuccess) {
     return (
-      <div className="py-12">
-        <div className="max-w-md mx-auto px-4 text-center">
-          <div className="inline-flex p-4 bg-green-100 rounded-full mb-6">
-            <Check className="w-12 h-12 text-green-600" />
+      <div className="page-container max-w-md text-center">
+          <div className="inline-flex p-4 bg-teal-100 rounded-2xl mb-6">
+            <Check className="w-12 h-12 text-teal-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Gracias por tu donacion!</h1>
-          <p className="text-gray-600 mb-8">Tu apoyo nos ayuda a mantener ConvertHub gratuito para todos.</p>
-          <Button onClick={() => window.location.href = '/'}>Continuar usando ConvertHub</Button>
-        </div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-4">¡Gracias por tu donación!</h1>
+          <p className="text-slate-600 mb-8">Tu apoyo nos ayuda a mantener ConvertHub gratuito para todos.</p>
+          <Button onClick={() => (window.location.href = '/')}>Continuar usando ConvertHub</Button>
       </div>
     );
   }
 
   return (
-    <div className="py-12">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="page-container max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Todos los features son gratuitos</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            ConvertHub es y siempre sera gratuito. Si te sirvio, considera hacer una donacion para apoyar el desarrollo.
+          <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Todos los features son gratuitos</h1>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            ConvertHub es y siempre será gratuito. Si te sirvió, considera hacer una donación para apoyar el desarrollo.
           </p>
         </div>
 
         <div className="max-w-md mx-auto mb-12">
-          <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-green-200">
+          <div className="content-panel border-2 border-rose-100 p-8">
             <div className="text-center mb-6">
-              <div className="inline-flex p-3 bg-green-100 rounded-full mb-4">
-                <Heart className="w-8 h-8 text-green-600" />
+              <div className="inline-flex p-3 bg-rose-100 rounded-2xl mb-4">
+                <Heart className="w-8 h-8 text-rose-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Hacer una donacion</h2>
-              <p className="text-gray-600 text-sm">Elige el monto que desees. No hay minimo.</p>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Hacer una donación</h2>
+              <p className="text-slate-600 text-sm">Elige el monto que desees. No hay mínimo.</p>
             </div>
 
             <div className="grid grid-cols-4 gap-2 mb-6">
@@ -242,7 +239,6 @@ export function Pricing() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

@@ -1,12 +1,15 @@
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload, Download, Plus, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { PageLayout } from '../components/layout/PageLayout';
 
 interface Cell {
   value: string;
 }
 
 export function SpreadsheetEditorPage() {
+  const { t } = useTranslation('common');
   const [data, setData] = useState<Cell[][]>([
     [{ value: 'Nombre' }, { value: 'Edad' }, { value: 'Ciudad' }],
     [{ value: 'Juan' }, { value: '25' }, { value: 'Madrid' }],
@@ -125,15 +128,13 @@ export function SpreadsheetEditorPage() {
   };
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Editor CSV / Excel</h1>
-          <p className="text-gray-600">Edita hojas de cálculo directamente en el navegador</p>
-        </div>
-
-        {/* Toolbar */}
-        <div className="bg-white rounded-xl shadow-lg p-4 mb-4">
+    <PageLayout
+      wide
+      title={t('nav.editors.spreadsheet')}
+      subtitle={t('nav.editors.spreadsheetDesc')}
+      breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.spreadsheet') }]}
+    >
+        <div className="content-panel p-4 mb-4">
           <div className="flex flex-wrap items-center gap-2">
             <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept=".csv,.tsv,.txt" />
             <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="sm">
@@ -235,10 +236,9 @@ export function SpreadsheetEditorPage() {
           </div>
         </div>
 
-        <div className="mt-4 text-sm text-gray-500 text-center">
+        <div className="mt-4 text-sm text-slate-500 text-center">
           {data.length} filas × {data[0]?.length || 0} columnas
         </div>
-      </div>
-    </div>
+    </PageLayout>
   );
 }
