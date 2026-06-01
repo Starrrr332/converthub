@@ -16,6 +16,9 @@ import { TextEditorPage } from './pages/TextEditorPage';
 import { JsonFormatterPage } from './pages/JsonFormatterPage';
 import { MarkdownEditorPage } from './pages/MarkdownEditorPage';
 import { SpreadsheetEditorPage } from './pages/SpreadsheetEditorPage';
+import { OcrPage } from './pages/OcrPage';
+import { ImageCompressorPage } from './pages/ImageCompressorPage';
+import { FileAnalyzerPage } from './pages/FileAnalyzerPage';
 import { VideoConverterPage } from './pages/VideoConverterPage';
 import { UnitConverterPage } from './pages/UnitConverterPage';
 import { UtilitiesPage } from './pages/UtilitiesPage';
@@ -53,6 +56,9 @@ function App() {
               <Route path="/tools/unit-converter" element={<UnitConverterPage />} />
               <Route path="/tools/utilities" element={<UtilitiesPage />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/tools/ocr" element={<OcrPage />} />
+              <Route path="/tools/image-compressor" element={<ImageCompressorPage />} />
+              <Route path="/tools/file-analyzer" element={<FileAnalyzerPage />} />
               <Route path="/devtools" element={<DevToolsPage />} />
               <Route path="/privacy" element={<Privacy />} />
             </Routes>

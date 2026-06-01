@@ -3,7 +3,8 @@ import {
   ArrowRight, Image, FileText, Table, Music, Film,
   Edit3, Type, Braces, Code, FileSpreadsheet,
   Ruler, Wrench, Cpu, Shield, Zap, Sparkles,
-  Upload, Sliders, Download, Heart
+  Upload, Sliders, Download, Heart, ScanText,
+  FileSearch2, ImageDown
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PrivacyBanner } from '../components/converter/PrivacyBanner';
@@ -11,7 +12,7 @@ import { PrivacyBanner } from '../components/converter/PrivacyBanner';
 export function Home() {
 
   const stats = [
-    { value: '35+', label: 'Herramientas' },
+    { value: '40+', label: 'Herramientas' },
     { value: '100%', label: 'En tu navegador' },
     { value: 'Gratis', label: 'Sin registro' },
     { value: 'Privado', label: 'Sin servidores' },
@@ -37,6 +38,9 @@ export function Home() {
     { icon: Ruler, title: 'Convertidor de Unidades', description: 'Longitud, peso, temperatura, volumen', path: '/tools/unit-converter', color: 'text-cyan-600', bg: 'bg-cyan-50', hover: 'hover:bg-cyan-50 hover:border-cyan-200' },
     { icon: Wrench, title: 'Utilidades', description: 'Contraseñas, UUID, Lorem Ipsum, códigos de barras', path: '/tools/utilities', color: 'text-amber-600', bg: 'bg-amber-50', hover: 'hover:bg-amber-50 hover:border-amber-200' },
     { icon: Cpu, title: 'DevTools', description: 'Base64, Hash, QR, SQL, Regex, JWT', path: '/devtools', color: 'text-slate-600', bg: 'bg-slate-50', hover: 'hover:bg-slate-50 hover:border-slate-200' },
+    { icon: ScanText, title: 'OCR - Texto de Imagen', description: 'Extraer texto de imágenes con Tesseract.js', path: '/tools/ocr', color: 'text-violet-600', bg: 'bg-violet-50', hover: 'hover:bg-violet-50 hover:border-violet-200' },
+    { icon: ImageDown, title: 'Compresor de Imágenes', description: 'Reduce el peso de imágenes PNG, JPG, WebP', path: '/tools/image-compressor', color: 'text-green-600', bg: 'bg-green-50', hover: 'hover:bg-green-50 hover:border-green-200' },
+    { icon: FileSearch2, title: 'Analizador de Archivos', description: 'Inspecciona metadatos, tipo MIME, firma hex', path: '/tools/file-analyzer', color: 'text-yellow-600', bg: 'bg-yellow-50', hover: 'hover:bg-yellow-50 hover:border-yellow-200' },
   ];
 
   const pdfTools = [

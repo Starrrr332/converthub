@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, Image, FileText, Table, Music, Film, Edit3, Type, Braces, Code, FileSpreadsheet, Wrench, Ruler, Cpu } from 'lucide-react';
+import { ChevronDown, Image, FileText, Table, Music, Film, Edit3, Type, Braces, Code, FileSpreadsheet, Wrench, Ruler, Cpu, ScanText, ImageDown, FileSearch2 } from 'lucide-react';
 
 export function DropdownMenu() {
   const { t } = useTranslation();
@@ -45,6 +45,9 @@ export function DropdownMenu() {
         { path: '/devtools', icon: <Cpu className="w-4.5 h-4.5" />, label: 'DevTools', desc: 'Base64, Hash, QR, SQL, JWT' },
         { path: '/tools/unit-converter', icon: <Ruler className="w-4.5 h-4.5" />, label: 'Unidades', desc: 'Longitud, peso, temperatura' },
         { path: '/tools/utilities', icon: <Wrench className="w-4.5 h-4.5" />, label: 'Utilidades', desc: 'Passwords, UUID, Lorem, Cron' },
+        { path: '/tools/ocr', icon: <ScanText className="w-4.5 h-4.5" />, label: 'OCR', desc: 'Texto desde imágenes' },
+        { path: '/tools/image-compressor', icon: <ImageDown className="w-4.5 h-4.5" />, label: 'Compresor', desc: 'Reducir peso de imágenes' },
+        { path: '/tools/file-analyzer', icon: <FileSearch2 className="w-4.5 h-4.5" />, label: 'Analizador', desc: 'Metadatos y tipo de archivo' },
       ]
     }
   ];

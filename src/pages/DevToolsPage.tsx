@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Binary, Link, Hash, QrCode, Palette, Database, FileDiff, Regex, Key, FileCode } from 'lucide-react';
+import { Binary, Link, Hash, QrCode, Palette, Database, FileDiff, Regex, Key, FileCode, Scan, Upload, Check, X } from 'lucide-react';
 import { PageLayout } from '../components/layout/PageLayout';
 import { Base64Tool } from '../components/devtools/Base64Tool';
 import { UrlEncoderTool } from '../components/devtools/UrlEncoderTool';
@@ -8,13 +8,14 @@ import { HashGeneratorTool } from '../components/devtools/HashGeneratorTool';
 import { QrCodeTool } from '../components/devtools/QrCodeTool';
 import { ColorConverterTool } from '../components/devtools/ColorConverterTool';
 
-type Tool = 'base64' | 'url' | 'hash' | 'qrcode' | 'color' | 'sql' | 'diff' | 'regex' | 'jwt' | 'jsfmt';
+type Tool = 'base64' | 'url' | 'hash' | 'qrcode' | 'color' | 'sql' | 'diff' | 'regex' | 'jwt' | 'jsfmt' | 'qrscan';
 
 const tools: Array<{ id: Tool; icon: React.ReactNode; label: string }> = [
   { id: 'base64', icon: <Binary className="w-5 h-5" />, label: 'Base64' },
   { id: 'url', icon: <Link className="w-5 h-5" />, label: 'URL' },
   { id: 'hash', icon: <Hash className="w-5 h-5" />, label: 'Hash' },
-  { id: 'qrcode', icon: <QrCode className="w-5 h-5" />, label: 'QR' },
+  { id: 'qrcode', icon: <QrCode className="w-5 h-5" />, label: 'QR Gen' },
+  { id: 'qrscan', icon: <Scan className="w-5 h-5" />, label: 'QR Scan' },
   { id: 'color', icon: <Palette className="w-5 h-5" />, label: 'Color' },
   { id: 'sql', icon: <Database className="w-5 h-5" />, label: 'SQL' },
   { id: 'diff', icon: <FileDiff className="w-5 h-5" />, label: 'Diff' },
@@ -27,38 +28,27 @@ const tools: Array<{ id: Tool; icon: React.ReactNode; label: string }> = [
 function SqlFormatterTool() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
+  const [error, setError] = useState('');
 
-  const formatSql = (sql: string) => {
-    const keywords = ['SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON', 'GROUP BY', 'ORDER BY', 'HAVING', 'LIMIT', 'OFFSET', 'INSERT INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE', 'CREATE TABLE', 'ALTER TABLE', 'DROP TABLE', 'INDEX', 'CREATE INDEX', 'UNION', 'ALL', 'DISTINCT', 'AS', 'IN', 'NOT', 'NULL', 'IS', 'BETWEEN', 'LIKE', 'EXISTS', 'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 'ASC', 'DESC', 'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'FULL JOIN', 'CROSS JOIN', 'NATURAL JOIN'];
-    let result = sql.replace(/\s+/g, ' ');
-    
-    for (const kw of keywords) {
-      const regex = new RegExp(`\\b${kw}\\b`, 'gi');
-      result = result.replace(regex, `\n${kw.toUpperCase()}`);
+  const formatSql = async () => {
+    try {
+      const { format } = await import('sql-formatter');
+      const result = format(input, { language: 'sql', tabWidth: 2 });
+      setOutput(result);
+      setError('');
+    } catch (e) {
+      setError((e as Error).message);
     }
-    
-    result = result.replace(/\n\s+/g, '\n').trim();
-    
-    // Indent
-    let indent = 0;
-    const lines = result.split('\n').map(line => {
-      const trimmed = line.trim();
-      if (trimmed.startsWith(')')) indent = Math.max(0, indent - 1);
-      const indented = '  '.repeat(indent) + trimmed;
-      if (trimmed.endsWith('(')) indent++;
-      return indented;
-    });
-    
-    return lines.join('\n');
   };
 
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4">SQL Formatter</h3>
-      <button onClick={() => setOutput(formatSql(input))} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 mb-4">Format SQL</button>
+      <button onClick={formatSql} className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 mb-4 transition-colors">Format SQL</button>
+      {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <textarea value={input} onChange={e => setInput(e.target.value)} placeholder="SELECT * FROM users WHERE id = 1" className="p-3 border-2 border-gray-200 rounded-lg h-48 font-mono text-sm" />
-        <textarea readOnly value={output} className="p-3 border-2 border-gray-200 rounded-lg h-48 font-mono text-sm bg-gray-50" />
+        <textarea value={input} onChange={e => setInput(e.target.value)} placeholder="SELECT * FROM users WHERE id = 1" className="input-field h-48 font-mono text-sm" />
+        <textarea readOnly value={output} className="input-field h-48 font-mono text-sm bg-surface-secondary" />
       </div>
     </div>
   );
@@ -70,22 +60,22 @@ function DiffCheckerTool() {
   const [right, setRight] = useState('');
   const [diffLines, setDiffLines] = useState<Array<{ type: 'same' | 'added' | 'removed'; text: string }>>([]);
 
-  const computeDiff = () => {
+  const computeDiff = async () => {
+    const { diffArrays } = await import('diff');
     const lLines = left.split('\n');
     const rLines = right.split('\n');
-    const maxLen = Math.max(lLines.length, rLines.length);
+    const changes = diffArrays(lLines, rLines);
     const result: Array<{ type: 'same' | 'added' | 'removed'; text: string }> = [];
     
-    for (let i = 0; i < maxLen; i++) {
-      if (i >= lLines.length) {
-        result.push({ type: 'added', text: rLines[i] });
-      } else if (i >= rLines.length) {
-        result.push({ type: 'removed', text: lLines[i] });
-      } else if (lLines[i] === rLines[i]) {
-        result.push({ type: 'same', text: lLines[i] });
-      } else {
-        result.push({ type: 'removed', text: lLines[i] });
-        result.push({ type: 'added', text: rLines[i] });
+    for (const change of changes) {
+      for (const value of change.value as string[]) {
+        if (change.added) {
+          result.push({ type: 'added', text: value });
+        } else if (change.removed) {
+          result.push({ type: 'removed', text: value });
+        } else {
+          result.push({ type: 'same', text: value });
+        }
       }
     }
     setDiffLines(result);
@@ -95,18 +85,18 @@ function DiffCheckerTool() {
     <div>
       <h3 className="text-lg font-semibold mb-4">Diff Checker</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <textarea value={left} onChange={e => setLeft(e.target.value)} placeholder="Texto original" className="p-3 border-2 border-gray-200 rounded-lg h-48 font-mono text-sm" />
-        <textarea value={right} onChange={e => setRight(e.target.value)} placeholder="Texto modificado" className="p-3 border-2 border-gray-200 rounded-lg h-48 font-mono text-sm" />
+        <textarea value={left} onChange={e => setLeft(e.target.value)} placeholder="Texto original" className="input-field h-48 font-mono text-sm" />
+        <textarea value={right} onChange={e => setRight(e.target.value)} placeholder="Texto modificado" className="input-field h-48 font-mono text-sm" />
       </div>
-      <button onClick={computeDiff} className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 mb-4">Comparar</button>
+      <button onClick={computeDiff} className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 mb-4 transition-colors">Comparar</button>
       {diffLines.length > 0 && (
-        <div className="border-2 border-gray-200 rounded-lg overflow-hidden">
+        <div className="border border-border rounded-lg overflow-hidden">
           {diffLines.map((line, i) => (
             <div key={i} className={`px-3 py-1 font-mono text-sm ${
-              line.type === 'added' ? 'bg-green-100 text-green-800' :
-              line.type === 'removed' ? 'bg-red-100 text-red-800' : 'bg-white'
+              line.type === 'added' ? 'bg-green-50 text-green-800' :
+              line.type === 'removed' ? 'bg-red-50 text-red-800' : 'bg-surface'
             }`}>
-              <span className="mr-2">{line.type === 'added' ? '+' : line.type === 'removed' ? '-' : ' '}</span>
+              <span className="mr-2 font-bold select-none">{line.type === 'added' ? '+' : line.type === 'removed' ? '-' : ' '}</span>
               {line.text || ' '}
             </div>
           ))}
@@ -242,6 +232,75 @@ function JsFormatterTool() {
   );
 }
 
+// QR Scanner
+function QrScanTool() {
+  const [result, setResult] = useState('');
+  const [error, setError] = useState('');
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setResult('');
+    setError('');
+
+    try {
+      const jsQR = (await import('jsqr')).default;
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+          setResult(code.data);
+        } else {
+          setError('No se encontró ningún código QR en la imagen.');
+        }
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = () => setError('Error al cargar la imagen.');
+      img.src = url;
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
+
+  const copy = async () => {
+    await navigator.clipboard.writeText(result);
+  };
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">Lector QR</h3>
+      <p className="text-sm text-text-secondary mb-4">Sube una imagen que contenga un código QR para extraer su contenido.</p>
+      <label className="dropzone flex flex-col items-center justify-center h-36 cursor-pointer mb-4">
+        <Upload className="w-6 h-6 mb-1 text-text-muted" />
+        <p className="text-xs text-text-secondary">Selecciona una imagen con QR</p>
+        <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
+      </label>
+      {error && (
+        <div className="flex items-center gap-2 p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+          <X className="w-4 h-4 shrink-0" /> {error}
+        </div>
+      )}
+      {result && (
+        <div className="card p-4 space-y-3">
+          <div className="flex items-center gap-2 text-green-600">
+            <Check className="w-5 h-5" />
+            <span className="font-medium">QR detectado</span>
+          </div>
+          <textarea readOnly value={result} className="input-field w-full h-24 font-mono text-sm" />
+          <button onClick={copy} className="btn-primary text-sm px-4 py-2">Copiar resultado</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function DevToolsPage() {
   const { t } = useTranslation('common');
   const [selectedTool, setSelectedTool] = useState<Tool>('base64');
@@ -256,6 +315,8 @@ export function DevToolsPage() {
         return <HashGeneratorTool />;
       case 'qrcode':
         return <QrCodeTool />;
+      case 'qrscan':
+        return <QrScanTool />;
       case 'color':
         return <ColorConverterTool />;
       case 'sql':

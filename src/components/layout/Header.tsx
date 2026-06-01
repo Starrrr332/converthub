@@ -53,6 +53,9 @@ export function Header({ isPremium }: HeaderProps) {
         { path: '/devtools', label: 'DevTools' },
         { path: '/tools/unit-converter', label: 'Convertidor de Unidades' },
         { path: '/tools/utilities', label: 'Utilidades' },
+        { path: '/tools/ocr', label: 'OCR - Texto de Imagen' },
+        { path: '/tools/image-compressor', label: 'Compresor de Imágenes' },
+        { path: '/tools/file-analyzer', label: 'Analizador de Archivos' },
       ]
     }
   ];

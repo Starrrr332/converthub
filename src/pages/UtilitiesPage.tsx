@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
-import { Copy, Check, RefreshCw, Key, Type, Hash, Camera, Terminal, FileCode, Braces, Binary } from 'lucide-react';
+import { Copy, Check, RefreshCw, Key, Type, Hash, Camera, Terminal, FileCode, Braces, Binary, Download, BarChart3, Sigma, Clock } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
-type UtilityTool = 'password' | 'lorem' | 'uuid' | 'barcode' | 'case' | 'html-entity' | 'cron' | 'css-min' | 'base64-img';
+type UtilityTool = 'password' | 'lorem' | 'uuid' | 'barcode' | 'case' | 'html-entity' | 'cron' | 'css-min' | 'base64-img' | 'text-stats' | 'number-base' | 'timestamp';
 
 const tools = [
   { id: 'password' as UtilityTool, icon: <Key className="w-5 h-5" />, label: 'Generar contraseñas', desc: 'Contraseñas seguras configurables' },
@@ -14,6 +14,9 @@ const tools = [
   { id: 'cron' as UtilityTool, icon: <Terminal className="w-5 h-5" />, label: 'Cron Generator', desc: 'Generar expresiones cron' },
   { id: 'css-min' as UtilityTool, icon: <Braces className="w-5 h-5" />, label: 'CSS Minifier', desc: 'Minimizar CSS' },
   { id: 'base64-img' as UtilityTool, icon: <Binary className="w-5 h-5" />, label: 'Base64 Image', desc: 'Convertir imagen a Base64' },
+  { id: 'text-stats' as UtilityTool, icon: <BarChart3 className="w-5 h-5" />, label: 'Estadísticas texto', desc: 'Contar palabras, caracteres, líneas' },
+  { id: 'number-base' as UtilityTool, icon: <Sigma className="w-5 h-5" />, label: 'Base numérica', desc: 'Bin/Oct/Dec/Hex converter' },
+  { id: 'timestamp' as UtilityTool, icon: <Clock className="w-5 h-5" />, label: 'Timestamp', desc: 'Unix time ↔ fecha legible' },
 ];
 
 function generatePassword(len: number, upper: boolean, lower: boolean, digits: boolean, special: boolean): string {
@@ -420,7 +423,156 @@ function ToolBase64Img() {
   );
 }
 
-import { Download } from 'lucide-react';
+// Text Statistics
+function ToolTextStats() {
+  const [text, setText] = useState('');
+
+  const stats = useMemo(() => {
+    if (!text) return null;
+    const chars = text.length;
+    const charsNoSpace = text.replace(/\s/g, '').length;
+    const words = text.split(/\s+/).filter(Boolean).length;
+    const lines = text.split('\n').length;
+    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+    const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+    const spaces = (text.match(/\s/g) || []).length;
+    const digits = (text.match(/\d/g) || []).length;
+    const letters = (text.match(/[a-zA-Z]/g) || []).length;
+    const readingTime = Math.ceil(words / 200);
+    const speakingTime = Math.ceil(words / 150);
+    return { chars, charsNoSpace, words, lines, sentences, paragraphs, spaces, digits, letters, readingTime, speakingTime };
+  }, [text]);
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">Estadísticas de Texto</h3>
+      <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Pega o escribe tu texto aquí..." className="w-full p-3 border-2 border-gray-200 rounded-lg h-48 font-mono text-sm mb-4" />
+      {stats && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'Caracteres', value: stats.chars },
+            { label: 'Sin espacios', value: stats.charsNoSpace },
+            { label: 'Palabras', value: stats.words },
+            { label: 'Líneas', value: stats.lines },
+            { label: 'Oraciones', value: stats.sentences },
+            { label: 'Párrafos', value: stats.paragraphs },
+            { label: 'Espacios', value: stats.spaces },
+            { label: 'Dígitos', value: stats.digits },
+            { label: 'Letras', value: stats.letters },
+            { label: 'Lectura', value: `${stats.readingTime} min` },
+            { label: 'Habla', value: `${stats.speakingTime} min` },
+          ].map(s => (
+            <div key={s.label} className="bg-gray-50 rounded-lg p-3 text-center">
+              <p className="text-xs text-gray-500">{s.label}</p>
+              <p className="text-lg font-semibold text-gray-800">{s.value}</p>
+            </div>
+          ))}
+        </div>
+      )}
+      {!text && <p className="text-sm text-gray-400">Comienza a escribir para ver las estadísticas.</p>}
+    </div>
+  );
+}
+
+// Number Base Converter
+function ToolNumberBase() {
+  const [input, setInput] = useState('255');
+  const [fromBase, setFromBase] = useState<2 | 8 | 10 | 16>(10);
+
+  const convert = useMemo(() => {
+    const val = parseInt(input, fromBase);
+    if (isNaN(val)) return null;
+    return {
+      bin: val.toString(2),
+      oct: val.toString(8),
+      dec: val.toString(10),
+      hex: val.toString(16).toUpperCase(),
+    };
+  }, [input, fromBase]);
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">Conversor de Bases Numéricas</h3>
+      <div className="flex gap-2 mb-4">
+        <input value={input} onChange={e => setInput(e.target.value)} placeholder="Valor" className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono" />
+        <select value={fromBase} onChange={e => setFromBase(Number(e.target.value) as any)} className="p-3 border-2 border-gray-200 rounded-lg bg-white">
+          <option value={2}>Binario</option>
+          <option value={8}>Octal</option>
+          <option value={10}>Decimal</option>
+          <option value={16}>Hexadecimal</option>
+        </select>
+      </div>
+      {convert && (
+        <div className="space-y-2">
+          {[
+            { label: 'Binario (2)', value: convert.bin, base: 2 },
+            { label: 'Octal (8)', value: convert.oct, base: 8 },
+            { label: 'Decimal (10)', value: convert.dec, base: 10 },
+            { label: 'Hexadecimal (16)', value: convert.hex, base: 16 },
+          ].map(b => (
+            <div key={b.base} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <span className="text-xs font-medium text-gray-500 w-28 shrink-0">{b.label}</span>
+              <code className="flex-1 font-mono text-sm">{b.value}</code>
+              <button onClick={() => navigator.clipboard.writeText(b.value)} className="p-1 hover:bg-gray-200 rounded">
+                <Copy className="w-4 h-4 text-gray-400" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Timestamp Converter
+function ToolTimestamp() {
+  const [timestamp, setTimestamp] = useState(Math.floor(Date.now() / 1000).toString());
+  const [dateStr, setDateStr] = useState(new Date().toISOString().slice(0, 16));
+
+  const tsToDate = () => {
+    const ts = parseInt(timestamp);
+    if (isNaN(ts)) return;
+    const d = new Date(ts * 1000);
+    setDateStr(d.toISOString().slice(0, 16));
+  };
+
+  const dateToTs = () => {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return;
+    setTimestamp(Math.floor(d.getTime() / 1000).toString());
+  };
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">Conversor de Timestamp Unix</h3>
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Timestamp Unix (segundos)</label>
+          <div className="flex gap-2">
+            <input value={timestamp} onChange={e => setTimestamp(e.target.value)} placeholder="1700000000" className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono" />
+            <Button onClick={tsToDate} variant="outline">→ Fecha</Button>
+          </div>
+          <p className="text-xs text-gray-400 mt-1">Muestra local: {new Date(parseInt(timestamp) * 1000).toLocaleString()}</p>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Fecha y hora</label>
+          <div className="flex gap-2">
+            <input type="datetime-local" value={dateStr} onChange={e => setDateStr(e.target.value)} className="flex-1 p-3 border-2 border-gray-200 rounded-lg" />
+            <Button onClick={dateToTs} variant="outline">→ Timestamp</Button>
+          </div>
+        </div>
+        <div className="p-4 bg-blue-50 rounded-lg text-sm text-blue-700">
+          <p className="font-medium mb-1">Timestamps comunes:</p>
+          <div className="space-y-1">
+            <button onClick={() => { setTimestamp(Math.floor(Date.now() / 1000).toString()); tsToDate(); }} className="block hover:underline">Ahora: {Math.floor(Date.now() / 1000)}</button>
+            <button onClick={() => { setTimestamp('0'); tsToDate(); }} className="block hover:underline">Unix epoch: 0 → 01/01/1970</button>
+            <button onClick={() => { setTimestamp('2147483647'); tsToDate(); }} className="block hover:underline">Máx 32-bit: 2147483647</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function UtilitiesPage() {
   const [selectedTool, setSelectedTool] = useState<UtilityTool>('password');
@@ -436,6 +588,9 @@ export function UtilitiesPage() {
       case 'cron': return <ToolCron />;
       case 'css-min': return <ToolCssMin />;
       case 'base64-img': return <ToolBase64Img />;
+      case 'text-stats': return <ToolTextStats />;
+      case 'number-base': return <ToolNumberBase />;
+      case 'timestamp': return <ToolTimestamp />;
     }
   };
 
