@@ -77,7 +77,6 @@
     box-shadow: var(--shadow-card);
   }
   .card-interactive:hover {
-    @apply border-brand-100;
     box-shadow: var(--shadow-card-hover);
     transform: translateY(-2px);
   }

@@ -18,25 +18,25 @@ export function Home() {
   ];
 
   const converters = [
-    { icon: Image, title: 'Imágenes', description: 'PNG, JPG, WebP, GIF, SVG, ICO, AVIF, HEIC', path: '/converter/image', color: 'text-blue-600', bg: 'bg-blue-50' },
-    { icon: FileText, title: 'PDF', description: 'Unir, dividir, comprimir, rotar, marca de agua', path: '/converter/pdf', color: 'text-red-600', bg: 'bg-red-50' },
-    { icon: Table, title: 'CSV / Excel', description: 'CSV a XLSX, XLSX a CSV, CSV a JSON', path: '/converter/csv', color: 'text-emerald-600', bg: 'bg-emerald-50' },
-    { icon: Music, title: 'Audio', description: 'MP3, WAV, OGG, FLAC, AAC', path: '/converter/audio', color: 'text-purple-600', bg: 'bg-purple-50' },
-    { icon: Film, title: 'Video', description: 'Convertir, comprimir, recortar, extraer audio', path: '/converter/video', color: 'text-orange-600', bg: 'bg-orange-50' },
+    { icon: Image, title: 'Imágenes', description: 'PNG, JPG, WebP, GIF, SVG, ICO, AVIF, HEIC', path: '/converter/image', color: 'text-blue-600', bg: 'bg-blue-50', hover: 'hover:bg-blue-50 hover:border-blue-200' },
+    { icon: FileText, title: 'PDF', description: 'Unir, dividir, comprimir, rotar, marca de agua', path: '/converter/pdf', color: 'text-red-600', bg: 'bg-red-50', hover: 'hover:bg-red-50 hover:border-red-200' },
+    { icon: Table, title: 'CSV / Excel', description: 'CSV a XLSX, XLSX a CSV, CSV a JSON', path: '/converter/csv', color: 'text-emerald-600', bg: 'bg-emerald-50', hover: 'hover:bg-emerald-50 hover:border-emerald-200' },
+    { icon: Music, title: 'Audio', description: 'MP3, WAV, OGG, FLAC, AAC', path: '/converter/audio', color: 'text-purple-600', bg: 'bg-purple-50', hover: 'hover:bg-purple-50 hover:border-purple-200' },
+    { icon: Film, title: 'Video', description: 'Convertir, comprimir, recortar, extraer audio', path: '/converter/video', color: 'text-orange-600', bg: 'bg-orange-50', hover: 'hover:bg-orange-50 hover:border-orange-200' },
   ];
 
   const editors = [
-    { icon: Edit3, title: 'Editor de Imágenes', description: 'Redimensionar, rotar, filtros, brillo, contraste', path: '/editor/image' },
-    { icon: Type, title: 'Editor de Texto', description: 'Notepad con búsqueda, reemplazo y estadísticas', path: '/editor/text' },
-    { icon: Braces, title: 'JSON Formatter', description: 'Formatear, minificar, validar y extraer claves', path: '/editor/json' },
-    { icon: Code, title: 'Editor Markdown', description: 'Live preview, exportar a HTML', path: '/editor/markdown' },
-    { icon: FileSpreadsheet, title: 'CSV Online', description: 'Editar hojas de cálculo directamente', path: '/editor/spreadsheet' },
+    { icon: Edit3, title: 'Editor de Imágenes', description: 'Redimensionar, rotar, filtros, brillo, contraste', path: '/editor/image', hover: 'hover:bg-pink-50 hover:border-pink-200' },
+    { icon: Type, title: 'Editor de Texto', description: 'Notepad con búsqueda, reemplazo y estadísticas', path: '/editor/text', hover: 'hover:bg-indigo-50 hover:border-indigo-200' },
+    { icon: Braces, title: 'JSON Formatter', description: 'Formatear, minificar, validar y extraer claves', path: '/editor/json', hover: 'hover:bg-amber-50 hover:border-amber-200' },
+    { icon: Code, title: 'Editor Markdown', description: 'Live preview, exportar a HTML', path: '/editor/markdown', hover: 'hover:bg-teal-50 hover:border-teal-200' },
+    { icon: FileSpreadsheet, title: 'CSV Online', description: 'Editar hojas de cálculo directamente', path: '/editor/spreadsheet', hover: 'hover:bg-emerald-50 hover:border-emerald-200' },
   ];
 
   const tools = [
-    { icon: Ruler, title: 'Convertidor de Unidades', description: 'Longitud, peso, temperatura, volumen', path: '/tools/unit-converter', color: 'text-cyan-600', bg: 'bg-cyan-50' },
-    { icon: Wrench, title: 'Utilidades', description: 'Contraseñas, UUID, Lorem Ipsum, códigos de barras', path: '/tools/utilities', color: 'text-amber-600', bg: 'bg-amber-50' },
-    { icon: Cpu, title: 'DevTools', description: 'Base64, Hash, QR, SQL, Regex, JWT', path: '/devtools', color: 'text-slate-600', bg: 'bg-slate-50' },
+    { icon: Ruler, title: 'Convertidor de Unidades', description: 'Longitud, peso, temperatura, volumen', path: '/tools/unit-converter', color: 'text-cyan-600', bg: 'bg-cyan-50', hover: 'hover:bg-cyan-50 hover:border-cyan-200' },
+    { icon: Wrench, title: 'Utilidades', description: 'Contraseñas, UUID, Lorem Ipsum, códigos de barras', path: '/tools/utilities', color: 'text-amber-600', bg: 'bg-amber-50', hover: 'hover:bg-amber-50 hover:border-amber-200' },
+    { icon: Cpu, title: 'DevTools', description: 'Base64, Hash, QR, SQL, Regex, JWT', path: '/devtools', color: 'text-slate-600', bg: 'bg-slate-50', hover: 'hover:bg-slate-50 hover:border-slate-200' },
   ];
 
   const pdfTools = [
@@ -142,7 +142,7 @@ export function Home() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {converters.map((item, i) => (
             <Link key={i} to={item.path}
-              className="card-interactive text-center">
+              className={`card-interactive text-center ${item.hover}`}>
               <div className={`inline-flex p-3 rounded-xl ${item.bg} ${item.color} mb-3`}>
                 <item.icon className="w-6 h-6" />
               </div>
@@ -163,7 +163,7 @@ export function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {editors.map((item, i) => (
               <Link key={i} to={item.path}
-                className="card-interactive flex items-center gap-4">
+                className={`card-interactive flex items-center gap-4 ${item.hover}`}>
                 <div className="p-2.5 rounded-xl bg-brand-50 text-brand-600 shrink-0">
                   <item.icon className="w-5 h-5" />
                 </div>
@@ -187,7 +187,7 @@ export function Home() {
         <div className="grid sm:grid-cols-3 gap-4 mb-6">
           {tools.map((item, i) => (
             <Link key={i} to={item.path}
-              className="card-interactive text-center">
+              className={`card-interactive text-center ${item.hover}`}>
               <div className={`inline-flex p-3 rounded-xl ${item.bg} ${item.color} mb-3`}>
                 <item.icon className="w-6 h-6" />
               </div>
