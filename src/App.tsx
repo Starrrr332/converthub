@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { usePremiumStore } from './store/premiumStore';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
@@ -19,46 +18,36 @@ import { MarkdownEditorPage } from './pages/MarkdownEditorPage';
 import { SpreadsheetEditorPage } from './pages/SpreadsheetEditorPage';
 import './i18n';
 
-const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
-
 function App() {
   const { isPremium } = usePremiumStore();
   
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-      <PayPalScriptProvider
-        options={{
-          clientId: PAYPAL_CLIENT_ID,
-          components: ["buttons"],
-          currency: "USD"
-        }}
-      >
-        <Router>
-          <div className="min-h-screen flex flex-col bg-gray-50">
-            <Header isPremium={isPremium()} />
-            
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/converter/image" element={<ImageConverter />} />
-                <Route path="/converter/pdf" element={<PdfConverter />} />
-                <Route path="/converter/csv" element={<SpreadsheetConverter />} />
-                <Route path="/converter/audio" element={<AudioConverter />} />
-                <Route path="/editor/image" element={<ImageEditorPage />} />
-                <Route path="/editor/text" element={<TextEditorPage />} />
-                <Route path="/editor/json" element={<JsonFormatterPage />} />
-                <Route path="/editor/markdown" element={<MarkdownEditorPage />} />
-                <Route path="/editor/spreadsheet" element={<SpreadsheetEditorPage />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/devtools" element={<DevToolsPage />} />
-                <Route path="/privacy" element={<Privacy />} />
-              </Routes>
-            </main>
-            
-            <Footer />
-          </div>
-        </Router>
-      </PayPalScriptProvider>
+      <Router>
+        <div className="min-h-screen flex flex-col bg-gray-50">
+          <Header isPremium={isPremium()} />
+          
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/converter/image" element={<ImageConverter />} />
+              <Route path="/converter/pdf" element={<PdfConverter />} />
+              <Route path="/converter/csv" element={<SpreadsheetConverter />} />
+              <Route path="/converter/audio" element={<AudioConverter />} />
+              <Route path="/editor/image" element={<ImageEditorPage />} />
+              <Route path="/editor/text" element={<TextEditorPage />} />
+              <Route path="/editor/json" element={<JsonFormatterPage />} />
+              <Route path="/editor/markdown" element={<MarkdownEditorPage />} />
+              <Route path="/editor/spreadsheet" element={<SpreadsheetEditorPage />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/devtools" element={<DevToolsPage />} />
+              <Route path="/privacy" element={<Privacy />} />
+            </Routes>
+          </main>
+          
+          <Footer />
+        </div>
+      </Router>
     </Suspense>
   );
 }
