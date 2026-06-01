@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Shield, Zap, Gift, ArrowRight, Image, FileText, Table, Music, Edit3, Type, Braces, Code, FileSpreadsheet } from 'lucide-react';
+import { Shield, Zap, Gift, ArrowRight, Image, FileText, Table, Music, Edit3, Type, Braces, Code, FileSpreadsheet, Film, Ruler, Wrench } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PrivacyBanner } from '../components/converter/PrivacyBanner';
 
@@ -51,7 +51,14 @@ export function Home() {
       description: 'MP3, WAV, OGG, FLAC, AAC - todos los formatos',
       path: '/converter/audio',
       color: 'bg-purple-100 text-purple-600'
-    }
+    },
+    {
+      icon: Film,
+      title: 'Convertir Video',
+      description: 'Convierte, comprime, recorta y extrae audio',
+      path: '/converter/video',
+      color: 'bg-orange-100 text-orange-600'
+    },
   ];
   
   const editors = [
@@ -90,6 +97,23 @@ export function Home() {
       path: '/editor/spreadsheet',
       color: 'bg-emerald-100 text-emerald-600'
     }
+  ];
+
+  const tools = [
+    {
+      icon: Ruler,
+      title: 'Convertidor de Unidades',
+      description: 'Longitud, peso, temperatura, volumen, velocidad y más',
+      path: '/tools/unit-converter',
+      color: 'bg-cyan-100 text-cyan-600'
+    },
+    {
+      icon: Wrench,
+      title: 'Utilidades',
+      description: 'Generar contraseñas, UUID, Lorem Ipsum, QR, códigos de barras',
+      path: '/tools/utilities',
+      color: 'bg-amber-100 text-amber-600'
+    },
   ];
   
   const pdfTools = [
@@ -140,22 +164,16 @@ export function Home() {
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
           Convertidores
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {converters.map((converter, index) => (
-            <Link
-              key={index}
-              to={converter.path}
+            <Link key={index} to={converter.path}
               className="card text-center hover:shadow-xl transition-shadow group"
             >
               <div className={`inline-flex p-4 rounded-full mb-4 ${converter.color} group-hover:scale-110 transition-transform`}>
                 <converter.icon className="w-8 h-8" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {converter.title}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {converter.description}
-              </p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{converter.title}</h3>
+              <p className="text-sm text-gray-600">{converter.description}</p>
             </Link>
           ))}
         </div>
@@ -168,9 +186,7 @@ export function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {editors.map((editor, index) => (
-            <Link
-              key={index}
-              to={editor.path}
+            <Link key={index} to={editor.path}
               className="card hover:shadow-xl transition-shadow group"
             >
               <div className="flex items-start gap-4">
@@ -178,12 +194,32 @@ export function Home() {
                   <editor.icon className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                    {editor.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {editor.description}
-                  </p>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{editor.title}</h3>
+                  <p className="text-sm text-gray-600">{editor.description}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Tools Grid */}
+      <section className="max-w-6xl mx-auto mt-16 px-4">
+        <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
+          Herramientas Útiles
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {tools.map((tool, index) => (
+            <Link key={index} to={tool.path}
+              className="card hover:shadow-xl transition-shadow group"
+            >
+              <div className="flex items-start gap-4">
+                <div className={`inline-flex p-3 rounded-xl ${tool.color} group-hover:scale-110 transition-transform`}>
+                  <tool.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{tool.title}</h3>
+                  <p className="text-sm text-gray-600">{tool.description}</p>
                 </div>
               </div>
             </Link>
@@ -198,9 +234,7 @@ export function Home() {
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {pdfTools.map((tool, index) => (
-            <Link
-              key={index}
-              to="/converter/pdf"
+            <Link key={index} to="/converter/pdf"
               className="p-4 bg-white rounded-xl shadow hover:shadow-lg transition-shadow text-center group"
             >
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{tool.icon}</div>
@@ -222,12 +256,8 @@ export function Home() {
               <div className="inline-flex p-3 bg-blue-100 rounded-full mb-4">
                 <feature.icon className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600">
-                {feature.description}
-              </p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
+              <p className="text-gray-600">{feature.description}</p>
             </div>
           ))}
         </div>

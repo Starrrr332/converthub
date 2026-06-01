@@ -16,6 +16,9 @@ import { TextEditorPage } from './pages/TextEditorPage';
 import { JsonFormatterPage } from './pages/JsonFormatterPage';
 import { MarkdownEditorPage } from './pages/MarkdownEditorPage';
 import { SpreadsheetEditorPage } from './pages/SpreadsheetEditorPage';
+import { VideoConverterPage } from './pages/VideoConverterPage';
+import { UnitConverterPage } from './pages/UnitConverterPage';
+import { UtilitiesPage } from './pages/UtilitiesPage';
 import './i18n';
 
 function App() {
@@ -34,11 +37,14 @@ function App() {
               <Route path="/converter/pdf" element={<PdfConverter />} />
               <Route path="/converter/csv" element={<SpreadsheetConverter />} />
               <Route path="/converter/audio" element={<AudioConverter />} />
+              <Route path="/converter/video" element={<VideoConverterPage />} />
               <Route path="/editor/image" element={<ImageEditorPage />} />
               <Route path="/editor/text" element={<TextEditorPage />} />
               <Route path="/editor/json" element={<JsonFormatterPage />} />
               <Route path="/editor/markdown" element={<MarkdownEditorPage />} />
               <Route path="/editor/spreadsheet" element={<SpreadsheetEditorPage />} />
+              <Route path="/tools/unit-converter" element={<UnitConverterPage />} />
+              <Route path="/tools/utilities" element={<UtilitiesPage />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/devtools" element={<DevToolsPage />} />
               <Route path="/privacy" element={<Privacy />} />
