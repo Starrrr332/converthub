@@ -64,7 +64,8 @@
   }
 
   .card-interactive {
-    @apply card transition-all duration-300 hover:-translate-y-0.5;
+    @apply bg-white rounded-2xl border border-slate-200/80 p-6 transition-all duration-300 hover:-translate-y-0.5;
+    box-shadow: var(--shadow-soft);
   }
 
   .card-interactive:hover {
