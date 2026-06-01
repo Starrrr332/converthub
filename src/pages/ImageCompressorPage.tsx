@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Upload, Download, Image, Percent, ZoomIn, FileDown } from 'lucide-react';
 import { PageLayout } from '../components/layout/PageLayout';
 
@@ -10,7 +9,6 @@ function formatSize(bytes: number): string {
 }
 
 export function ImageCompressorPage() {
-  const { t } = useTranslation('common');
   const [original, setOriginal] = useState<{ file: File; url: string; size: number } | null>(null);
   const [compressed, setCompressed] = useState<{ blob: Blob; url: string; size: number } | null>(null);
   const [quality, setQuality] = useState(80);

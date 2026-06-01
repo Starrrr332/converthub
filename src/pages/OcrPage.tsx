@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Upload, Download, Copy, Check, FileText, Image as ImageIcon } from 'lucide-react';
+import { Download, Copy, Check, FileText, Image as ImageIcon } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export function OcrPage() {

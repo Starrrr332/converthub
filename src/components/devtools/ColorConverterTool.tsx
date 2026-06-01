@@ -10,10 +10,6 @@ function formatRgb(r: number, g: number, b: number) {
   return `${r}, ${g}, ${b}`;
 }
 
-function toHex(n: number): string {
-  return Math.round(n).toString(16).padStart(2, '0');
-}
-
 export function ColorConverterTool() {
   const [hexInput, setHexInput] = useState('#3B82F6');
   const [color, setColor] = useState<{ r: number; g: number; b: number; h: number; s: number; l: number } | null>(null);

@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Upload, FileText, Hash, Ruler, Tag, Calendar, Info } from 'lucide-react';
 import { PageLayout } from '../components/layout/PageLayout';
 
@@ -29,7 +28,6 @@ function formatHex(buf: ArrayBuffer): string {
 }
 
 export function FileAnalyzerPage() {
-  const { t } = useTranslation('common');
   const [fileInfo, setFileInfo] = useState<{
     name: string; size: number; type: string; lastModified: Date;
     mimeType: string; hexSignature: string; dimensions?: string;
