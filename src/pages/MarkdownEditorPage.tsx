@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload, Eye, Edit3, Bold, Italic, Code, List, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { PageLayout } from '../components/layout/PageLayout';
 
 const sampleMarkdown = `# Bienvenido a ConvertHub
 
@@ -82,6 +84,7 @@ function parseMarkdown(md: string): string {
 }
 
 export function MarkdownEditorPage() {
+  const { t } = useTranslation('common');
   const [markdown, setMarkdown] = useState(sampleMarkdown);
   const [showPreview, setShowPreview] = useState(true);
   const [fontSize, setFontSize] = useState(14);
@@ -143,15 +146,13 @@ ${parseMarkdown(markdown)}
   };
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Editor Markdown</h1>
-          <p className="text-gray-600">Escribe Markdown con vista previa en tiempo real</p>
-        </div>
-
-        {/* Toolbar */}
-        <div className="bg-white rounded-xl shadow-lg p-3 mb-4">
+    <PageLayout
+      wide
+      title={t('nav.editors.markdown')}
+      subtitle={t('nav.editors.markdownDesc')}
+      breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.markdown') }]}
+    >
+        <div className="content-panel p-3 mb-4">
           <div className="flex flex-wrap items-center gap-1">
             <input type="file" accept=".md,.markdown,.txt" onChange={handleFileUpload} className="hidden" id="md-upload" />
             <Button onClick={() => document.getElementById('md-upload')?.click()} variant="ghost" size="sm">
@@ -234,7 +235,6 @@ ${parseMarkdown(markdown)}
             </div>
           )}
         </div>
-      </div>
-    </div>
+    </PageLayout>
   );
 }

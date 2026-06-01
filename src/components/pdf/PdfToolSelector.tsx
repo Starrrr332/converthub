@@ -28,11 +28,7 @@ export function PdfToolSelector({ selectedTool, onSelect }: PdfToolSelectorProps
         <button
           key={tool.id}
           onClick={() => onSelect(tool.id)}
-          className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-2 ${
-            selectedTool === tool.id
-              ? 'border-blue-500 bg-blue-50 text-blue-700'
-              : 'border-gray-200 hover:border-gray-300 text-gray-600'
-          }`}
+          className={`tool-tab ${selectedTool === tool.id ? 'tool-tab-active' : ''}`}
         >
           {tool.icon}
           <span className="text-sm font-medium text-center">{tool.label}</span>

@@ -12,7 +12,7 @@ export function LanguageSwitcher() {
   return (
     <button
       onClick={toggleLanguage}
-      className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+      className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl border border-transparent hover:border-slate-200 transition-all"
       title={i18n.language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
     >
       <Globe className="w-4 h-4" />

@@ -6,23 +6,67 @@
   "nav": {
     "home": "Inicio",
     "convert": "Convertir",
-    "pricing": "Precios",
+    "edit": "Editar",
+    "pricing": "Donar",
     "privacy": "Privacidad",
+    "devtools": "DevTools",
     "converters": {
       "image": "Imagen",
       "imageDesc": "PNG, JPEG, WebP, BMP, GIF",
       "pdf": "PDF",
-      "pdfDesc": "Merge, Split, Compress, Protect",
+      "pdfDesc": "Unir, dividir, comprimir y más",
       "csv": "CSV / Excel",
       "csvDesc": "CSV ↔ XLSX ↔ JSON",
       "audio": "Audio",
-      "audioDesc": "MP3, WAV, OGG, FLAC, AAC"
+      "audioDesc": "MP3, WAV, OGG, FLAC, AAC",
+      "video": "Video",
+      "videoDesc": "Convertir, comprimir y recortar"
+    },
+    "more": "Más",
+    "devtoolsDesc": "Base64, Hash, QR, SQL, JWT…",
+    "tools": {
+      "units": "Unidades",
+      "unitsDesc": "Longitud, peso, temperatura…",
+      "utilities": "Utilidades",
+      "utilitiesDesc": "Contraseñas, UUID, Lorem…"
+    },
+    "editors": {
+      "image": "Editor de imágenes",
+      "imageDesc": "Redimensionar, rotar y filtros",
+      "text": "Editor de texto",
+      "textDesc": "Notepad con búsqueda y estadísticas",
+      "json": "JSON Formatter",
+      "jsonDesc": "Formatear, validar y minificar",
+      "markdown": "Markdown",
+      "markdownDesc": "Vista previa en tiempo real",
+      "spreadsheet": "Hoja de cálculo",
+      "spreadsheetDesc": "Editar CSV en el navegador"
     }
   },
   "hero": {
-    "title": "Convierte archivos de forma segura y privada",
-    "subtitle": "Todos tus archivos se procesan en tu navegador. Nunca salen de tu dispositivo.",
-    "cta": "Empezar a convertir"
+    "title": "Convierte y edita archivos",
+    "titleHighlight": "sin subirlos a ningún servidor",
+    "subtitle": "Herramientas online que procesan todo en tu navegador. Privado, rápido y gratuito.",
+    "cta": "Empezar a convertir",
+    "donate": "Apoyar el proyecto",
+    "searchPlaceholder": "Buscar herramienta…",
+    "stats": {
+      "tools": "15+ herramientas",
+      "privacy": "100% local",
+      "free": "Sin registro"
+    }
+  },
+  "home": {
+    "converters": "Convertidores",
+    "convertersDesc": "Transforma formatos de imagen, PDF, audio y hojas de cálculo",
+    "editors": "Editores online",
+    "editorsDesc": "Edita y formatea sin instalar software",
+    "pdfTools": "Herramientas PDF",
+    "pdfToolsDesc": "Acceso rápido a las operaciones más usadas",
+    "why": "¿Por qué ConvertHub?",
+    "viewAllPdf": "Ver todas las herramientas PDF",
+    "allTools": "Todas",
+    "noResults": "No hay herramientas que coincidan con tu búsqueda"
   },
   "features": {
     "privacy": {
@@ -47,6 +91,7 @@
     }
   },
   "footer": {
+    "legal": "Legal",
     "copyright": "© 2026 ConvertHub. Todos los derechos reservados.",
     "privacyPolicy": "Política de Privacidad",
     "terms": "Términos de Uso",

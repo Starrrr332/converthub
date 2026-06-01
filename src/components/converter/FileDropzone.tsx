@@ -96,24 +96,24 @@ export function FileDropzone({
       
       <label htmlFor="file-input" className="cursor-pointer">
         <div className="flex flex-col items-center gap-4">
-          <div className={`p-4 rounded-full ${isDragActive ? 'bg-blue-100' : 'bg-gray-100'}`}>
+          <div className={`p-4 rounded-2xl ${isDragActive ? 'bg-indigo-100' : 'bg-slate-100'}`}>
             {isDragActive ? (
-              <ImageIcon className="w-12 h-12 text-blue-500" />
+              <ImageIcon className="w-12 h-12 text-indigo-600" />
             ) : (
-              <Upload className="w-12 h-12 text-gray-400" />
+              <Upload className="w-12 h-12 text-slate-400" />
             )}
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold text-gray-700">
+            <h3 className="text-lg font-semibold text-slate-800">
               {isDragActive ? t('dropzone.dragActive') : t('dropzone.title')}
             </h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-slate-500 mt-1">
               {t('dropzone.subtitle')}
             </p>
           </div>
           
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-slate-400">
             <p>{t('dropzone.acceptedFormats')}</p>
             <p>{t('dropzone.maxSize', { size: formatFileSize(maxSize) })}</p>
           </div>

@@ -1,10 +1,13 @@
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload, Download, Copy, Trash2, FileText, WrapText, Type } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { PageLayout } from '../components/layout/PageLayout';
 
 type CaseType = 'upper' | 'lower' | 'title' | 'sentence' | 'none';
 
 export function TextEditorPage() {
+  const { t } = useTranslation('common');
   const [text, setText] = useState('');
   const [fileName, setFileName] = useState('document.txt');
   const [wordCount, setWordCount] = useState(0);
@@ -94,17 +97,16 @@ export function TextEditorPage() {
   };
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Editor de Texto</h1>
-          <p className="text-gray-600">Editor de texto avanzado con herramientas de formato</p>
-        </div>
-
+    <PageLayout
+      wide
+      title={t('nav.editors.text')}
+      subtitle={t('nav.editors.textDesc')}
+      breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.text') }]}
+    >
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-4 space-y-4">
+            <div className="content-panel p-4 space-y-4">
               {/* File */}
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2 text-sm">Archivo</h3>
@@ -200,7 +202,6 @@ export function TextEditorPage() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    </PageLayout>
   );
 }

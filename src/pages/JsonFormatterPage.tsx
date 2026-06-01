@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Upload, Download, Copy, Check, Braces } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { PageLayout } from '../components/layout/PageLayout';
 
 export function JsonFormatterPage() {
+  const { t } = useTranslation('common');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -88,15 +91,13 @@ export function JsonFormatterPage() {
   };
 
   return (
-    <div className="py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">JSON Formatter</h1>
-          <p className="text-gray-600">Formatea, valida y edita tu JSON fácilmente</p>
-        </div>
-
-        {/* Toolbar */}
-        <div className="bg-white rounded-xl shadow-lg p-4 mb-4">
+    <PageLayout
+      wide
+      title={t('nav.editors.json')}
+      subtitle={t('nav.editors.jsonDesc')}
+      breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.json') }]}
+    >
+        <div className="content-panel p-4 mb-4">
           <div className="flex flex-wrap gap-2">
             <input type="file" accept=".json" onChange={handleFileUpload} className="hidden" id="json-upload" />
             <Button onClick={() => document.getElementById('json-upload')?.click()} variant="outline" size="sm">
@@ -160,7 +161,6 @@ export function JsonFormatterPage() {
             />
           </div>
         </div>
-      </div>
-    </div>
+    </PageLayout>
   );
 }
