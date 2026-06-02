@@ -21,9 +21,9 @@ export function Button({
 
   const variantStyles = {
     primary:
-      'bg-accent-500 text-white hover:bg-accent-600 active:bg-accent-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
+      'bg-accent-600 text-white hover:bg-accent-700 active:bg-accent-800 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
     secondary:
-      'bg-surface-secondary text-text-secondary hover:bg-accent-50 active:bg-surface-secondary hover:-translate-y-0.5 active:translate-y-0',
+      'bg-surface-tertiary text-text-secondary hover:bg-accent-50 active:bg-surface-secondary hover:-translate-y-0.5 active:translate-y-0',
     outline:
       'border border-border text-text-secondary hover:bg-accent-50 hover:border-accent-200 active:bg-surface-secondary hover:-translate-y-0.5 active:translate-y-0',
     ghost: 'text-text-secondary hover:bg-accent-50 active:bg-surface-secondary',

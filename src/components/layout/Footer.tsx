@@ -42,7 +42,7 @@ export function Footer() {
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200"
+                    className="text-sm text-text-secondary hover:text-accent-600 transition-colors duration-200"
                   >
                     {item.label}
                   </Link>
@@ -67,7 +67,7 @@ export function Footer() {
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className="text-sm text-text-secondary hover:text-text-primary transition-colors duration-200"
+                    className="text-sm text-text-secondary hover:text-accent-600 transition-colors duration-200"
                   >
                     {item.label}
                   </Link>

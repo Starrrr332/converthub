@@ -63,24 +63,24 @@ export function PageLayout({
       <div className={wide ? 'page-container-wide' : 'page-container'}>
         {breadcrumb && breadcrumb.length > 0 && (
           <nav
-            className="flex items-center gap-1.5 text-sm text-slate-500 mb-6"
+            className="flex items-center gap-1.5 text-sm text-text-muted mb-6"
             aria-label="Breadcrumb"
           >
             <Link
               to="/"
-              className="hover:text-indigo-600 transition-colors p-1 -ml-1 rounded-lg hover:bg-slate-100"
+              className="hover:text-accent-600 transition-colors p-1 -ml-1 rounded-lg hover:bg-accent-50"
             >
               <Home className="w-4 h-4" />
             </Link>
             {breadcrumb.map((item, i) => (
               <span key={i} className="flex items-center gap-1.5">
-                <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+                <ChevronRight className="w-3.5 h-3.5 text-border" />
                 {item.to ? (
-                  <Link to={item.to} className="hover:text-indigo-600 transition-colors">
+                  <Link to={item.to} className="hover:text-accent-600 transition-colors">
                     {item.label}
                   </Link>
                 ) : (
-                  <span className="text-slate-700 font-medium">{item.label}</span>
+                  <span className="text-text-primary font-medium">{item.label}</span>
                 )}
               </span>
             ))}
@@ -89,17 +89,17 @@ export function PageLayout({
 
         <header className="mb-8 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-text-primary tracking-tight">
               {title}
             </h1>
-            {subtitle && <p className="mt-2 text-lg text-slate-600 max-w-2xl">{subtitle}</p>}
+            {subtitle && <p className="mt-2 text-lg text-text-secondary max-w-2xl">{subtitle}</p>}
           </div>
           <div className="flex items-center gap-1.5 shrink-0 mt-1">
             <FavoriteButton path={location.pathname} />
             <ShareButton />
             <button
               onClick={handleOpenInTab}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-text-secondary hover:text-text bg-surface-secondary hover:bg-slate-200 rounded-lg transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-text-secondary hover:text-text-primary bg-surface-secondary hover:bg-accent-50 rounded-lg transition-colors"
               title="Abrir en nueva pestaña"
             >
               <ExternalLink className="w-3.5 h-3.5" />

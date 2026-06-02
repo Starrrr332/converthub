@@ -137,7 +137,7 @@ export function Header() {
                 <Palette className="w-4 h-4" />
               </button>
               {themeOpen && (
-                <div className="absolute top-full right-0 mt-2 w-56 bg-surface rounded-xl py-2 z-50 border border-border/70 shadow-elevated animate-slide-down">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-surface rounded-xl py-2 z-50 border border-border shadow-elevated animate-slide-down">
                   <p className="px-3 pb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
                     Temas
                   </p>
@@ -186,7 +186,7 @@ export function Header() {
             <LanguageSwitcher />
 
             <Link to="/pricing" className="hidden sm:inline-flex">
-              <button className="px-4 py-1.5 text-xs font-semibold bg-brand-600 text-white rounded-full hover:bg-brand-700 transition-all duration-200 shadow-sm hover:shadow-md">
+              <button className="px-4 py-1.5 text-xs font-semibold bg-accent-600 text-white rounded-full hover:bg-accent-700 transition-all duration-200 shadow-sm hover:shadow-md">
                 Donar
               </button>
             </Link>
@@ -204,14 +204,14 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border/50 bg-surface max-h-[calc(100vh-3.5rem)] overflow-y-auto animate-slide-down">
+        <div className="md:hidden border-t border-border bg-surface max-h-[calc(100vh-3.5rem)] overflow-y-auto animate-slide-down">
           <nav className="page-container py-4 space-y-1">
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
               className={`block px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive('/')
-                  ? 'text-brand-700 bg-brand-50'
+                  ? 'text-accent-700 bg-accent-50'
                   : 'text-text-secondary hover:bg-surface-secondary'
               }`}
             >
@@ -231,7 +231,7 @@ export function Header() {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`block px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${
                         isActive(item.path)
-                          ? 'text-brand-700 bg-brand-50 font-medium'
+                          ? 'text-accent-700 bg-accent-50 font-medium'
                           : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
                       }`}
                     >
@@ -242,11 +242,11 @@ export function Header() {
               </div>
             ))}
 
-            <div className="pt-3 mt-3 border-t border-border/50">
+            <div className="pt-3 mt-3 border-t border-border">
               <Link
                 to="/pricing"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium text-brand-600 hover:bg-brand-50 transition-all duration-200"
+                className="flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium text-accent-600 hover:bg-accent-50 transition-all duration-200"
               >
                 <Heart className="w-4 h-4" />
                 Donar

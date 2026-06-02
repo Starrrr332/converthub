@@ -12,23 +12,23 @@ export interface ThemeDefinition {
 export const themes: ThemeDefinition[] = [
   {
     id: 'default',
-    name: 'Default (Indigo)',
+    name: 'Violet',
     brand: {
-      50: '#eef2ff',
-      100: '#e0e7ff',
-      200: '#c7d2fe',
-      300: '#a5b4fc',
-      400: '#818cf8',
-      500: '#6366f1',
-      600: '#4f46e5',
-      700: '#4338ca',
-      800: '#3730a3',
-      900: '#312e81',
+      50: '#f5f3ff',
+      100: '#ede9fe',
+      200: '#ddd6fe',
+      300: '#c4b5fd',
+      400: '#a78bfa',
+      500: '#8b5cf6',
+      600: '#7c3aed',
+      700: '#6d28d9',
+      800: '#5b21b6',
+      900: '#4c1d95',
     },
   },
   {
     id: 'ocean',
-    name: 'Ocean (Blue)',
+    name: 'Ocean',
     brand: {
       50: '#eff6ff',
       100: '#dbeafe',
@@ -44,7 +44,7 @@ export const themes: ThemeDefinition[] = [
   },
   {
     id: 'forest',
-    name: 'Forest (Green)',
+    name: 'Forest',
     brand: {
       50: '#f0fdf4',
       100: '#dcfce7',
@@ -60,7 +60,7 @@ export const themes: ThemeDefinition[] = [
   },
   {
     id: 'sunset',
-    name: 'Sunset (Orange)',
+    name: 'Sunset',
     brand: {
       50: '#fff7ed',
       100: '#ffedd5',
@@ -76,7 +76,7 @@ export const themes: ThemeDefinition[] = [
   },
   {
     id: 'neon',
-    name: 'Neon (Cyan)',
+    name: 'Neon',
     brand: {
       50: '#ecfeff',
       100: '#cffafe',
@@ -143,9 +143,8 @@ function applyTheme(id: ThemeId) {
   });
 }
 
-// Apply theme on initial load (deferred to avoid module-level side effects)
+// Apply theme on initial load
 if (typeof window !== 'undefined') {
-  // Use requestIdleCallback to defer non-critical work
   const applyStoredTheme = () => {
     const stored = localStorage.getItem('converthub-theme');
     if (stored) {

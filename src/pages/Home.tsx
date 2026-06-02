@@ -80,9 +80,9 @@ export function Home() {
       label: 'Convertidores',
       description: 'Convierte entre múltiples formatos',
       count: converterTools.length,
-      color: 'text-blue-600',
-      bg: 'bg-blue-50',
-      borderHover: 'hover:border-blue-200',
+      color: 'text-indigo-600',
+      bg: 'bg-indigo-50',
+      borderHover: 'hover:border-indigo-200',
       path: '/converter',
     },
     {
@@ -91,9 +91,9 @@ export function Home() {
       label: 'Editores',
       description: 'Edita imágenes, texto y más',
       count: editorTools.length,
-      color: 'text-pink-600',
-      bg: 'bg-pink-50',
-      borderHover: 'hover:border-pink-200',
+      color: 'text-violet-600',
+      bg: 'bg-violet-50',
+      borderHover: 'hover:border-violet-200',
       path: '/editor',
     },
     {
@@ -102,9 +102,9 @@ export function Home() {
       label: 'Herramientas',
       description: 'Utilidades standalone',
       count: standaloneTools.length,
-      color: 'text-cyan-600',
-      bg: 'bg-cyan-50',
-      borderHover: 'hover:border-cyan-200',
+      color: 'text-purple-600',
+      bg: 'bg-purple-50',
+      borderHover: 'hover:border-purple-200',
       path: '/tools',
     },
     {
@@ -124,9 +124,9 @@ export function Home() {
       label: 'Utilidades',
       description: 'Generadores y más',
       count: utilityTools.length,
-      color: 'text-amber-600',
-      bg: 'bg-amber-50',
-      borderHover: 'hover:border-amber-200',
+      color: 'text-fuchsia-600',
+      bg: 'bg-fuchsia-50',
+      borderHover: 'hover:border-fuchsia-200',
       path: '/utilities',
     },
   ];
@@ -149,7 +149,7 @@ export function Home() {
           {/* Background decorations */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-10 left-1/4 w-72 h-72 bg-accent-200/20 rounded-full blur-3xl" />
-            <div className="absolute top-20 right-1/4 w-56 h-56 bg-brand-200/20 rounded-full blur-3xl" />
+            <div className="absolute top-20 right-1/4 w-56 h-56 bg-accent-100/30 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-surface-secondary to-transparent" />
           </div>
 
@@ -191,7 +191,7 @@ export function Home() {
               {/* Trust indicators */}
               <div className="mt-8 flex items-center justify-center gap-4 text-xs text-text-muted animate-fade-in stagger-6">
                 <span className="flex items-center gap-1">
-                  <Shield className="w-3.5 h-3.5 text-green-500" />
+                  <Shield className="w-3.5 h-3.5 text-success" />
                   Sin servidores
                 </span>
                 <span className="w-1 h-1 rounded-full bg-border" />
@@ -372,13 +372,18 @@ export function Home() {
         </section>
 
         {/* ───── Why ConvertHub ───── */}
-        <section className="bg-text mt-20 sm:mt-24 py-20 sm:py-24">
+        <section
+          className="mt-20 sm:mt-24 py-20 sm:py-24"
+          style={{
+            background: 'linear-gradient(135deg, var(--color-accent-900), var(--color-accent-800))',
+          }}
+        >
           <div className="page-container">
             <div className="text-center mb-12 animate-slide-up">
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 ¿Por qué ConvertHub?
               </h2>
-              <p className="text-slate-400 mt-3 max-w-xl mx-auto">
+              <p className="text-accent-200 mt-3 max-w-xl mx-auto">
                 La mejor alternativa gratuita a las herramientas de pago.
               </p>
             </div>
@@ -388,11 +393,11 @@ export function Home() {
                   key={i}
                   className={`text-center p-7 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/[0.07] transition-all duration-300 animate-slide-up stagger-${i + 2}`}
                 >
-                  <div className="inline-flex p-3 rounded-xl bg-accent-500/15 mb-5">
-                    <item.icon className="w-6 h-6 text-accent-400" />
+                  <div className="inline-flex p-3 rounded-xl bg-accent-400/15 mb-5">
+                    <item.icon className="w-6 h-6 text-accent-300" />
                   </div>
                   <h3 className="font-semibold text-white text-base mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">{item.description}</p>
+                  <p className="text-sm text-accent-200/80 leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -404,17 +409,18 @@ export function Home() {
           <div
             className="max-w-lg mx-auto p-10 sm:p-12 rounded-3xl animate-slide-up"
             style={{
-              background: 'linear-gradient(135deg, var(--color-brand-500), var(--color-brand-700))',
+              background:
+                'linear-gradient(135deg, var(--color-accent-600), var(--color-accent-800))',
             }}
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">¿Listo para empezar?</h2>
-            <p className="text-brand-100 text-sm sm:text-base mb-8 leading-relaxed">
+            <p className="text-accent-100 text-sm sm:text-base mb-8 leading-relaxed">
               Más de 52 herramientas gratuitas. Sin registro, sin límites.
             </p>
             <Link to="/converter/image">
               <Button
                 size="lg"
-                className="bg-white text-brand-700 hover:bg-brand-100 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white text-accent-700 hover:bg-accent-50 shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Comienza ahora gratis
                 <ArrowRight className="w-4 h-4" />
