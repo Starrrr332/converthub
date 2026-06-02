@@ -310,7 +310,7 @@ export async function unlockPdf(options: {
     // Try loading with the password provided by the user
     pdf = await PDFDocument.load(pdfBytes, {
       password: options.password,
-    });
+    } as Record<string, unknown>);
   } catch {
     // Fallback: try ignoring encryption (PDF may not actually be encrypted)
     try {

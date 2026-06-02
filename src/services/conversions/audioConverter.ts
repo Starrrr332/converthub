@@ -1,11 +1,16 @@
 import type { AudioConvertOptions, AudioConversionResult } from '../../types';
 
-let ffmpegPromise: Promise<typeof import('@ffmpeg/ffmpeg').FFmpeg> | null = null;
-let loadedInstance: Awaited<ReturnType<typeof loadFFmpeg>> | null = null;
+interface FFmpegInstance {
+  ff: import('@ffmpeg/ffmpeg').FFmpeg;
+  fetchFile: (file?: string | Blob | File) => Promise<Uint8Array>;
+}
+
+let ffmpegPromise: Promise<FFmpegInstance> | null = null;
+let loadedInstance: FFmpegInstance | null = null;
 
 // ==================== INITIALIZATION ====================
 
-async function loadFFmpeg() {
+async function loadFFmpeg(): Promise<FFmpegInstance> {
   if (loadedInstance) return loadedInstance;
 
   if (!ffmpegPromise) {
@@ -43,7 +48,7 @@ export async function convertAudio(
   await ff.writeFile(inputName, await fetchFile(file));
 
   if (onProgress) {
-    ff.on('progress', ({ progress }) => {
+    ff.on('progress', ({ progress }: { progress: number }) => {
       onProgress(Math.round(progress * 100));
     });
   }

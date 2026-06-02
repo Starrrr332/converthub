@@ -1,5 +1,11 @@
 import { logger } from './logger';
 
+declare global {
+  interface Window {
+    plausible?: (event: string, options?: { props?: Record<string, unknown> }) => void;
+  }
+}
+
 interface AnalyticsEvent {
   name: string;
   props?: Record<string, string | number | boolean>;
@@ -32,7 +38,7 @@ class Analytics {
 
     const script = document.createElement('script');
     script.defer = true;
-    script.data-domain = this.domain;
+    script.setAttribute('data-domain', this.domain);
     script.src = 'https://plausible.io/js/script.tagged-events.js';
     document.head.appendChild(script);
 
@@ -53,8 +59,8 @@ class Analytics {
 
     logger.debug('Page view tracked', { path }, 'analytics');
 
-    if (this.enabled && typeof window !== 'undefined' && (window as any).plausible) {
-      (window as any).plausible('pageview', { props: { path } });
+    if (this.enabled && typeof window !== 'undefined' && window.plausible) {
+      window.plausible('pageview', { props: { path } });
     }
   }
 
@@ -68,17 +74,24 @@ class Analytics {
 
     logger.logToolUsage({
       timestamp: new Date().toISOString(),
-      tool: props?.tool as string || 'unknown',
+      tool: (props?.tool as string) || 'unknown',
       action: name,
       metadata: props,
     });
 
-    if (this.enabled && typeof window !== 'undefined' && (window as any).plausible) {
-      (window as any).plausible(name, { props });
+    if (this.enabled && typeof window !== 'undefined' && window.plausible) {
+      window.plausible(name, { props });
     }
   }
 
-  trackConversion(tool: string, inputFormat: string, outputFormat: string, fileSize: number, duration: number, success: boolean) {
+  trackConversion(
+    tool: string,
+    inputFormat: string,
+    outputFormat: string,
+    fileSize: number,
+    duration: number,
+    success: boolean,
+  ) {
     this.trackEvent('conversion', {
       tool,
       inputFormat,
@@ -116,15 +129,21 @@ class Analytics {
   }
 
   getStats() {
-    const pageViewCounts = this.pageViews.reduce((acc, pv) => {
-      acc[pv.path] = (acc[pv.path] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const pageViewCounts = this.pageViews.reduce(
+      (acc, pv) => {
+        acc[pv.path] = (acc[pv.path] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
-    const eventCounts = this.events.reduce((acc, e) => {
-      acc[e.name] = (acc[e.name] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const eventCounts = this.events.reduce(
+      (acc, e) => {
+        acc[e.name] = (acc[e.name] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     return {
       totalPageViews: this.pageViews.length,
