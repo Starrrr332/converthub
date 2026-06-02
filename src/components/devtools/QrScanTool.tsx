@@ -44,7 +44,9 @@ export function QrScanTool() {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-4">Lector QR</h3>
-      <p className="text-sm text-text-secondary mb-4">Sube una imagen que contenga un código QR para extraer su contenido.</p>
+      <p className="text-sm text-text-secondary mb-4">
+        Sube una imagen que contenga un código QR para extraer su contenido.
+      </p>
       <label className="dropzone flex flex-col items-center justify-center h-36 cursor-pointer mb-4">
         <Upload className="w-6 h-6 mb-1 text-text-muted" />
         <p className="text-xs text-text-secondary">Selecciona una imagen con QR</p>
@@ -62,7 +64,9 @@ export function QrScanTool() {
             <span className="font-medium">QR detectado</span>
           </div>
           <textarea readOnly value={result} className="input-field w-full h-24 font-mono text-sm" />
-          <button onClick={copy} className="btn-primary text-sm px-4 py-2">Copiar resultado</button>
+          <button onClick={copy} className="btn-primary text-sm px-4 py-2">
+            Copiar resultado
+          </button>
         </div>
       )}
     </div>

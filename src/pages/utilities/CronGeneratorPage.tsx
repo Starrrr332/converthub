@@ -7,7 +7,11 @@ export function CronGeneratorPage() {
       title="Generador de Cron"
       subtitle="Genera expresiones cron fácilmente."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades', to: '/tools/utilities' }, { label: 'Cron' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'Utilidades', to: '/tools/utilities' },
+        { label: 'Cron' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

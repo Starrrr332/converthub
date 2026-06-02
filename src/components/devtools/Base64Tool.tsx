@@ -35,13 +35,21 @@ export function Base64Tool() {
     <div className="space-y-4">
       <div className="flex items-center gap-4">
         <button
-          onClick={() => { setMode('encode'); setOutput(''); setError(null); }}
+          onClick={() => {
+            setMode('encode');
+            setOutput('');
+            setError(null);
+          }}
           className={`px-4 py-2 rounded-lg font-medium transition-all ${mode === 'encode' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
         >
           Encode
         </button>
         <button
-          onClick={() => { setMode('decode'); setOutput(''); setError(null); }}
+          onClick={() => {
+            setMode('decode');
+            setOutput('');
+            setError(null);
+          }}
           className={`px-4 py-2 rounded-lg font-medium transition-all ${mode === 'decode' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600'}`}
         >
           Decode
@@ -71,7 +79,10 @@ export function Base64Tool() {
         <div>
           <div className="flex items-center justify-between mb-1">
             <label className="text-sm font-medium text-gray-700">Result</label>
-            <button onClick={handleCopy} className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1">
+            <button
+              onClick={handleCopy}
+              className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1"
+            >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               {copied ? 'Copied!' : 'Copy'}
             </button>

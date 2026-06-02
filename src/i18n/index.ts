@@ -13,18 +13,18 @@ i18n
     ns: ['common', 'converter', 'pricing', 'privacy', 'security'],
     defaultNS: 'common',
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json'
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
     detection: {
       order: ['querystring', 'localStorage', 'navigator'],
-      caches: ['localStorage']
+      caches: ['localStorage'],
     },
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
     react: {
-      useSuspense: true
-    }
+      useSuspense: true,
+    },
   });
 
 export default i18n;

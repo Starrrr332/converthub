@@ -64,11 +64,16 @@ export function HeicConverter() {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-2">HEIC a JPG / PNG</h3>
-      <p className="text-sm text-text-secondary mb-4">Convierte fotos HEIC de Apple a formato estándar.</p>
+      <p className="text-sm text-text-secondary mb-4">
+        Convierte fotos HEIC de Apple a formato estándar.
+      </p>
 
       <label
         className={`dropzone flex flex-col items-center justify-center h-32 cursor-pointer mb-4 ${dragOver ? 'dropzone-active' : ''}`}
-        onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
       >
@@ -80,21 +85,25 @@ export function HeicConverter() {
           ref={inputRef}
           type="file"
           accept=".heic,.heif"
-          onChange={e => handleFile(e.target.files?.[0])}
+          onChange={(e) => handleFile(e.target.files?.[0])}
           className="hidden"
         />
       </label>
 
       <div className="flex items-center gap-4 mb-4">
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Formato de salida</label>
+          <label className="block text-xs font-medium text-text-muted mb-1">
+            Formato de salida
+          </label>
           <div className="flex gap-1.5">
-            {(['jpeg', 'png'] as const).map(fmt => (
+            {(['jpeg', 'png'] as const).map((fmt) => (
               <button
                 key={fmt}
                 onClick={() => setOutputFormat(fmt)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  outputFormat === fmt ? 'bg-brand-600 text-white' : 'bg-surface-secondary text-text-secondary'
+                  outputFormat === fmt
+                    ? 'bg-brand-600 text-white'
+                    : 'bg-surface-secondary text-text-secondary'
                 }`}
               >
                 {fmt.toUpperCase()}
@@ -105,23 +114,23 @@ export function HeicConverter() {
 
         {outputFormat === 'jpeg' && (
           <div className="flex-1">
-            <label className="block text-xs font-medium text-text-muted mb-1">Calidad: {Math.round(quality * 100)}%</label>
+            <label className="block text-xs font-medium text-text-muted mb-1">
+              Calidad: {Math.round(quality * 100)}%
+            </label>
             <input
               type="range"
               min="0.1"
               max="1"
               step="0.05"
               value={quality}
-              onChange={e => setQuality(Number(e.target.value))}
+              onChange={(e) => setQuality(Number(e.target.value))}
               className="w-full"
             />
           </div>
         )}
       </div>
 
-      {error && (
-        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>
-      )}
+      {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>}
 
       <Button onClick={convert} disabled={!file || loading}>
         {loading ? 'Convirtiendo...' : 'Convertir'}

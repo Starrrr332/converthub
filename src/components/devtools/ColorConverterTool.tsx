@@ -12,7 +12,14 @@ function formatRgb(r: number, g: number, b: number) {
 
 export function ColorConverterTool() {
   const [hexInput, setHexInput] = useState('#3B82F6');
-  const [color, setColor] = useState<{ r: number; g: number; b: number; h: number; s: number; l: number } | null>(null);
+  const [color, setColor] = useState<{
+    r: number;
+    g: number;
+    b: number;
+    h: number;
+    s: number;
+    l: number;
+  } | null>(null);
   const [harmonies, setHarmonies] = useState<HarmonyColor[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
 
@@ -71,9 +78,18 @@ export function ColorConverterTool() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <div className="w-20 h-20 rounded-xl shadow-lg border-2 border-border" style={{ backgroundColor: hexInput }} />
+        <div
+          className="w-20 h-20 rounded-xl shadow-lg border-2 border-border"
+          style={{ backgroundColor: hexInput }}
+        />
         <div>
-          <input type="text" value={hexInput} onChange={(e) => setHexInput(e.target.value)} className="input-field font-mono text-lg w-32" maxLength={7} />
+          <input
+            type="text"
+            value={hexInput}
+            onChange={(e) => setHexInput(e.target.value)}
+            className="input-field font-mono text-lg w-32"
+            maxLength={7}
+          />
         </div>
       </div>
 
@@ -83,8 +99,14 @@ export function ColorConverterTool() {
             <div className="card p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">RGB</span>
-                <button onClick={() => handleCopy(`rgb(${formatRgb(color.r, color.g, color.b)})`, 'rgb')}>
-                  {copied === 'rgb' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-text-muted" />}
+                <button
+                  onClick={() => handleCopy(`rgb(${formatRgb(color.r, color.g, color.b)})`, 'rgb')}
+                >
+                  {copied === 'rgb' ? (
+                    <Check className="w-4 h-4 text-green-500" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-text-muted" />
+                  )}
                 </button>
               </div>
               <div className="font-mono text-sm">rgb({formatRgb(color.r, color.g, color.b)})</div>
@@ -92,17 +114,29 @@ export function ColorConverterTool() {
             <div className="card p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">HSL</span>
-                <button onClick={() => handleCopy(`hsl(${color.h}, ${color.s}%, ${color.l}%)`, 'hsl')}>
-                  {copied === 'hsl' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-text-muted" />}
+                <button
+                  onClick={() => handleCopy(`hsl(${color.h}, ${color.s}%, ${color.l}%)`, 'hsl')}
+                >
+                  {copied === 'hsl' ? (
+                    <Check className="w-4 h-4 text-green-500" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-text-muted" />
+                  )}
                 </button>
               </div>
-              <div className="font-mono text-sm">hsl({color.h}°, {color.s}%, {color.l}%)</div>
+              <div className="font-mono text-sm">
+                hsl({color.h}°, {color.s}%, {color.l}%)
+              </div>
             </div>
             <div className="card p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">HEX</span>
                 <button onClick={() => handleCopy(hexInput, 'hex')}>
-                  {copied === 'hex' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-text-muted" />}
+                  {copied === 'hex' ? (
+                    <Check className="w-4 h-4 text-green-500" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-text-muted" />
+                  )}
                 </button>
               </div>
               <div className="font-mono text-sm">{hexInput}</div>
@@ -110,11 +144,19 @@ export function ColorConverterTool() {
             <div className="card p-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">HSV</span>
-                <button onClick={() => handleCopy(`hsv(${color.h}, ${color.s}%, ${color.l}%)`, 'hsv')}>
-                  {copied === 'hsv' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-text-muted" />}
+                <button
+                  onClick={() => handleCopy(`hsv(${color.h}, ${color.s}%, ${color.l}%)`, 'hsv')}
+                >
+                  {copied === 'hsv' ? (
+                    <Check className="w-4 h-4 text-green-500" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-text-muted" />
+                  )}
                 </button>
               </div>
-              <div className="font-mono text-sm">hsv({color.h}°, {color.s}%, {color.l}%)</div>
+              <div className="font-mono text-sm">
+                hsv({color.h}°, {color.s}%, {color.l}%)
+              </div>
             </div>
           </div>
 
@@ -144,8 +186,18 @@ export function ColorConverterTool() {
               <div>
                 <p className="text-xs text-text-muted">Texto claro sobre este color</p>
                 <div className="flex gap-2 mt-1">
-                  <span className="text-xs px-1.5 py-0.5 rounded" style={{ backgroundColor: hexInput, color: '#ffffff' }}>Blanco</span>
-                  <span className="text-xs px-1.5 py-0.5 rounded" style={{ backgroundColor: hexInput, color: '#000000' }}>Negro</span>
+                  <span
+                    className="text-xs px-1.5 py-0.5 rounded"
+                    style={{ backgroundColor: hexInput, color: '#ffffff' }}
+                  >
+                    Blanco
+                  </span>
+                  <span
+                    className="text-xs px-1.5 py-0.5 rounded"
+                    style={{ backgroundColor: hexInput, color: '#000000' }}
+                  >
+                    Negro
+                  </span>
                 </div>
               </div>
             </div>
@@ -154,8 +206,18 @@ export function ColorConverterTool() {
               <div>
                 <p className="text-xs text-text-muted">Fondo claro con texto</p>
                 <div className="flex gap-2 mt-1">
-                  <span className="text-xs px-1.5 py-0.5 rounded bg-white border" style={{ color: hexInput }}>Sobre blanco</span>
-                  <span className="text-xs px-1.5 py-0.5 rounded bg-gray-100 border" style={{ color: hexInput }}>Sobre gris</span>
+                  <span
+                    className="text-xs px-1.5 py-0.5 rounded bg-white border"
+                    style={{ color: hexInput }}
+                  >
+                    Sobre blanco
+                  </span>
+                  <span
+                    className="text-xs px-1.5 py-0.5 rounded bg-gray-100 border"
+                    style={{ color: hexInput }}
+                  >
+                    Sobre gris
+                  </span>
                 </div>
               </div>
             </div>

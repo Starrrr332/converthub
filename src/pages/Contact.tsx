@@ -13,7 +13,7 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('sending');
-    
+
     // Simular envío (en producción aquí iría la lógica real)
     setTimeout(() => {
       setStatus('success');
@@ -21,7 +21,9 @@ export function Contact() {
     }, 1500);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -58,9 +60,7 @@ export function Contact() {
         <div className="inline-flex p-4 bg-indigo-100 rounded-2xl mb-4">
           <MessageSquare className="w-8 h-8 text-indigo-600" />
         </div>
-        <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">
-          Contacto
-        </h1>
+        <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Contacto</h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
           ¿Tienes preguntas, sugerencias o problemas? Estamos aquí para ayudarte.
         </p>
@@ -87,18 +87,22 @@ export function Contact() {
         {/* Formulario */}
         <div className="card">
           <h2 className="text-xl font-semibold text-slate-900 mb-6">Envíanos un mensaje</h2>
-          
+
           {status === 'success' && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-green-600 shrink-0" />
-              <p className="text-green-700 text-sm">Mensaje enviado correctamente. Te responderemos pronto.</p>
+              <p className="text-green-700 text-sm">
+                Mensaje enviado correctamente. Te responderemos pronto.
+              </p>
             </div>
           )}
 
           {status === 'error' && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3">
               <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />
-              <p className="text-red-700 text-sm">Error al enviar el mensaje. Intenta de nuevo o contáctanos por email.</p>
+              <p className="text-red-700 text-sm">
+                Error al enviar el mensaje. Intenta de nuevo o contáctanos por email.
+              </p>
             </div>
           )}
 
@@ -197,8 +201,8 @@ export function Contact() {
           <div className="card">
             <h3 className="font-semibold text-slate-900 mb-3">Tiempo de respuesta</h3>
             <p className="text-slate-600 text-sm">
-              Nos esforzamos por responder todos los mensajes dentro de 48 horas durante días laborales.
-              Para consultas urgentes, te recomendamos enviarnos un email directamente.
+              Nos esforzamos por responder todos los mensajes dentro de 48 horas durante días
+              laborales. Para consultas urgentes, te recomendamos enviarnos un email directamente.
             </p>
           </div>
 
@@ -220,14 +224,13 @@ export function Contact() {
           </div>
 
           <div className="card bg-indigo-50/80 border border-indigo-200">
-            <h3 className="font-semibold text-slate-900 mb-2">¿Necesitas ayuda con una herramienta?</h3>
+            <h3 className="font-semibold text-slate-900 mb-2">
+              ¿Necesitas ayuda con una herramienta?
+            </h3>
             <p className="text-slate-600 text-sm mb-3">
               Revisa nuestra sección de preguntas frecuentes para obtener respuestas rápidas.
             </p>
-            <a
-              href="/blog"
-              className="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
-            >
+            <a href="/blog" className="text-indigo-600 hover:text-indigo-700 text-sm font-medium">
               Ver guías y tutoriales →
             </a>
           </div>

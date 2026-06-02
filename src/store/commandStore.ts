@@ -21,9 +21,7 @@ export const useCommandStore = create<CommandStore>()(
 
       addFavorite: (path) =>
         set((state) => ({
-          favorites: state.favorites.includes(path)
-            ? state.favorites
-            : [...state.favorites, path],
+          favorites: state.favorites.includes(path) ? state.favorites : [...state.favorites, path],
         })),
 
       removeFavorite: (path) =>
@@ -45,6 +43,6 @@ export const useCommandStore = create<CommandStore>()(
     }),
     {
       name: 'converthub-commands',
-    }
-  )
+    },
+  ),
 );

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 export function useNotifications() {
-  const [permission, setPermission] = useState<NotificationPermission>(
-    () => ('Notification' in window ? Notification.permission : 'default')
+  const [permission, setPermission] = useState<NotificationPermission>(() =>
+    'Notification' in window ? Notification.permission : 'default',
   );
 
   const requestPermission = async () => {

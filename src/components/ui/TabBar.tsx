@@ -30,7 +30,10 @@ export function TabBar() {
                 {tool && <tool.icon className="w-3.5 h-3.5" />}
                 <span>{tab.label}</span>
                 <button
-                  onClick={(e) => { e.preventDefault(); removeTab(tab.id); }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeTab(tab.id);
+                  }}
                   className="p-0.5 rounded hover:bg-slate-200 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <X className="w-3 h-3" />

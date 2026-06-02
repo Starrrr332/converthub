@@ -24,14 +24,23 @@ function formatSize(bytes: number): string {
 
 function formatHex(buf: ArrayBuffer): string {
   const bytes = new Uint8Array(buf.slice(0, 16));
-  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join(' ');
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join(' ');
 }
 
 export function FileAnalyzerPage() {
   const [fileInfo, setFileInfo] = useState<{
-    name: string; size: number; type: string; lastModified: Date;
-    mimeType: string; hexSignature: string; dimensions?: string;
-    lines?: number; words?: number; chars?: number;
+    name: string;
+    size: number;
+    type: string;
+    lastModified: Date;
+    mimeType: string;
+    hexSignature: string;
+    dimensions?: string;
+    lines?: number;
+    words?: number;
+    chars?: number;
   } | null>(null);
   const [error, setError] = useState('');
 
@@ -97,7 +106,9 @@ export function FileAnalyzerPage() {
         {!fileInfo ? (
           <label className="dropzone flex flex-col items-center justify-center h-48 cursor-pointer">
             <Upload className="w-8 h-8 mb-2 text-text-muted" />
-            <p className="text-sm text-text-secondary">Arrastra cualquier archivo o haz clic para analizar</p>
+            <p className="text-sm text-text-secondary">
+              Arrastra cualquier archivo o haz clic para analizar
+            </p>
             <p className="text-xs text-text-muted mt-1">Se analiza localmente — nunca se sube</p>
             <input type="file" onChange={handleFile} className="hidden" />
           </label>
@@ -106,7 +117,9 @@ export function FileAnalyzerPage() {
             {error && <p className="text-red-600 text-sm">{error}</p>}
             <div className="card p-5 space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b border-border">
-                <div className={`p-2.5 rounded-xl ${FILE_TYPE_COLORS[fileInfo.type] || 'text-slate-600 bg-slate-50'}`}>
+                <div
+                  className={`p-2.5 rounded-xl ${FILE_TYPE_COLORS[fileInfo.type] || 'text-slate-600 bg-slate-50'}`}
+                >
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
@@ -134,14 +147,19 @@ export function FileAnalyzerPage() {
                   <Calendar className="w-4 h-4 text-text-muted mt-0.5" />
                   <div>
                     <p className="text-xs text-text-muted">Última modificación</p>
-                    <p className="text-sm font-medium">{fileInfo.lastModified.toLocaleDateString()} {fileInfo.lastModified.toLocaleTimeString()}</p>
+                    <p className="text-sm font-medium">
+                      {fileInfo.lastModified.toLocaleDateString()}{' '}
+                      {fileInfo.lastModified.toLocaleTimeString()}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <Hash className="w-4 h-4 text-text-muted mt-0.5" />
                   <div>
                     <p className="text-xs text-text-muted">Firma hexadecimal</p>
-                    <p className="text-xs font-mono font-medium break-all">{fileInfo.hexSignature}</p>
+                    <p className="text-xs font-mono font-medium break-all">
+                      {fileInfo.hexSignature}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -174,7 +192,12 @@ export function FileAnalyzerPage() {
               )}
             </div>
 
-            <button onClick={() => { setFileInfo(null); }} className="text-sm text-brand-600 hover:underline">
+            <button
+              onClick={() => {
+                setFileInfo(null);
+              }}
+              className="text-sm text-brand-600 hover:underline"
+            >
               Analizar otro archivo
             </button>
           </div>

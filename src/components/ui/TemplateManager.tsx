@@ -9,7 +9,8 @@ interface TemplateManagerProps {
 }
 
 export function TemplateManager({ toolPath, currentSettings, onApply }: TemplateManagerProps) {
-  const { templates, addTemplate, removeTemplate, exportTemplates, importTemplates } = useTemplatesStore();
+  const { templates, addTemplate, removeTemplate, exportTemplates, importTemplates } =
+    useTemplatesStore();
   const [showSave, setShowSave] = useState(false);
   const [name, setName] = useState('');
 
@@ -59,13 +60,16 @@ export function TemplateManager({ toolPath, currentSettings, onApply }: Template
         <div className="flex items-center gap-1.5">
           <input
             value={name}
-            onChange={e => setName(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && save()}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && save()}
             placeholder="Nombre de la plantilla"
             className="px-2 py-1 border border-border rounded text-xs w-40"
             autoFocus
           />
-          <button onClick={save} className="px-2 py-1 bg-brand-600 text-white text-xs rounded hover:bg-brand-700">
+          <button
+            onClick={save}
+            className="px-2 py-1 bg-brand-600 text-white text-xs rounded hover:bg-brand-700"
+          >
             Guardar
           </button>
         </div>
@@ -78,7 +82,10 @@ export function TemplateManager({ toolPath, currentSettings, onApply }: Template
           </button>
           <div className="absolute top-full left-0 mt-1 w-56 bg-surface rounded-lg border border-border shadow-elevated py-1 z-50 hidden group-hover:block">
             {toolTemplates.map((tpl) => (
-              <div key={tpl.id} className="flex items-center gap-2 px-3 py-2 hover:bg-surface-secondary">
+              <div
+                key={tpl.id}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-surface-secondary"
+              >
                 <button
                   onClick={() => onApply(tpl.settings)}
                   className="flex-1 text-left text-sm text-text truncate"

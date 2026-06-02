@@ -12,13 +12,15 @@ export function FileEncryptor() {
 
   const deriveKey = async (pwd: string, salt: Uint8Array) => {
     const enc = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(pwd), 'PBKDF2', false, ['deriveKey']);
+    const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(pwd), 'PBKDF2', false, [
+      'deriveKey',
+    ]);
     return crypto.subtle.deriveKey(
       { name: 'PBKDF2', salt: salt as unknown as ArrayBuffer, iterations: 100000, hash: 'SHA-256' },
       keyMaterial,
       { name: 'AES-GCM', length: 256 },
       false,
-      ['encrypt', 'decrypt']
+      ['encrypt', 'decrypt'],
     );
   };
 
@@ -66,7 +68,9 @@ export function FileEncryptor() {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-2">Encriptador / Desencriptador</h3>
-      <p className="text-sm text-text-secondary mb-4">AES-256-GCM. Todo en tu navegador, sin servidores.</p>
+      <p className="text-sm text-text-secondary mb-4">
+        AES-256-GCM. Todo en tu navegador, sin servidores.
+      </p>
 
       {/* Warning */}
       <div className="flex items-start gap-2 p-3 bg-amber-50 text-amber-700 rounded-lg text-sm mb-4">
@@ -79,7 +83,9 @@ export function FileEncryptor() {
         <button
           onClick={() => setMode('encrypt')}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-            mode === 'encrypt' ? 'bg-brand-600 text-white' : 'bg-surface-secondary text-text-secondary'
+            mode === 'encrypt'
+              ? 'bg-brand-600 text-white'
+              : 'bg-surface-secondary text-text-secondary'
           }`}
         >
           <Lock className="w-4 h-4" /> Encriptar
@@ -87,7 +93,9 @@ export function FileEncryptor() {
         <button
           onClick={() => setMode('decrypt')}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-            mode === 'decrypt' ? 'bg-brand-600 text-white' : 'bg-surface-secondary text-text-secondary'
+            mode === 'decrypt'
+              ? 'bg-brand-600 text-white'
+              : 'bg-surface-secondary text-text-secondary'
           }`}
         >
           <Unlock className="w-4 h-4" /> Desencriptar
@@ -101,7 +109,7 @@ export function FileEncryptor() {
         </p>
         <input
           type="file"
-          onChange={e => setFile(e.target.files?.[0] || null)}
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
           className="hidden"
         />
       </label>
@@ -110,14 +118,12 @@ export function FileEncryptor() {
       <input
         type="password"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
         placeholder="Ingresa una contraseña"
         className="input-field w-full mb-4"
       />
 
-      {error && (
-        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>
-      )}
+      {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>}
 
       <Button onClick={process} disabled={!file || !password || loading}>
         {loading ? 'Procesando...' : mode === 'encrypt' ? 'Encriptar' : 'Desencriptar'}

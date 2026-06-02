@@ -7,7 +7,11 @@ export function BarcodeGeneratorPage() {
       title="Generador de Código de Barras"
       subtitle="Genera códigos EAN-13 y Code128."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades', to: '/tools/utilities' }, { label: 'Código de Barras' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'Utilidades', to: '/tools/utilities' },
+        { label: 'Código de Barras' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

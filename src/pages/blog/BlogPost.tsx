@@ -41,10 +41,7 @@ export function BlogPost({ title, description, date, readTime, tags, children }:
           <div className="flex items-center gap-2">
             <Tag className="w-4 h-4" />
             {tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs"
-              >
+              <span key={tag} className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">
                 {tag}
               </span>
             ))}
@@ -53,9 +50,7 @@ export function BlogPost({ title, description, date, readTime, tags, children }:
       </header>
 
       {/* Content */}
-      <div className="prose prose-slate prose-lg max-w-none">
-        {children}
-      </div>
+      <div className="prose prose-slate prose-lg max-w-none">{children}</div>
 
       {/* CTA */}
       <div className="mt-12 p-6 bg-indigo-50 rounded-xl border border-indigo-100">

@@ -37,7 +37,7 @@ export function useGlobalDrop(onFilesDrop: (files: File[]) => void) {
         onFilesDrop(Array.from(e.dataTransfer.files));
       }
     },
-    [onFilesDrop]
+    [onFilesDrop],
   );
 
   useEffect(() => {

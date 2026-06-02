@@ -14,7 +14,8 @@ const blogPosts: BlogEntry[] = [
   {
     slug: 'como-convertir-imagenes-sin-perder-calidad',
     title: 'Cómo Convertir Imágenes Sin Perder Calidad',
-    description: 'Guía completa para convertir entre formatos de imagen manteniendo la máxima calidad posible.',
+    description:
+      'Guía completa para convertir entre formatos de imagen manteniendo la máxima calidad posible.',
     date: '1 de enero, 2026',
     readTime: '5 min de lectura',
     tags: ['Imágenes', 'Guía', 'Calidad'],
@@ -22,7 +23,8 @@ const blogPosts: BlogEntry[] = [
   {
     slug: 'guia-formatos-imagen-2026',
     title: 'Guía Completa de Formatos de Imagen 2026',
-    description: 'PNG, JPG, WebP, AVIF: ¿cuál elegir? Conoce las diferencias y cuándo usar cada formato.',
+    description:
+      'PNG, JPG, WebP, AVIF: ¿cuál elegir? Conoce las diferencias y cuándo usar cada formato.',
     date: '15 de diciembre, 2025',
     readTime: '8 min de lectura',
     tags: ['Formatos', 'Imágenes', 'SEO'],
@@ -30,7 +32,8 @@ const blogPosts: BlogEntry[] = [
   {
     slug: 'herramientas-online-seguras',
     title: 'Cómo Elegir Herramientas Online Seguras',
-    description: 'Qué buscar en una herramienta online para proteger tus datos y archivos personales.',
+    description:
+      'Qué buscar en una herramienta online para proteger tus datos y archivos personales.',
     date: '1 de diciembre, 2025',
     readTime: '6 min de lectura',
     tags: ['Seguridad', 'Privacidad', 'Consejos'],
@@ -52,11 +55,7 @@ export function BlogIndex() {
 
       <div className="grid gap-6">
         {blogPosts.map((post) => (
-          <Link
-            key={post.slug}
-            to={`/blog/${post.slug}`}
-            className="card-interactive group"
-          >
+          <Link key={post.slug} to={`/blog/${post.slug}`} className="card-interactive group">
             <article>
               <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-3">
                 <div className="flex items-center gap-1.5">

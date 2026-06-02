@@ -4,11 +4,11 @@ import { Download, Music, Trash2, Loader2, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ToolInfoModal } from '../ui/ToolInfoModal';
 import { useNotifications } from '../../hooks/useNotifications';
-import { 
-  convertAudio, 
-  validateAudioFile, 
+import {
+  convertAudio,
+  validateAudioFile,
   formatDuration,
-  formatFileSize 
+  formatFileSize,
 } from '../../services/conversions/audioConverter';
 import type { AudioFormat, AudioConversionResult } from '../../types';
 
@@ -31,20 +31,20 @@ export function AudioToolContent() {
   const [error, setError] = useState<string | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
   const [showToolInfo, setShowToolInfo] = useState(false);
-  
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
-    
+
     if (!validateAudioFile(selectedFile)) {
       setError(t('audio.error.invalidFormat'));
       return;
     }
-    
+
     setFile(selectedFile);
     setResult(null);
     setError(null);
-    
+
     const audio = new Audio();
     audio.src = URL.createObjectURL(selectedFile);
     audio.onloadedmetadata = () => {
@@ -52,23 +52,23 @@ export function AudioToolContent() {
       URL.revokeObjectURL(audio.src);
     };
   };
-  
+
   const handleConvert = async () => {
     if (!file) return;
-    
+
     setLoading(true);
     setError(null);
     setProgress(0);
-    
+
     try {
-      const conversionResult = await convertAudio(
-        file,
-        { format: targetFormat },
-        (p) => setProgress(p)
+      const conversionResult = await convertAudio(file, { format: targetFormat }, (p) =>
+        setProgress(p),
       );
-      
+
       setResult(conversionResult);
-      notify(t('audio.title'), { body: `Audio convertido a ${targetFormat.toUpperCase()} listo para descargar` });
+      notify(t('audio.title'), {
+        body: `Audio convertido a ${targetFormat.toUpperCase()} listo para descargar`,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Conversion failed');
     } finally {
@@ -76,10 +76,10 @@ export function AudioToolContent() {
       setProgress(0);
     }
   };
-  
+
   const handleDownload = () => {
     if (!result) return;
-    
+
     const a = document.createElement('a');
     a.href = result.url;
     a.download = result.filename;
@@ -87,13 +87,13 @@ export function AudioToolContent() {
     a.click();
     document.body.removeChild(a);
   };
-  
+
   const getSourceFormat = (): string => {
     if (!file) return '';
     const ext = file.name.split('.').pop()?.toLowerCase() || '';
     return ext.toUpperCase();
   };
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -106,7 +106,7 @@ export function AudioToolContent() {
           <Info className="w-5 h-5" />
         </button>
       </div>
-      
+
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
           type="file"
@@ -118,12 +118,10 @@ export function AudioToolContent() {
         <label htmlFor="audio-input" className="cursor-pointer">
           <Music className="w-12 h-12 text-gray-400 mx-auto mb-4" />
           <p className="text-gray-600">{t('audio.dropzone')}</p>
-          <p className="text-xs text-gray-400 mt-2">
-            MP3, WAV, OGG, FLAC, AAC, M4A
-          </p>
+          <p className="text-xs text-gray-400 mt-2">MP3, WAV, OGG, FLAC, AAC, M4A</p>
         </label>
       </div>
-      
+
       {file && (
         <div className="p-4 bg-gray-50 rounded-lg">
           <div className="flex items-center justify-between">
@@ -138,7 +136,11 @@ export function AudioToolContent() {
               </div>
             </div>
             <button
-              onClick={() => { setFile(null); setResult(null); setDuration(null); }}
+              onClick={() => {
+                setFile(null);
+                setResult(null);
+                setDuration(null);
+              }}
               className="text-gray-400 hover:text-red-500"
             >
               <Trash2 className="w-4 h-4" />
@@ -146,7 +148,7 @@ export function AudioToolContent() {
           </div>
         </div>
       )}
-      
+
       {file && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -155,7 +157,7 @@ export function AudioToolContent() {
           <div className="flex flex-wrap gap-2">
             {ALL_FORMATS.map((format) => {
               const isSelected = targetFormat === format.value;
-              
+
               return (
                 <button
                   key={format.value}
@@ -173,7 +175,7 @@ export function AudioToolContent() {
           </div>
         </div>
       )}
-      
+
       {loading && progress > 0 && (
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
@@ -181,20 +183,16 @@ export function AudioToolContent() {
             <span className="text-gray-500">{progress}%</span>
           </div>
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-blue-500 transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
       )}
-      
-      {error && (
-        <div className="p-4 bg-red-50 text-red-700 rounded-lg">
-          {error}
-        </div>
-      )}
-      
+
+      {error && <div className="p-4 bg-red-50 text-red-700 rounded-lg">{error}</div>}
+
       <div className="flex gap-4">
         <Button
           onClick={handleConvert}
@@ -211,7 +209,7 @@ export function AudioToolContent() {
             t('actions.convert')
           )}
         </Button>
-        
+
         {result && (
           <Button onClick={handleDownload} variant="secondary">
             <Download className="w-4 h-4 mr-2" />
@@ -219,7 +217,7 @@ export function AudioToolContent() {
           </Button>
         )}
       </div>
-      
+
       {result && (
         <div className="p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-green-700">
@@ -227,12 +225,8 @@ export function AudioToolContent() {
           </p>
         </div>
       )}
-      
-      <ToolInfoModal 
-        isOpen={showToolInfo} 
-        onClose={() => setShowToolInfo(false)}
-        tool="audio"
-      />
+
+      <ToolInfoModal isOpen={showToolInfo} onClose={() => setShowToolInfo(false)} tool="audio" />
     </div>
   );
 }

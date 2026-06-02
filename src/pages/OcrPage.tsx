@@ -9,7 +9,9 @@ export function OcrPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [progress, setProgress] = useState('');
-  const workerRef = useRef<Awaited<ReturnType<typeof import('tesseract.js').createWorker>> | null>(null);
+  const workerRef = useRef<Awaited<ReturnType<typeof import('tesseract.js').createWorker>> | null>(
+    null,
+  );
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -41,7 +43,7 @@ export function OcrPage() {
           } else if (m.status === 'initializing api') {
             setProgress('Preparando...');
           }
-        }
+        },
       });
       workerRef.current = worker;
 
@@ -96,7 +98,13 @@ export function OcrPage() {
 
           {!file ? (
             <div className="dropzone">
-              <input type="file" accept="image/*" onChange={handleFile} className="hidden" id="ocr-upload" />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFile}
+                className="hidden"
+                id="ocr-upload"
+              />
               <label htmlFor="ocr-upload" className="cursor-pointer block">
                 <div className="inline-flex p-4 rounded-xl bg-brand-50 text-brand-600 mb-4">
                   <ImageIcon className="w-10 h-10" />
@@ -110,16 +118,24 @@ export function OcrPage() {
             <div className="space-y-6">
               <div className="content-panel p-4 sm:p-6">
                 <div className="flex items-start gap-4">
-                  <img src={preview} alt="Preview" className="w-32 h-32 object-cover rounded-lg shrink-0" />
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className="w-32 h-32 object-cover rounded-lg shrink-0"
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="font-medium text-text text-sm truncate">{file.name}</p>
-                    <p className="text-xs text-text-muted mt-0.5">{(file.size / 1024).toFixed(1)} KB</p>
+                    <p className="text-xs text-text-muted mt-0.5">
+                      {(file.size / 1024).toFixed(1)} KB
+                    </p>
                     <div className="flex gap-2 mt-3">
                       <Button onClick={runOcr} disabled={loading} loading={loading} size="sm">
                         <FileText className="w-3.5 h-3.5" />
                         {loading ? 'Procesando...' : 'Extraer texto'}
                       </Button>
-                      <Button onClick={clear} variant="ghost" size="sm">Cambiar imagen</Button>
+                      <Button onClick={clear} variant="ghost" size="sm">
+                        Cambiar imagen
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -137,15 +153,29 @@ export function OcrPage() {
                   <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                     <p className="text-sm font-medium text-text">Texto extraído</p>
                     <div className="flex gap-1">
-                      <button onClick={copyText} className="p-1.5 rounded-lg hover:bg-slate-100 text-text-secondary hover:text-text transition-colors" title="Copiar">
-                        {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                      <button
+                        onClick={copyText}
+                        className="p-1.5 rounded-lg hover:bg-slate-100 text-text-secondary hover:text-text transition-colors"
+                        title="Copiar"
+                      >
+                        {copied ? (
+                          <Check className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
                       </button>
-                      <button onClick={downloadText} className="p-1.5 rounded-lg hover:bg-slate-100 text-text-secondary hover:text-text transition-colors" title="Descargar">
+                      <button
+                        onClick={downloadText}
+                        className="p-1.5 rounded-lg hover:bg-slate-100 text-text-secondary hover:text-text transition-colors"
+                        title="Descargar"
+                      >
                         <Download className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
-                  <pre className="p-4 text-sm text-text font-sans whitespace-pre-wrap max-h-96 overflow-y-auto">{text}</pre>
+                  <pre className="p-4 text-sm text-text font-sans whitespace-pre-wrap max-h-96 overflow-y-auto">
+                    {text}
+                  </pre>
                 </div>
               )}
             </div>

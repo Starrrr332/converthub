@@ -17,9 +17,10 @@ const subCategories = [
 export function ConvertersPage() {
   const [activeSubCategory, setActiveSubCategory] = useState<SubCategory>('all');
 
-  const filteredTools = activeSubCategory === 'all'
-    ? converterTools
-    : converterTools.filter(t => t.subCategory === activeSubCategory);
+  const filteredTools =
+    activeSubCategory === 'all'
+      ? converterTools
+      : converterTools.filter((t) => t.subCategory === activeSubCategory);
 
   return (
     <PageLayout

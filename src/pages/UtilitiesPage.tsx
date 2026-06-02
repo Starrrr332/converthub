@@ -12,19 +12,21 @@ export function UtilitiesPage() {
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades' }]}
     >
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {utilityTools.filter(t => t.path !== '/tools/utilities').map((tool) => (
-          <Link
-            key={tool.path}
-            to={tool.path}
-            className={`card-interactive text-center ${tool.hover}`}
-          >
-            <div className={`inline-flex p-3 rounded-xl ${tool.bg} ${tool.color} mb-3`}>
-              <tool.icon className="w-6 h-6" />
-            </div>
-            <h3 className="font-semibold text-text-primary text-sm">{tool.name}</h3>
-            <p className="text-xs text-text-secondary mt-1">{tool.homeDesc}</p>
-          </Link>
-        ))}
+        {utilityTools
+          .filter((t) => t.path !== '/tools/utilities')
+          .map((tool) => (
+            <Link
+              key={tool.path}
+              to={tool.path}
+              className={`card-interactive text-center ${tool.hover}`}
+            >
+              <div className={`inline-flex p-3 rounded-xl ${tool.bg} ${tool.color} mb-3`}>
+                <tool.icon className="w-6 h-6" />
+              </div>
+              <h3 className="font-semibold text-text-primary text-sm">{tool.name}</h3>
+              <p className="text-xs text-text-secondary mt-1">{tool.homeDesc}</p>
+            </Link>
+          ))}
       </div>
 
       <div className="mt-12 text-center">

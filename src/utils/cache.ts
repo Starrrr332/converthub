@@ -23,7 +23,7 @@ export async function generateHash(data: ArrayBuffer, settings: string = ''): Pr
   combined.set(new TextEncoder().encode(settings), data.byteLength);
   const hashBuffer = await crypto.subtle.digest('SHA-256', combined);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 interface CacheEntry {
@@ -57,7 +57,11 @@ export async function getCached<T>(key: string): Promise<T | null> {
   }
 }
 
-export async function setCached(key: string, value: unknown, ttl: number = DEFAULT_TTL): Promise<void> {
+export async function setCached(
+  key: string,
+  value: unknown,
+  ttl: number = DEFAULT_TTL,
+): Promise<void> {
   try {
     const db = await openDB();
     const tx = db.transaction(STORE_NAME, 'readwrite');

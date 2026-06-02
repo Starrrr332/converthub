@@ -10,10 +10,7 @@ export function AudioConverter() {
     <PageLayout
       title={t('audio.title')}
       subtitle={t('audio.subtitle')}
-      breadcrumb={[
-        { label: tc('nav.home'), to: '/' },
-        { label: tc('nav.converters.audio') },
-      ]}
+      breadcrumb={[{ label: tc('nav.home'), to: '/' }, { label: tc('nav.converters.audio') }]}
     >
       <div className="content-panel">
         <AudioToolContent />

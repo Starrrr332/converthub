@@ -10,7 +10,9 @@ function formatSize(bytes: number): string {
 
 export function ImageCompressorPage() {
   const [original, setOriginal] = useState<{ file: File; url: string; size: number } | null>(null);
-  const [compressed, setCompressed] = useState<{ blob: Blob; url: string; size: number } | null>(null);
+  const [compressed, setCompressed] = useState<{ blob: Blob; url: string; size: number } | null>(
+    null,
+  );
   const [quality, setQuality] = useState(80);
   const [maxWidth, setMaxWidth] = useState(1920);
   const [maxHeight, setMaxHeight] = useState(1920);
@@ -61,7 +63,9 @@ export function ImageCompressorPage() {
         {!original ? (
           <label className="dropzone flex flex-col items-center justify-center h-48 cursor-pointer">
             <Upload className="w-8 h-8 mb-2 text-text-muted" />
-            <p className="text-sm text-text-secondary">Arrastra una imagen o haz clic para seleccionar</p>
+            <p className="text-sm text-text-secondary">
+              Arrastra una imagen o haz clic para seleccionar
+            </p>
             <p className="text-xs text-text-muted mt-1">PNG, JPG, WebP</p>
             <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
           </label>
@@ -80,36 +84,75 @@ export function ImageCompressorPage() {
                 <label className="flex items-center justify-between text-sm font-medium">
                   <Percent className="w-4 h-4 mr-1" /> Calidad: {quality}%
                 </label>
-                <input type="range" min="10" max="100" value={quality} onChange={e => setQuality(Number(e.target.value))} className="w-full" />
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  value={quality}
+                  onChange={(e) => setQuality(Number(e.target.value))}
+                  className="w-full"
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium flex items-center"><ZoomIn className="w-4 h-4 mr-1" /> Ancho máx</label>
-                  <input type="number" min="100" max="10000" value={maxWidth} onChange={e => setMaxWidth(Number(e.target.value))} className="input-field w-full" />
+                  <label className="text-sm font-medium flex items-center">
+                    <ZoomIn className="w-4 h-4 mr-1" /> Ancho máx
+                  </label>
+                  <input
+                    type="number"
+                    min="100"
+                    max="10000"
+                    value={maxWidth}
+                    onChange={(e) => setMaxWidth(Number(e.target.value))}
+                    className="input-field w-full"
+                  />
                 </div>
                 <div>
-                  <label className="text-sm font-medium flex items-center"><ZoomIn className="w-4 h-4 mr-1" /> Alto máx</label>
-                  <input type="number" min="100" max="10000" value={maxHeight} onChange={e => setMaxHeight(Number(e.target.value))} className="input-field w-full" />
+                  <label className="text-sm font-medium flex items-center">
+                    <ZoomIn className="w-4 h-4 mr-1" /> Alto máx
+                  </label>
+                  <input
+                    type="number"
+                    min="100"
+                    max="10000"
+                    value={maxHeight}
+                    onChange={(e) => setMaxHeight(Number(e.target.value))}
+                    className="input-field w-full"
+                  />
                 </div>
               </div>
-              <button onClick={compress} disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
-                {loading ? <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" /> : <Download className="w-4 h-4" />}
+              <button
+                onClick={compress}
+                disabled={loading}
+                className="btn-primary w-full flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                ) : (
+                  <Download className="w-4 h-4" />
+                )}
                 {loading ? 'Comprimiendo...' : 'Comprimir imagen'}
               </button>
             </div>
 
             {compressed && (
               <div className="card p-4 space-y-4">
-                <img src={compressed.url} alt="Compressed" className="max-h-48 rounded-lg mx-auto" />
+                <img
+                  src={compressed.url}
+                  alt="Compressed"
+                  className="max-h-48 rounded-lg mx-auto"
+                />
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-text-secondary">
-                    Original: {formatSize(original.size)}
-                  </span>
+                  <span className="text-text-secondary">Original: {formatSize(original.size)}</span>
                   <span className="text-green-600 font-medium">
-                    Comprimido: {formatSize(compressed.size)} ({Math.round((1 - compressed.size / original.size) * 100)}% menor)
+                    Comprimido: {formatSize(compressed.size)} (
+                    {Math.round((1 - compressed.size / original.size) * 100)}% menor)
                   </span>
                 </div>
-                <button onClick={download} className="btn-primary w-full flex items-center justify-center gap-2">
+                <button
+                  onClick={download}
+                  className="btn-primary w-full flex items-center justify-center gap-2"
+                >
                   <FileDown className="w-4 h-4" /> Descargar imagen comprimida
                 </button>
               </div>

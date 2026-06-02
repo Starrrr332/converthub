@@ -1,13 +1,46 @@
 import { lazy } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
-  Image, FileText, Table, Music, Film,
-  Edit3, Type, Braces, Code, FileSpreadsheet,
-  Wrench, Ruler, Cpu, ScanText, ImageDown, FileSearch2,
-  Lock, Calculator, Smile, FileJson, Palette, Paintbrush,
-  Binary, Link, Hash, QrCode, Database, FileDiff, Regex, Key, FileCode, Scan,
-  Camera, Terminal, BarChart3, Sigma, Clock,
-  BookOpen, Smartphone, Grid3X3,
+  Image,
+  FileText,
+  Table,
+  Music,
+  Film,
+  Edit3,
+  Type,
+  Braces,
+  Code,
+  FileSpreadsheet,
+  Wrench,
+  Ruler,
+  Cpu,
+  ScanText,
+  ImageDown,
+  FileSearch2,
+  Lock,
+  Calculator,
+  Smile,
+  FileJson,
+  Palette,
+  Paintbrush,
+  Binary,
+  Link,
+  Hash,
+  QrCode,
+  Database,
+  FileDiff,
+  Regex,
+  Key,
+  FileCode,
+  Scan,
+  Camera,
+  Terminal,
+  BarChart3,
+  Sigma,
+  Clock,
+  BookOpen,
+  Smartphone,
+  Grid3X3,
 } from 'lucide-react';
 
 export type ToolCategory = 'converter' | 'editor' | 'tool' | 'devtool' | 'utility';
@@ -29,65 +62,169 @@ export interface ToolDefinition {
 }
 
 // Lazy-loaded page components
-const ImageConverter = lazy(() => import('../pages/Converter').then(m => ({ default: m.Converter })));
-const PdfConverter = lazy(() => import('../pages/PdfConverter').then(m => ({ default: m.PdfConverter })));
-const SpreadsheetConverter = lazy(() => import('../pages/SpreadsheetConverter').then(m => ({ default: m.SpreadsheetConverter })));
-const AudioConverter = lazy(() => import('../pages/AudioConverter').then(m => ({ default: m.AudioConverter })));
-const VideoConverterPage = lazy(() => import('../pages/VideoConverterPage').then(m => ({ default: m.VideoConverterPage })));
-const ImageEditorPage = lazy(() => import('../pages/ImageEditorPage').then(m => ({ default: m.ImageEditorPage })));
-const TextEditorPage = lazy(() => import('../pages/TextEditorPage').then(m => ({ default: m.TextEditorPage })));
-const JsonFormatterPage = lazy(() => import('../pages/JsonFormatterPage').then(m => ({ default: m.JsonFormatterPage })));
-const MarkdownEditorPage = lazy(() => import('../pages/MarkdownEditorPage').then(m => ({ default: m.MarkdownEditorPage })));
-const SpreadsheetEditorPage = lazy(() => import('../pages/SpreadsheetEditorPage').then(m => ({ default: m.SpreadsheetEditorPage })));
-const UnitConverterPage = lazy(() => import('../pages/UnitConverterPage').then(m => ({ default: m.UnitConverterPage })));
-const OcrPage = lazy(() => import('../pages/OcrPage').then(m => ({ default: m.OcrPage })));
-const ImageCompressorPage = lazy(() => import('../pages/ImageCompressorPage').then(m => ({ default: m.ImageCompressorPage })));
-const FileAnalyzerPage = lazy(() => import('../pages/FileAnalyzerPage').then(m => ({ default: m.FileAnalyzerPage })));
-const DevToolsPage = lazy(() => import('../pages/DevToolsPage').then(m => ({ default: m.DevToolsPage })));
-const UtilitiesPage = lazy(() => import('../pages/UtilitiesPage').then(m => ({ default: m.UtilitiesPage })));
+const ImageConverter = lazy(() =>
+  import('../pages/Converter').then((m) => ({ default: m.Converter })),
+);
+const PdfConverter = lazy(() =>
+  import('../pages/PdfConverter').then((m) => ({ default: m.PdfConverter })),
+);
+const SpreadsheetConverter = lazy(() =>
+  import('../pages/SpreadsheetConverter').then((m) => ({ default: m.SpreadsheetConverter })),
+);
+const AudioConverter = lazy(() =>
+  import('../pages/AudioConverter').then((m) => ({ default: m.AudioConverter })),
+);
+const VideoConverterPage = lazy(() =>
+  import('../pages/VideoConverterPage').then((m) => ({ default: m.VideoConverterPage })),
+);
+const ImageEditorPage = lazy(() =>
+  import('../pages/ImageEditorPage').then((m) => ({ default: m.ImageEditorPage })),
+);
+const TextEditorPage = lazy(() =>
+  import('../pages/TextEditorPage').then((m) => ({ default: m.TextEditorPage })),
+);
+const JsonFormatterPage = lazy(() =>
+  import('../pages/JsonFormatterPage').then((m) => ({ default: m.JsonFormatterPage })),
+);
+const MarkdownEditorPage = lazy(() =>
+  import('../pages/MarkdownEditorPage').then((m) => ({ default: m.MarkdownEditorPage })),
+);
+const SpreadsheetEditorPage = lazy(() =>
+  import('../pages/SpreadsheetEditorPage').then((m) => ({ default: m.SpreadsheetEditorPage })),
+);
+const UnitConverterPage = lazy(() =>
+  import('../pages/UnitConverterPage').then((m) => ({ default: m.UnitConverterPage })),
+);
+const OcrPage = lazy(() => import('../pages/OcrPage').then((m) => ({ default: m.OcrPage })));
+const ImageCompressorPage = lazy(() =>
+  import('../pages/ImageCompressorPage').then((m) => ({ default: m.ImageCompressorPage })),
+);
+const FileAnalyzerPage = lazy(() =>
+  import('../pages/FileAnalyzerPage').then((m) => ({ default: m.FileAnalyzerPage })),
+);
+const DevToolsPage = lazy(() =>
+  import('../pages/DevToolsPage').then((m) => ({ default: m.DevToolsPage })),
+);
+const UtilitiesPage = lazy(() =>
+  import('../pages/UtilitiesPage').then((m) => ({ default: m.UtilitiesPage })),
+);
 
 // New tools (Fase 3-4)
-const FileEncryptorPage = lazy(() => import('../pages/tools/FileEncryptorPage').then(m => ({ default: m.FileEncryptorPage })));
-const ExpressionCalcPage = lazy(() => import('../pages/tools/ExpressionCalcPage').then(m => ({ default: m.ExpressionCalcPage })));
-const EmojiConverterPage = lazy(() => import('../pages/tools/EmojiConverterPage').then(m => ({ default: m.EmojiConverterPage })));
-const JsonToTsPage = lazy(() => import('../pages/tools/JsonToTsPage').then(m => ({ default: m.JsonToTsPage })));
-const YamlJsonPage = lazy(() => import('../pages/tools/YamlJsonPage').then(m => ({ default: m.YamlJsonPage })));
-const GradientPage = lazy(() => import('../pages/tools/GradientPage').then(m => ({ default: m.GradientPage })));
-const ColorPalettePage = lazy(() => import('../pages/tools/ColorPalettePage').then(m => ({ default: m.ColorPalettePage })));
+const FileEncryptorPage = lazy(() =>
+  import('../pages/tools/FileEncryptorPage').then((m) => ({ default: m.FileEncryptorPage })),
+);
+const ExpressionCalcPage = lazy(() =>
+  import('../pages/tools/ExpressionCalcPage').then((m) => ({ default: m.ExpressionCalcPage })),
+);
+const EmojiConverterPage = lazy(() =>
+  import('../pages/tools/EmojiConverterPage').then((m) => ({ default: m.EmojiConverterPage })),
+);
+const JsonToTsPage = lazy(() =>
+  import('../pages/tools/JsonToTsPage').then((m) => ({ default: m.JsonToTsPage })),
+);
+const YamlJsonPage = lazy(() =>
+  import('../pages/tools/YamlJsonPage').then((m) => ({ default: m.YamlJsonPage })),
+);
+const GradientPage = lazy(() =>
+  import('../pages/tools/GradientPage').then((m) => ({ default: m.GradientPage })),
+);
+const ColorPalettePage = lazy(() =>
+  import('../pages/tools/ColorPalettePage').then((m) => ({ default: m.ColorPalettePage })),
+);
 
 // Sprint 2 tools
-const EpubConverterPage = lazy(() => import('../pages/tools/EpubConverterPage').then(m => ({ default: m.EpubConverterPage })));
-const HeicConverterPage = lazy(() => import('../pages/tools/HeicConverterPage').then(m => ({ default: m.HeicConverterPage })));
-const MdToPdfPage = lazy(() => import('../pages/tools/MdToPdfPage').then(m => ({ default: m.MdToPdfPage })));
-const JsonToSqlPage = lazy(() => import('../pages/tools/JsonToSqlPage').then(m => ({ default: m.JsonToSqlPage })));
-const CollageMakerPage = lazy(() => import('../pages/tools/CollageMakerPage').then(m => ({ default: m.CollageMakerPage })));
+const EpubConverterPage = lazy(() =>
+  import('../pages/tools/EpubConverterPage').then((m) => ({ default: m.EpubConverterPage })),
+);
+const HeicConverterPage = lazy(() =>
+  import('../pages/tools/HeicConverterPage').then((m) => ({ default: m.HeicConverterPage })),
+);
+const MdToPdfPage = lazy(() =>
+  import('../pages/tools/MdToPdfPage').then((m) => ({ default: m.MdToPdfPage })),
+);
+const JsonToSqlPage = lazy(() =>
+  import('../pages/tools/JsonToSqlPage').then((m) => ({ default: m.JsonToSqlPage })),
+);
+const CollageMakerPage = lazy(() =>
+  import('../pages/tools/CollageMakerPage').then((m) => ({ default: m.CollageMakerPage })),
+);
 
 // DevTools (individual pages)
-const Base64Page = lazy(() => import('../pages/devtools/Base64Page').then(m => ({ default: m.Base64Page })));
-const UrlEncoderPage = lazy(() => import('../pages/devtools/UrlEncoderPage').then(m => ({ default: m.UrlEncoderPage })));
-const HashGeneratorPage = lazy(() => import('../pages/devtools/HashGeneratorPage').then(m => ({ default: m.HashGeneratorPage })));
-const QrCodePage = lazy(() => import('../pages/devtools/QrCodePage').then(m => ({ default: m.QrCodePage })));
-const QrScanPage = lazy(() => import('../pages/devtools/QrScanPage').then(m => ({ default: m.QrScanPage })));
-const ColorConverterPage = lazy(() => import('../pages/devtools/ColorConverterPage').then(m => ({ default: m.ColorConverterPage })));
-const SqlFormatterPage = lazy(() => import('../pages/devtools/SqlFormatterPage').then(m => ({ default: m.SqlFormatterPage })));
-const DiffCheckerPage = lazy(() => import('../pages/devtools/DiffCheckerPage').then(m => ({ default: m.DiffCheckerPage })));
-const RegexTesterPage = lazy(() => import('../pages/devtools/RegexTesterPage').then(m => ({ default: m.RegexTesterPage })));
-const JwtDecoderPage = lazy(() => import('../pages/devtools/JwtDecoderPage').then(m => ({ default: m.JwtDecoderPage })));
-const JsFormatterPage = lazy(() => import('../pages/devtools/JsFormatterPage').then(m => ({ default: m.JsFormatterPage })));
+const Base64Page = lazy(() =>
+  import('../pages/devtools/Base64Page').then((m) => ({ default: m.Base64Page })),
+);
+const UrlEncoderPage = lazy(() =>
+  import('../pages/devtools/UrlEncoderPage').then((m) => ({ default: m.UrlEncoderPage })),
+);
+const HashGeneratorPage = lazy(() =>
+  import('../pages/devtools/HashGeneratorPage').then((m) => ({ default: m.HashGeneratorPage })),
+);
+const QrCodePage = lazy(() =>
+  import('../pages/devtools/QrCodePage').then((m) => ({ default: m.QrCodePage })),
+);
+const QrScanPage = lazy(() =>
+  import('../pages/devtools/QrScanPage').then((m) => ({ default: m.QrScanPage })),
+);
+const ColorConverterPage = lazy(() =>
+  import('../pages/devtools/ColorConverterPage').then((m) => ({ default: m.ColorConverterPage })),
+);
+const SqlFormatterPage = lazy(() =>
+  import('../pages/devtools/SqlFormatterPage').then((m) => ({ default: m.SqlFormatterPage })),
+);
+const DiffCheckerPage = lazy(() =>
+  import('../pages/devtools/DiffCheckerPage').then((m) => ({ default: m.DiffCheckerPage })),
+);
+const RegexTesterPage = lazy(() =>
+  import('../pages/devtools/RegexTesterPage').then((m) => ({ default: m.RegexTesterPage })),
+);
+const JwtDecoderPage = lazy(() =>
+  import('../pages/devtools/JwtDecoderPage').then((m) => ({ default: m.JwtDecoderPage })),
+);
+const JsFormatterPage = lazy(() =>
+  import('../pages/devtools/JsFormatterPage').then((m) => ({ default: m.JsFormatterPage })),
+);
 
 // Utilities (individual pages)
-const PasswordGeneratorPage = lazy(() => import('../pages/utilities/PasswordGeneratorPage').then(m => ({ default: m.PasswordGeneratorPage })));
-const LoremIpsumPage = lazy(() => import('../pages/utilities/LoremIpsumPage').then(m => ({ default: m.LoremIpsumPage })));
-const UuidGeneratorPage = lazy(() => import('../pages/utilities/UuidGeneratorPage').then(m => ({ default: m.UuidGeneratorPage })));
-const BarcodeGeneratorPage = lazy(() => import('../pages/utilities/BarcodeGeneratorPage').then(m => ({ default: m.BarcodeGeneratorPage })));
-const CaseConverterPage = lazy(() => import('../pages/utilities/CaseConverterPage').then(m => ({ default: m.CaseConverterPage })));
-const HtmlEntityPage = lazy(() => import('../pages/utilities/HtmlEntityPage').then(m => ({ default: m.HtmlEntityPage })));
-const CronGeneratorPage = lazy(() => import('../pages/utilities/CronGeneratorPage').then(m => ({ default: m.CronGeneratorPage })));
-const CssMinifierPage = lazy(() => import('../pages/utilities/CssMinifierPage').then(m => ({ default: m.CssMinifierPage })));
-const Base64ImagePage = lazy(() => import('../pages/utilities/Base64ImagePage').then(m => ({ default: m.Base64ImagePage })));
-const TextStatsPage = lazy(() => import('../pages/utilities/TextStatsPage').then(m => ({ default: m.TextStatsPage })));
-const NumberBasePage = lazy(() => import('../pages/utilities/NumberBasePage').then(m => ({ default: m.NumberBasePage })));
-const TimestampPage = lazy(() => import('../pages/utilities/TimestampPage').then(m => ({ default: m.TimestampPage })));
+const PasswordGeneratorPage = lazy(() =>
+  import('../pages/utilities/PasswordGeneratorPage').then((m) => ({
+    default: m.PasswordGeneratorPage,
+  })),
+);
+const LoremIpsumPage = lazy(() =>
+  import('../pages/utilities/LoremIpsumPage').then((m) => ({ default: m.LoremIpsumPage })),
+);
+const UuidGeneratorPage = lazy(() =>
+  import('../pages/utilities/UuidGeneratorPage').then((m) => ({ default: m.UuidGeneratorPage })),
+);
+const BarcodeGeneratorPage = lazy(() =>
+  import('../pages/utilities/BarcodeGeneratorPage').then((m) => ({
+    default: m.BarcodeGeneratorPage,
+  })),
+);
+const CaseConverterPage = lazy(() =>
+  import('../pages/utilities/CaseConverterPage').then((m) => ({ default: m.CaseConverterPage })),
+);
+const HtmlEntityPage = lazy(() =>
+  import('../pages/utilities/HtmlEntityPage').then((m) => ({ default: m.HtmlEntityPage })),
+);
+const CronGeneratorPage = lazy(() =>
+  import('../pages/utilities/CronGeneratorPage').then((m) => ({ default: m.CronGeneratorPage })),
+);
+const CssMinifierPage = lazy(() =>
+  import('../pages/utilities/CssMinifierPage').then((m) => ({ default: m.CssMinifierPage })),
+);
+const Base64ImagePage = lazy(() =>
+  import('../pages/utilities/Base64ImagePage').then((m) => ({ default: m.Base64ImagePage })),
+);
+const TextStatsPage = lazy(() =>
+  import('../pages/utilities/TextStatsPage').then((m) => ({ default: m.TextStatsPage })),
+);
+const NumberBasePage = lazy(() =>
+  import('../pages/utilities/NumberBasePage').then((m) => ({ default: m.NumberBasePage })),
+);
+const TimestampPage = lazy(() =>
+  import('../pages/utilities/TimestampPage').then((m) => ({ default: m.TimestampPage })),
+);
 
 export const toolRegistry: ToolDefinition[] = [
   // ── Converters ──
@@ -764,16 +901,16 @@ export const toolRegistry: ToolDefinition[] = [
 // ── Helpers ──
 
 export const getToolsByCategory = (category: ToolCategory): ToolDefinition[] =>
-  toolRegistry.filter(t => t.category === category);
+  toolRegistry.filter((t) => t.category === category);
 
 export const getToolByPath = (path: string): ToolDefinition | undefined =>
-  toolRegistry.find(t => t.path === path);
+  toolRegistry.find((t) => t.path === path);
 
 export const getFeaturedTools = (category: ToolCategory): ToolDefinition[] =>
-  toolRegistry.filter(t => t.category === category && t.featured);
+  toolRegistry.filter((t) => t.category === category && t.featured);
 
 export const getToolsBySubCategory = (subCategory: string): ToolDefinition[] =>
-  toolRegistry.filter(t => t.subCategory === subCategory);
+  toolRegistry.filter((t) => t.subCategory === subCategory);
 
 export const converterTools = getToolsByCategory('converter');
 export const editorTools = getToolsByCategory('editor');
@@ -793,10 +930,10 @@ export const categoryGroups = {
     description: 'Convierte entre múltiples formatos de archivo al instante.',
     tools: converterTools,
     subCategories: {
-      image: converterTools.filter(t => t.subCategory === 'image'),
-      document: converterTools.filter(t => t.subCategory === 'document'),
-      audio: converterTools.filter(t => t.subCategory === 'audio'),
-      video: converterTools.filter(t => t.subCategory === 'video'),
+      image: converterTools.filter((t) => t.subCategory === 'image'),
+      document: converterTools.filter((t) => t.subCategory === 'document'),
+      audio: converterTools.filter((t) => t.subCategory === 'audio'),
+      video: converterTools.filter((t) => t.subCategory === 'video'),
     },
   },
   editor: {

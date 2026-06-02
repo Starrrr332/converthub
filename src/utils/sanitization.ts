@@ -50,7 +50,11 @@ export function sanitizeUrl(input: string): string {
   const trimmed = input.trim();
   const lower = trimmed.toLowerCase();
 
-  if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) {
+  if (
+    lower.startsWith('javascript:') ||
+    lower.startsWith('data:') ||
+    lower.startsWith('vbscript:')
+  ) {
     return '';
   }
 
@@ -125,9 +129,22 @@ export function validateFilename(filename: string): { valid: boolean; error?: st
 
   // Block executable extensions
   const blockedExtensions = [
-    '.exe', '.bat', '.cmd', '.com', '.msi', '.scr', '.pif',
-    '.sh', '.bash', '.csh', '.ksh',
-    '.js', '.vbs', '.vbe', '.wsf', '.wsh',
+    '.exe',
+    '.bat',
+    '.cmd',
+    '.com',
+    '.msi',
+    '.scr',
+    '.pif',
+    '.sh',
+    '.bash',
+    '.csh',
+    '.ksh',
+    '.js',
+    '.vbs',
+    '.vbe',
+    '.wsf',
+    '.wsh',
   ];
 
   const ext = filename.toLowerCase().substring(filename.lastIndexOf('.'));

@@ -22,7 +22,7 @@ export function SpreadsheetEditorPage() {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
+
     setFileName(file.name);
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -33,10 +33,10 @@ export function SpreadsheetEditorPage() {
   };
 
   const parseCSV = (content: string) => {
-    const lines = content.split('\n').filter(l => l.trim());
-    const parsed = lines.map(line => {
+    const lines = content.split('\n').filter((l) => l.trim());
+    const parsed = lines.map((line) => {
       const cells = line.split(delimiter);
-      return cells.map(cell => ({ value: cell.replace(/^"|"$/g, '').trim() }));
+      return cells.map((cell) => ({ value: cell.replace(/^"|"$/g, '').trim() }));
     });
     setData(parsed);
   };
@@ -50,7 +50,9 @@ export function SpreadsheetEditorPage() {
 
   const addRow = (afterRow: number) => {
     const cols = data[0]?.length || 3;
-    const newRow: Cell[] = Array(cols).fill(null).map(() => ({ value: '' }));
+    const newRow: Cell[] = Array(cols)
+      .fill(null)
+      .map(() => ({ value: '' }));
     const newData = [...data];
     newData.splice(afterRow + 1, 0, newRow);
     setData(newData);
@@ -70,7 +72,7 @@ export function SpreadsheetEditorPage() {
   };
 
   const addColumn = (afterCol: number) => {
-    const newData = data.map(row => {
+    const newData = data.map((row) => {
       const newRow = [...row];
       newRow.splice(afterCol + 1, 0, { value: '' });
       return newRow;
@@ -80,11 +82,13 @@ export function SpreadsheetEditorPage() {
 
   const deleteCol = (colIndex: number) => {
     if (data[0]?.length <= 1) return;
-    setData(data.map(row => row.filter((_, i) => i !== colIndex)));
+    setData(data.map((row) => row.filter((_, i) => i !== colIndex)));
   };
 
   const exportCSV = () => {
-    const content = data.map(row => row.map(cell => `"${cell.value}"`).join(delimiter)).join('\n');
+    const content = data
+      .map((row) => row.map((cell) => `"${cell.value}"`).join(delimiter))
+      .join('\n');
     const blob = new Blob([content], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -96,10 +100,12 @@ export function SpreadsheetEditorPage() {
 
   const exportJSON = () => {
     if (data.length < 2) return;
-    const headers = data[0].map(cell => cell.value);
-    const jsonData = data.slice(1).map(row => {
+    const headers = data[0].map((cell) => cell.value);
+    const jsonData = data.slice(1).map((row) => {
       const obj: Record<string, string> = {};
-      headers.forEach((header, i) => { obj[header] = row[i]?.value || ''; });
+      headers.forEach((header, i) => {
+        obj[header] = row[i]?.value || '';
+      });
       return obj;
     });
     const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
@@ -134,111 +140,142 @@ export function SpreadsheetEditorPage() {
       subtitle={t('nav.editors.spreadsheetDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.spreadsheet') }]}
     >
-        <div className="content-panel p-4 mb-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" accept=".csv,.tsv,.txt" />
-            <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="sm">
-              <Upload className="w-4 h-4 mr-1" /> Abrir CSV
-            </Button>
-            <Button onClick={exportCSV} size="sm">
-              <Download className="w-4 h-4 mr-1" /> Exportar CSV
-            </Button>
-            <Button onClick={exportJSON} variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-1" /> Exportar JSON
-            </Button>
-            <Button onClick={() => addRow(data.length - 1)} variant="outline" size="sm">
-              <Plus className="w-4 h-4 mr-1" /> Fila
-            </Button>
-            <Button onClick={() => addColumn((data[0]?.length || 1) - 1)} variant="outline" size="sm">
-              <Plus className="w-4 h-4 mr-1" /> Columna
-            </Button>
-            <div className="flex items-center gap-2 ml-auto">
-              <label className="text-sm text-gray-600">Delimitador:</label>
-              <select value={delimiter} onChange={(e) => setDelimiter(e.target.value)}
-                className="p-1 border rounded text-sm">
-                <option value=",">Coma (,)</option>
-                <option value=";">Punto y coma (;)</option>
-                <option value="\t">Tab</option>
-                <option value="|">Pipe (|)</option>
-              </select>
-            </div>
+      <div className="content-panel p-4 mb-4">
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            className="hidden"
+            accept=".csv,.tsv,.txt"
+          />
+          <Button onClick={() => fileInputRef.current?.click()} variant="outline" size="sm">
+            <Upload className="w-4 h-4 mr-1" /> Abrir CSV
+          </Button>
+          <Button onClick={exportCSV} size="sm">
+            <Download className="w-4 h-4 mr-1" /> Exportar CSV
+          </Button>
+          <Button onClick={exportJSON} variant="outline" size="sm">
+            <Download className="w-4 h-4 mr-1" /> Exportar JSON
+          </Button>
+          <Button onClick={() => addRow(data.length - 1)} variant="outline" size="sm">
+            <Plus className="w-4 h-4 mr-1" /> Fila
+          </Button>
+          <Button onClick={() => addColumn((data[0]?.length || 1) - 1)} variant="outline" size="sm">
+            <Plus className="w-4 h-4 mr-1" /> Columna
+          </Button>
+          <div className="flex items-center gap-2 ml-auto">
+            <label className="text-sm text-gray-600">Delimitador:</label>
+            <select
+              value={delimiter}
+              onChange={(e) => setDelimiter(e.target.value)}
+              className="p-1 border rounded text-sm"
+            >
+              <option value=",">Coma (,)</option>
+              <option value=";">Punto y coma (;)</option>
+              <option value="\t">Tab</option>
+              <option value="|">Pipe (|)</option>
+            </select>
           </div>
         </div>
+      </div>
 
-        {/* Spreadsheet */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="p-2 bg-gray-100 border text-sm font-medium text-gray-600 w-12">#</th>
-                  {data[0]?.map((_, colIndex) => (
-                    <th key={colIndex} className="p-2 bg-gray-100 border text-sm font-medium text-gray-600 min-w-[120px]">
-                      <div className="flex items-center justify-between gap-1">
-                        <span>Col {colIndex + 1}</span>
-                        <div className="flex gap-0.5">
-                          <button onClick={() => sortColumn(colIndex, true)} className="hover:bg-gray-200 p-0.5 rounded">
-                            <ArrowUp className="w-3 h-3" />
-                          </button>
-                          <button onClick={() => sortColumn(colIndex, false)} className="hover:bg-gray-200 p-0.5 rounded">
-                            <ArrowDown className="w-3 h-3" />
-                          </button>
-                          <button onClick={() => deleteCol(colIndex)} className="hover:bg-red-100 p-0.5 rounded text-red-500">
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-                        </div>
-                      </div>
-                    </th>
-                  ))}
-                  <th className="p-2 bg-gray-100 border w-20">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((row, rowIndex) => (
-                  <tr key={rowIndex} className={rowIndex === 0 ? 'bg-blue-50' : ''}>
-                    <td className="p-2 border text-sm text-gray-500 text-center">{rowIndex + 1}</td>
-                    {row.map((cell, colIndex) => (
-                      <td key={colIndex} className="p-0 border">
-                        <input
-                          type="text"
-                          value={cell.value}
-                          onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
-                          className={`w-full p-2 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm ${
-                            rowIndex === 0 ? 'font-semibold' : ''
-                          }`}
-                        />
-                      </td>
-                    ))}
-                    <td className="p-1 border">
-                      <div className="flex gap-0.5 justify-center">
-                        <button onClick={() => moveRow(rowIndex, 'up')} disabled={rowIndex === 0}
-                          className="p-1 hover:bg-gray-100 rounded disabled:opacity-30">
+      {/* Spreadsheet */}
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full border-collapse">
+            <thead>
+              <tr>
+                <th className="p-2 bg-gray-100 border text-sm font-medium text-gray-600 w-12">#</th>
+                {data[0]?.map((_, colIndex) => (
+                  <th
+                    key={colIndex}
+                    className="p-2 bg-gray-100 border text-sm font-medium text-gray-600 min-w-[120px]"
+                  >
+                    <div className="flex items-center justify-between gap-1">
+                      <span>Col {colIndex + 1}</span>
+                      <div className="flex gap-0.5">
+                        <button
+                          onClick={() => sortColumn(colIndex, true)}
+                          className="hover:bg-gray-200 p-0.5 rounded"
+                        >
                           <ArrowUp className="w-3 h-3" />
                         </button>
-                        <button onClick={() => moveRow(rowIndex, 'down')} disabled={rowIndex === data.length - 1}
-                          className="p-1 hover:bg-gray-100 rounded disabled:opacity-30">
+                        <button
+                          onClick={() => sortColumn(colIndex, false)}
+                          className="hover:bg-gray-200 p-0.5 rounded"
+                        >
                           <ArrowDown className="w-3 h-3" />
                         </button>
-                        <button onClick={() => addRow(rowIndex)}
-                          className="p-1 hover:bg-green-100 rounded text-green-600">
-                          <Plus className="w-3 h-3" />
-                        </button>
-                        <button onClick={() => deleteRow(rowIndex)}
-                          className="p-1 hover:bg-red-100 rounded text-red-500">
+                        <button
+                          onClick={() => deleteCol(colIndex)}
+                          className="hover:bg-red-100 p-0.5 rounded text-red-500"
+                        >
                           <Trash2 className="w-3 h-3" />
                         </button>
                       </div>
-                    </td>
-                  </tr>
+                    </div>
+                  </th>
                 ))}
-              </tbody>
-            </table>
-          </div>
+                <th className="p-2 bg-gray-100 border w-20">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, rowIndex) => (
+                <tr key={rowIndex} className={rowIndex === 0 ? 'bg-blue-50' : ''}>
+                  <td className="p-2 border text-sm text-gray-500 text-center">{rowIndex + 1}</td>
+                  {row.map((cell, colIndex) => (
+                    <td key={colIndex} className="p-0 border">
+                      <input
+                        type="text"
+                        value={cell.value}
+                        onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
+                        className={`w-full p-2 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm ${
+                          rowIndex === 0 ? 'font-semibold' : ''
+                        }`}
+                      />
+                    </td>
+                  ))}
+                  <td className="p-1 border">
+                    <div className="flex gap-0.5 justify-center">
+                      <button
+                        onClick={() => moveRow(rowIndex, 'up')}
+                        disabled={rowIndex === 0}
+                        className="p-1 hover:bg-gray-100 rounded disabled:opacity-30"
+                      >
+                        <ArrowUp className="w-3 h-3" />
+                      </button>
+                      <button
+                        onClick={() => moveRow(rowIndex, 'down')}
+                        disabled={rowIndex === data.length - 1}
+                        className="p-1 hover:bg-gray-100 rounded disabled:opacity-30"
+                      >
+                        <ArrowDown className="w-3 h-3" />
+                      </button>
+                      <button
+                        onClick={() => addRow(rowIndex)}
+                        className="p-1 hover:bg-green-100 rounded text-green-600"
+                      >
+                        <Plus className="w-3 h-3" />
+                      </button>
+                      <button
+                        onClick={() => deleteRow(rowIndex)}
+                        className="p-1 hover:bg-red-100 rounded text-red-500"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+      </div>
 
-        <div className="mt-4 text-sm text-slate-500 text-center">
-          {data.length} filas × {data[0]?.length || 0} columnas
-        </div>
+      <div className="mt-4 text-sm text-slate-500 text-center">
+        {data.length} filas × {data[0]?.length || 0} columnas
+      </div>
     </PageLayout>
   );
 }

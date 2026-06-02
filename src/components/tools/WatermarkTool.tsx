@@ -2,7 +2,16 @@ import { useState, useRef, useCallback } from 'react';
 import { Download, Upload, AlertTriangle, Droplets } from 'lucide-react';
 import { Button } from '../ui/Button';
 
-type Position = 'top-left' | 'top-center' | 'top-right' | 'middle-left' | 'center' | 'middle-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+type Position =
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'middle-left'
+  | 'center'
+  | 'middle-right'
+  | 'bottom-left'
+  | 'bottom-center'
+  | 'bottom-right';
 
 const POSITIONS: { value: Position; label: string }[] = [
   { value: 'top-left', label: '↗' },
@@ -52,7 +61,7 @@ export function WatermarkTool() {
       'top-center': { x: (canvas.width - textWidth) / 2, y: padding + textHeight },
       'top-right': { x: canvas.width - textWidth - padding, y: padding + textHeight },
       'middle-left': { x: padding, y: canvas.height / 2 },
-      'center': { x: (canvas.width - textWidth) / 2, y: canvas.height / 2 },
+      center: { x: (canvas.width - textWidth) / 2, y: canvas.height / 2 },
       'middle-right': { x: canvas.width - textWidth - padding, y: canvas.height / 2 },
       'bottom-left': { x: padding, y: canvas.height - padding },
       'bottom-center': { x: (canvas.width - textWidth) / 2, y: canvas.height - padding },
@@ -111,10 +120,7 @@ export function WatermarkTool() {
 
   return (
     <div className="space-y-4">
-      <div
-        onClick={() => fileRef.current?.click()}
-        className="dropzone cursor-pointer"
-      >
+      <div onClick={() => fileRef.current?.click()} className="dropzone cursor-pointer">
         <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
         <p className="text-sm text-slate-600 text-center">
           Arrastra una imagen o haz clic para seleccionar
@@ -137,7 +143,9 @@ export function WatermarkTool() {
 
       <div className="space-y-3">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Texto del watermark</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Texto del watermark
+          </label>
           <input
             type="text"
             value={text}
@@ -216,7 +224,11 @@ export function WatermarkTool() {
         </div>
       )}
 
-      <Button onClick={applyWatermark} disabled={!preview || !text.trim() || loading} className="w-full">
+      <Button
+        onClick={applyWatermark}
+        disabled={!preview || !text.trim() || loading}
+        className="w-full"
+      >
         <Droplets className="w-4 h-4" />
         {loading ? 'Aplicando...' : 'Agregar Marca de Agua'}
       </Button>
@@ -225,7 +237,10 @@ export function WatermarkTool() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-slate-700">Imagen con marca de agua</span>
-            <button onClick={handleDownload} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+            <button
+              onClick={handleDownload}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+            >
               <Download className="w-4 h-4" />
               Descargar
             </button>

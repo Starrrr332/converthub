@@ -82,7 +82,7 @@ const EMOJIS: Emoji[] = [
   { char: '⏰', name: 'alarm', category: 'objetos' },
 ];
 
-const CATEGORIES = [...new Set(EMOJIS.map(e => e.category))];
+const CATEGORIES = [...new Set(EMOJIS.map((e) => e.category))];
 
 export function EmojiConverter() {
   const [search, setSearch] = useState('');
@@ -91,8 +91,9 @@ export function EmojiConverter() {
   const [selectedEmoji, setSelectedEmoji] = useState<Emoji | null>(null);
 
   const filtered = useMemo(() => {
-    return EMOJIS.filter(e => {
-      const matchSearch = !search || e.name.includes(search.toLowerCase()) || e.char.includes(search);
+    return EMOJIS.filter((e) => {
+      const matchSearch =
+        !search || e.name.includes(search.toLowerCase()) || e.char.includes(search);
       const matchCategory = !selectedCategory || e.category === selectedCategory;
       return matchSearch && matchCategory;
     });
@@ -101,7 +102,8 @@ export function EmojiConverter() {
   const copyEmoji = async (emoji: Emoji, type: 'char' | 'unicode' | 'html') => {
     let text: string;
     if (type === 'char') text = emoji.char;
-    else if (type === 'unicode') text = `U+${emoji.char.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`;
+    else if (type === 'unicode')
+      text = `U+${emoji.char.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`;
     else text = `&#${emoji.char.codePointAt(0)};`;
 
     await navigator.clipboard.writeText(text);
@@ -118,7 +120,7 @@ export function EmojiConverter() {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
         <input
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Buscar emoji..."
           className="input-field pl-10 w-full"
         />
@@ -129,17 +131,21 @@ export function EmojiConverter() {
         <button
           onClick={() => setSelectedCategory(null)}
           className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
-            !selectedCategory ? 'bg-brand-600 text-white' : 'bg-surface-secondary text-text-secondary hover:bg-slate-200'
+            !selectedCategory
+              ? 'bg-brand-600 text-white'
+              : 'bg-surface-secondary text-text-secondary hover:bg-slate-200'
           }`}
         >
           Todos
         </button>
-        {CATEGORIES.map(cat => (
+        {CATEGORIES.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
             className={`px-2.5 py-1 rounded-lg text-xs font-medium capitalize transition-colors ${
-              selectedCategory === cat ? 'bg-brand-600 text-white' : 'bg-surface-secondary text-text-secondary hover:bg-slate-200'
+              selectedCategory === cat
+                ? 'bg-brand-600 text-white'
+                : 'bg-surface-secondary text-text-secondary hover:bg-slate-200'
             }`}
           >
             {cat}
@@ -176,15 +182,27 @@ export function EmojiConverter() {
           <div className="flex gap-2 flex-wrap">
             {[
               { type: 'char' as const, label: 'Copiar emoji', value: selectedEmoji.char },
-              { type: 'unicode' as const, label: 'Unicode', value: `U+${selectedEmoji.char.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}` },
-              { type: 'html' as const, label: 'HTML entity', value: `&#${selectedEmoji.char.codePointAt(0)};` },
-            ].map(opt => (
+              {
+                type: 'unicode' as const,
+                label: 'Unicode',
+                value: `U+${selectedEmoji.char.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`,
+              },
+              {
+                type: 'html' as const,
+                label: 'HTML entity',
+                value: `&#${selectedEmoji.char.codePointAt(0)};`,
+              },
+            ].map((opt) => (
               <button
                 key={opt.type}
                 onClick={() => copyEmoji(selectedEmoji, opt.type)}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-secondary hover:bg-slate-200 text-xs font-medium text-text-secondary transition-colors"
               >
-                {copied === `${selectedEmoji.char}-${opt.type}` ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                {copied === `${selectedEmoji.char}-${opt.type}` ? (
+                  <Check className="w-3 h-3 text-green-500" />
+                ) : (
+                  <Copy className="w-3 h-3" />
+                )}
                 {opt.label}
               </button>
             ))}

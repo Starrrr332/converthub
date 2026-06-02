@@ -4,9 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 export function useShareConfig() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const setConfig = useCallback((params: Record<string, string>) => {
-    setSearchParams(params, { replace: true });
-  }, [setSearchParams]);
+  const setConfig = useCallback(
+    (params: Record<string, string>) => {
+      setSearchParams(params, { replace: true });
+    },
+    [setSearchParams],
+  );
 
   const getConfig = useCallback(() => {
     const params: Record<string, string> = {};

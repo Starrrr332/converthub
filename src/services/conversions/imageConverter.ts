@@ -6,20 +6,75 @@ import {
   canvasToBlob
 } from '../../utils/fileHelpers';
 
+let worker: Worker | null = null;
+let workerReady = false;
+let messageId = 0;
+const pendingCallbacks = new Map<number, { resolve: (r: ConversionResult) => void; reject: (e: Error) => void }>();
+
+const supportsOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
+
+function getWorker(): Worker | null {
+  if (!supportsOffscreenCanvas) return null;
+  if (worker && workerReady) return worker;
+
+  if (!worker) {
+    worker = new Worker(new URL('../../workers/imageWorker.ts', import.meta.url), { type: 'module' });
+    worker.onmessage = (e) => {
+      const { id, success, blob, error } = e.data;
+      const pending = pendingCallbacks.get(id);
+      if (!pending) return;
+      pendingCallbacks.delete(id);
+
+      if (success) {
+        const url = URL.createObjectURL(blob);
+        pending.resolve({
+          blob,
+          url,
+          width: 0,
+          height: 0,
+          size: blob.size,
+          format: '',
+        });
+      } else {
+        pending.reject(new Error(error));
+      }
+    };
+    worker.onerror = (e) => {
+      console.error('Image worker error:', e);
+    };
+    workerReady = true;
+  }
+  return worker;
+}
+
+function convertViaWorker(file: File, options: ConvertOptions): Promise<ConversionResult> {
+  const w = getWorker();
+  if (!w) return Promise.reject(new Error('Worker not available'));
+
+  const id = ++messageId;
+  return new Promise<ConversionResult>((resolve, reject) => {
+    pendingCallbacks.set(id, { resolve, reject });
+    w.postMessage({ type: 'processImage', id, file, options });
+  });
+}
+
 export async function convertImage(
   file: File,
   options: ConvertOptions
 ): Promise<ConversionResult> {
-  // Read file as data URL for image loading
+  if (supportsOffscreenCanvas && getWorker()) {
+    try {
+      return await convertViaWorker(file, options);
+    } catch {
+      // Fallback to main thread
+    }
+  }
+
   const dataUrl = await readFileAsDataURL(file);
-  
-  // Load image
   const img = await loadImage(dataUrl);
   
-  // Create canvas and apply transformations
   let canvas = createCanvasFromImage(img);
   
-  // Apply resize if specified
   if (options.width || options.height) {
     canvas = resizeCanvas(
       canvas,
@@ -29,25 +84,19 @@ export async function convertImage(
     );
   }
   
-  // Apply crop if specified
   if (options.crop) {
     canvas = cropCanvas(canvas, options.crop);
   }
   
-  // Apply rotation if specified
   if (options.rotate && options.rotate !== 0) {
     canvas = rotateCanvas(canvas, options.rotate);
   }
   
-  // Apply flip if specified
   if (options.flip) {
     canvas = flipCanvas(canvas, options.flip.horizontal, options.flip.vertical);
   }
   
-  // Convert to blob
   const blob = await canvasToBlob(canvas, options.format, options.quality);
-  
-  // Create result
   const url = URL.createObjectURL(blob);
   
   return {
@@ -83,7 +132,6 @@ function resizeCanvas(
   newCanvas.width = width;
   newCanvas.height = height;
   
-  // Draw resized image
   ctx.drawImage(canvas, 0, 0, width, height);
   
   return newCanvas;
@@ -125,7 +173,6 @@ function rotateCanvas(canvas: HTMLCanvasElement, degrees: number): HTMLCanvasEle
   
   const ctx = newCanvas.getContext('2d')!;
   
-  // Move to center, rotate, draw
   ctx.translate(newWidth / 2, newHeight / 2);
   ctx.rotate(radians);
   ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
@@ -204,8 +251,6 @@ export async function changeDpi(
   file: File,
   _dpi: number // eslint-disable-line @typescript-eslint/no-unused-vars
 ): Promise<ConversionResult> {
-  // Note: DPI is metadata, actual pixel dimensions remain the same
-  // This function ensures the output has the correct DPI metadata
   return convertImage(file, {
     format: file.type as ImageFormat
   });

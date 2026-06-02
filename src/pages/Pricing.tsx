@@ -55,23 +55,30 @@ export function Pricing() {
       if (!container) return;
       while (container.firstChild) container.removeChild(container.firstChild);
       try {
-        window.paypal.Buttons({
-          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'donate' },
-          createOrder: (_data: unknown, actions: Record<string, unknown>) => {
-            return (actions.order as { create: (order: unknown) => Promise<string> }).create({
-              purchase_units: [{ amount: { value: selectedAmount.toFixed(2) }, description: `Donacion a ConvertHub - $${selectedAmount} USD` }]
-            });
-          },
-          onApprove: async (_data: unknown, actions: Record<string, unknown>) => {
-            await (actions.order as { capture: () => Promise<unknown> }).capture();
-            handlePaymentSuccess();
-          },
-          onError: () => {
-            setPaymentError('Error en el pago. Intenta de nuevo.');
-            setLoadingPaypal(false);
-          },
-          onCancel: () => setLoadingPaypal(false)
-        }).render('#paypal-donation-btn');
+        window.paypal
+          .Buttons({
+            style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'donate' },
+            createOrder: (_data: unknown, actions: Record<string, unknown>) => {
+              return (actions.order as { create: (order: unknown) => Promise<string> }).create({
+                purchase_units: [
+                  {
+                    amount: { value: selectedAmount.toFixed(2) },
+                    description: `Donacion a ConvertHub - $${selectedAmount} USD`,
+                  },
+                ],
+              });
+            },
+            onApprove: async (_data: unknown, actions: Record<string, unknown>) => {
+              await (actions.order as { capture: () => Promise<unknown> }).capture();
+              handlePaymentSuccess();
+            },
+            onError: () => {
+              setPaymentError('Error en el pago. Intenta de nuevo.');
+              setLoadingPaypal(false);
+            },
+            onCancel: () => setLoadingPaypal(false),
+          })
+          .render('#paypal-donation-btn');
         setLoadingPaypal(false);
       } catch {
         setPaymentError('Error al cargar PayPal. Recarga la pagina.');
@@ -90,8 +97,10 @@ export function Pricing() {
             <Check className="w-8 h-8 text-green-600" />
           </div>
           <h1 className="text-2xl font-bold text-text mb-3">Gracias por tu donación</h1>
-          <p className="text-text-secondary text-sm mb-8">Tu apoyo nos ayuda a mantener ConvertHub gratuito para todos.</p>
-          <Button onClick={() => window.location.href = '/'}>Continuar usando ConvertHub</Button>
+          <p className="text-text-secondary text-sm mb-8">
+            Tu apoyo nos ayuda a mantener ConvertHub gratuito para todos.
+          </p>
+          <Button onClick={() => (window.location.href = '/')}>Continuar usando ConvertHub</Button>
         </div>
       </div>
     );
@@ -108,7 +117,8 @@ export function Pricing() {
             Todo es gratuito
           </h1>
           <p className="text-text-secondary text-sm sm:text-base">
-            ConvertHub es y será siempre gratuito. Si te sirvió, considera hacer una donación voluntaria.
+            ConvertHub es y será siempre gratuito. Si te sirvió, considera hacer una donación
+            voluntaria.
           </p>
         </div>
 
@@ -116,27 +126,48 @@ export function Pricing() {
           <div className="card border-2 border-brand-100">
             <div className="text-center mb-6">
               <h2 className="text-xl font-bold text-text mb-1">Hacer una donación</h2>
-              <p className="text-sm text-text-secondary">Elige el monto que desees. No hay mínimo.</p>
+              <p className="text-sm text-text-secondary">
+                Elige el monto que desees. No hay mínimo.
+              </p>
             </div>
 
             <div className="grid grid-cols-4 gap-2 mb-5">
-              {[1, 3, 5, 10].map(amount => (
-                <button key={amount} onClick={() => { setSelectedAmount(amount); setShowPayPal(false); renderedRef.current = false; }}
+              {[1, 3, 5, 10].map((amount) => (
+                <button
+                  key={amount}
+                  onClick={() => {
+                    setSelectedAmount(amount);
+                    setShowPayPal(false);
+                    renderedRef.current = false;
+                  }}
                   className={`p-3 rounded-lg border-2 font-bold text-sm transition-all ${
-                    selectedAmount === amount ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-border hover:border-brand-200 text-text-secondary hover:text-text'
-                  }`}>
+                    selectedAmount === amount
+                      ? 'border-brand-500 bg-brand-50 text-brand-700'
+                      : 'border-border hover:border-brand-200 text-text-secondary hover:text-text'
+                  }`}
+                >
                   ${amount}
                 </button>
               ))}
             </div>
 
             <div className="mb-5">
-              <label className="block text-xs font-medium text-text-secondary mb-1">Otro monto (USD)</label>
+              <label className="block text-xs font-medium text-text-secondary mb-1">
+                Otro monto (USD)
+              </label>
               <div className="flex items-center gap-1.5">
                 <span className="text-text-muted text-sm">$</span>
-                <input type="number" min="1" value={selectedAmount}
-                  onChange={(e) => { setSelectedAmount(Math.max(1, Number(e.target.value))); setShowPayPal(false); renderedRef.current = false; }}
-                  className="input-field" />
+                <input
+                  type="number"
+                  min="1"
+                  value={selectedAmount}
+                  onChange={(e) => {
+                    setSelectedAmount(Math.max(1, Number(e.target.value)));
+                    setShowPayPal(false);
+                    renderedRef.current = false;
+                  }}
+                  className="input-field"
+                />
               </div>
             </div>
 
@@ -149,18 +180,32 @@ export function Pricing() {
 
             <div className="min-h-[60px]">
               {!showPayPal ? (
-                <Button onClick={() => { setShowPayPal(true); setPaymentError(null); }} className="w-full" size="lg">
+                <Button
+                  onClick={() => {
+                    setShowPayPal(true);
+                    setPaymentError(null);
+                  }}
+                  className="w-full"
+                  size="lg"
+                >
                   <CreditCard className="w-4 h-4" />
                   Donar ${selectedAmount} USD
                 </Button>
               ) : (
                 <div>
                   {loadingPaypal && (
-                    <div className="text-center py-4 text-sm text-text-muted">Cargando PayPal...</div>
+                    <div className="text-center py-4 text-sm text-text-muted">
+                      Cargando PayPal...
+                    </div>
                   )}
                   <div id="paypal-donation-btn" />
-                  <button onClick={() => { setShowPayPal(false); renderedRef.current = false; }}
-                    className="w-full mt-3 py-2 text-sm text-text-muted hover:text-text transition-colors">
+                  <button
+                    onClick={() => {
+                      setShowPayPal(false);
+                      renderedRef.current = false;
+                    }}
+                    className="w-full mt-3 py-2 text-sm text-text-muted hover:text-text transition-colors"
+                  >
                     Cancelar
                   </button>
                 </div>
@@ -190,8 +235,16 @@ export function Pricing() {
           <h2 className="text-xl font-bold text-text mb-6">¿Qué incluye?</h2>
           <div className="grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
             {[
-              { icon: '🔒', title: 'Privacidad total', desc: 'Tus archivos nunca salen de tu navegador' },
-              { icon: '⚡', title: 'Sin límites', desc: 'Conversiones ilimitadas, archivos grandes' },
+              {
+                icon: '🔒',
+                title: 'Privacidad total',
+                desc: 'Tus archivos nunca salen de tu navegador',
+              },
+              {
+                icon: '⚡',
+                title: 'Sin límites',
+                desc: 'Conversiones ilimitadas, archivos grandes',
+              },
               { icon: '🎁', title: 'Todo incluido', desc: 'PDF, imágenes, audio, video y más' },
             ].map((item, i) => (
               <div key={i} className="card text-center">

@@ -19,13 +19,15 @@ export function ThemeSelector() {
             }`}
           >
             <div className="flex gap-0.5 shrink-0">
-              {Object.values(theme.brand).slice(4, 7).map((color, i) => (
-                <div
-                  key={i}
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
+              {Object.values(theme.brand)
+                .slice(4, 7)
+                .map((color, i) => (
+                  <div
+                    key={i}
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
             </div>
             <span className="text-xs font-medium text-text truncate">{theme.name}</span>
             {currentTheme === theme.id && (

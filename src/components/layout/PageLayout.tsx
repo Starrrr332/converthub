@@ -32,8 +32,14 @@ export function PageLayout({
   return (
     <div className={wide ? 'page-container-wide' : 'page-container'}>
       {breadcrumb && breadcrumb.length > 0 && (
-        <nav className="flex items-center gap-1.5 text-sm text-slate-500 mb-6" aria-label="Breadcrumb">
-          <Link to="/" className="hover:text-indigo-600 transition-colors p-1 -ml-1 rounded-lg hover:bg-slate-100">
+        <nav
+          className="flex items-center gap-1.5 text-sm text-slate-500 mb-6"
+          aria-label="Breadcrumb"
+        >
+          <Link
+            to="/"
+            className="hover:text-indigo-600 transition-colors p-1 -ml-1 rounded-lg hover:bg-slate-100"
+          >
             <Home className="w-4 h-4" />
           </Link>
           {breadcrumb.map((item, i) => (

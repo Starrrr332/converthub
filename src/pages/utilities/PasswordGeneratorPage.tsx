@@ -7,7 +7,11 @@ export function PasswordGeneratorPage() {
       title="Generador de Contraseñas"
       subtitle="Contraseñas seguras configurables."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades', to: '/tools/utilities' }, { label: 'Contraseñas' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'Utilidades', to: '/tools/utilities' },
+        { label: 'Contraseñas' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

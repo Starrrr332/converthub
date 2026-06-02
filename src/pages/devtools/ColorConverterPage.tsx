@@ -7,7 +7,11 @@ export function ColorConverterPage() {
       title="Convertidor de Color"
       subtitle="Convierte entre HEX, RGB, HSL."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'DevTools', to: '/devtools' }, { label: 'Color' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'DevTools', to: '/devtools' },
+        { label: 'Color' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

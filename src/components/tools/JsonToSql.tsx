@@ -68,12 +68,12 @@ export function JsonToSql() {
         return;
       }
 
-      const colNames = columns.map(c => `"${c.name}"`).join(', ');
+      const colNames = columns.map((c) => `"${c.name}"`).join(', ');
       const lines: string[] = [];
 
       for (const row of parsed) {
         const obj = row as Record<string, unknown>;
-        const values = columns.map(c => escapeValue(obj[c.name])).join(', ');
+        const values = columns.map((c) => escapeValue(obj[c.name])).join(', ');
         lines.push(`INSERT INTO "${tableName}" (${colNames}) VALUES (${values});`);
       }
 
@@ -91,7 +91,7 @@ export function JsonToSql() {
   };
 
   const updateColumnType = (index: number, type: SqlType) => {
-    setColumns(prev => prev.map((c, i) => i === index ? { ...c, type } : c));
+    setColumns((prev) => prev.map((c, i) => (i === index ? { ...c, type } : c)));
   };
 
   return (
@@ -103,22 +103,26 @@ export function JsonToSql() {
         {columns.length > 0 && <Button onClick={generate}>Generar SQL</Button>}
         {output && (
           <Button onClick={copy} variant="outline">
-            {copied ? <Check className="w-4 h-4 mr-1 text-green-500" /> : <Copy className="w-4 h-4 mr-1" />}
+            {copied ? (
+              <Check className="w-4 h-4 mr-1 text-green-500" />
+            ) : (
+              <Copy className="w-4 h-4 mr-1" />
+            )}
             Copiar
           </Button>
         )}
       </div>
 
-      {error && (
-        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>
-      )}
+      {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">JSON de entrada (array)</label>
+          <label className="block text-xs font-medium text-text-muted mb-1">
+            JSON de entrada (array)
+          </label>
           <textarea
             value={input}
-            onChange={e => setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)}
             placeholder={'[\n  {"name": "Alice", "age": 30},\n  {"name": "Bob", "age": 25}\n]'}
             className="input-field h-48 font-mono text-sm"
           />
@@ -139,7 +143,7 @@ export function JsonToSql() {
           <input
             type="text"
             value={tableName}
-            onChange={e => setTableName(e.target.value)}
+            onChange={(e) => setTableName(e.target.value)}
             className="input-field text-sm"
           />
         </div>
@@ -148,7 +152,7 @@ export function JsonToSql() {
           <input
             type="text"
             value={primaryKey}
-            onChange={e => setPrimaryKey(e.target.value)}
+            onChange={(e) => setPrimaryKey(e.target.value)}
             className="input-field text-sm"
           />
         </div>
@@ -161,14 +165,19 @@ export function JsonToSql() {
           </p>
           <div className="flex flex-wrap gap-2">
             {columns.map((col, i) => (
-              <div key={col.name} className="flex items-center gap-1.5 bg-surface-secondary px-2.5 py-1.5 rounded-lg text-sm">
+              <div
+                key={col.name}
+                className="flex items-center gap-1.5 bg-surface-secondary px-2.5 py-1.5 rounded-lg text-sm"
+              >
                 <span className="font-mono font-medium text-text">{col.name}</span>
                 {col.name === primaryKey && (
-                  <span className="text-[10px] bg-accent-100 text-accent-700 px-1.5 py-0.5 rounded-full font-bold">PK</span>
+                  <span className="text-[10px] bg-accent-100 text-accent-700 px-1.5 py-0.5 rounded-full font-bold">
+                    PK
+                  </span>
                 )}
                 <select
                   value={col.type}
-                  onChange={e => updateColumnType(i, e.target.value as SqlType)}
+                  onChange={(e) => updateColumnType(i, e.target.value as SqlType)}
                   className="text-xs border border-border rounded px-1.5 py-0.5 bg-surface"
                 >
                   <option value="TEXT">TEXT</option>

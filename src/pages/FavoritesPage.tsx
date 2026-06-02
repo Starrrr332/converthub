@@ -11,11 +11,11 @@ export function FavoritesPage() {
 
   const favoriteTools = favorites
     .map((path) => toolRegistry.find((t) => t.path === path))
-    .filter((t): t is typeof toolRegistry[number] => Boolean(t));
+    .filter((t): t is (typeof toolRegistry)[number] => Boolean(t));
 
   const recentTools = recentPaths
     .map((path) => toolRegistry.find((t) => t.path === path))
-    .filter((t): t is typeof toolRegistry[number] => Boolean(t));
+    .filter((t): t is (typeof toolRegistry)[number] => Boolean(t));
 
   return (
     <PageLayout
@@ -36,7 +36,9 @@ export function FavoritesPage() {
           <div className="card p-8 text-center">
             <Star className="w-10 h-10 text-text-muted mx-auto mb-3" />
             <p className="text-sm text-text-secondary">Aún no tienes favoritos.</p>
-            <p className="text-xs text-text-muted mt-1">Haz clic en la estrella de cualquier herramienta para agregarla.</p>
+            <p className="text-xs text-text-muted mt-1">
+              Haz clic en la estrella de cualquier herramienta para agregarla.
+            </p>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -55,7 +57,10 @@ export function FavoritesPage() {
                 </div>
                 <div className="flex items-center gap-1">
                   <button
-                    onClick={(e) => { e.preventDefault(); removeFavorite(tool.path); }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      removeFavorite(tool.path);
+                    }}
                     className="p-1 rounded hover:bg-red-50 text-text-muted hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
                     title="Quitar de favoritos"
                   >

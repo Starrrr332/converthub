@@ -44,7 +44,11 @@ export function YamlJsonConverter() {
     <div>
       <div className="flex items-center gap-3 mb-4">
         <h3 className="text-lg font-semibold">YAML ↔ JSON</h3>
-        <button onClick={swap} className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-text-muted hover:text-text" title="Intercambiar">
+        <button
+          onClick={swap}
+          className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-text-muted hover:text-text"
+          title="Intercambiar"
+        >
           <ArrowLeftRight className="w-4 h-4" />
         </button>
         <span className="text-xs text-text-muted">
@@ -56,15 +60,17 @@ export function YamlJsonConverter() {
         <Button onClick={convert}>Convertir</Button>
         {output && (
           <Button onClick={copy} variant="outline">
-            {copied ? <Check className="w-4 h-4 mr-1 text-green-500" /> : <Copy className="w-4 h-4 mr-1" />}
+            {copied ? (
+              <Check className="w-4 h-4 mr-1 text-green-500" />
+            ) : (
+              <Copy className="w-4 h-4 mr-1" />
+            )}
             Copiar
           </Button>
         )}
       </div>
 
-      {error && (
-        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>
-      )}
+      {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -73,8 +79,10 @@ export function YamlJsonConverter() {
           </label>
           <textarea
             value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder={mode === 'yaml-to-json' ? 'name: ConvertHub\nversion: 1.0' : '{"name": "ConvertHub"}'}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={
+              mode === 'yaml-to-json' ? 'name: ConvertHub\nversion: 1.0' : '{"name": "ConvertHub"}'
+            }
             className="input-field h-64 font-mono text-sm"
           />
         </div>

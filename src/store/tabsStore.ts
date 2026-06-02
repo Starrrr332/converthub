@@ -30,9 +30,7 @@ export const useTabsStore = create<TabsStore>()((set) => ({
       }
 
       // Remove oldest if at max
-      const tabs = state.tabs.length >= MAX_TABS
-        ? state.tabs.slice(1)
-        : state.tabs;
+      const tabs = state.tabs.length >= MAX_TABS ? state.tabs.slice(1) : state.tabs;
 
       const id = `${path}-${Date.now()}`;
       return {
@@ -44,9 +42,8 @@ export const useTabsStore = create<TabsStore>()((set) => ({
   removeTab: (id) =>
     set((state) => {
       const tabs = state.tabs.filter((t) => t.id !== id);
-      const activeTab = state.activeTab === id
-        ? tabs[tabs.length - 1]?.id || null
-        : state.activeTab;
+      const activeTab =
+        state.activeTab === id ? tabs[tabs.length - 1]?.id || null : state.activeTab;
       return { tabs, activeTab };
     }),
 

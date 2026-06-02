@@ -7,7 +7,11 @@ export function QrScanPage() {
       title="Escáner de QR"
       subtitle="Lee códigos QR desde imágenes."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'DevTools', to: '/devtools' }, { label: 'QR Scan' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'DevTools', to: '/devtools' },
+        { label: 'QR Scan' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

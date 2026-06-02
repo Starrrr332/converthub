@@ -2,7 +2,13 @@ import { useState, useMemo } from 'react';
 import { Copy, Check, RefreshCw } from 'lucide-react';
 import { Button } from '../ui/Button';
 
-function generatePassword(len: number, upper: boolean, lower: boolean, digits: boolean, special: boolean): string {
+function generatePassword(
+  len: number,
+  upper: boolean,
+  lower: boolean,
+  digits: boolean,
+  special: boolean,
+): string {
   let chars = '';
   if (upper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   if (lower) chars += 'abcdefghijklmnopqrstuvwxyz';
@@ -11,7 +17,9 @@ function generatePassword(len: number, upper: boolean, lower: boolean, digits: b
   if (!chars) chars = 'abcdefghijklmnopqrstuvwxyz';
   const arr = new Uint32Array(len);
   crypto.getRandomValues(arr);
-  return Array.from(arr).map(n => chars[n % chars.length]).join('');
+  return Array.from(arr)
+    .map((n) => chars[n % chars.length])
+    .join('');
 }
 
 export function PasswordGeneratorTool() {
@@ -48,7 +56,12 @@ export function PasswordGeneratorTool() {
     <div>
       <h3 className="text-lg font-semibold mb-4">Generador de Contraseñas</h3>
       <div className="flex gap-2 mb-4">
-        <input readOnly value={password} className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono text-lg bg-gray-50" placeholder="Haz clic en Generar" />
+        <input
+          readOnly
+          value={password}
+          className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono text-lg bg-gray-50"
+          placeholder="Haz clic en Generar"
+        />
         <Button onClick={copy} variant="outline" className="px-3">
           {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
         </Button>
@@ -56,24 +69,42 @@ export function PasswordGeneratorTool() {
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Longitud: {len}</label>
-          <input type="range" min="4" max="64" value={len} onChange={e => setLen(Number(e.target.value))} className="w-full" />
+          <input
+            type="range"
+            min="4"
+            max="64"
+            value={len}
+            onChange={(e) => setLen(Number(e.target.value))}
+            className="w-full"
+          />
         </div>
         <div className="flex items-center">
-          <span className="text-sm font-medium text-gray-700">Fortaleza: <span className={strength.color}>{strength.label}</span></span>
+          <span className="text-sm font-medium text-gray-700">
+            Fortaleza: <span className={strength.color}>{strength.label}</span>
+          </span>
         </div>
       </div>
       <div className="flex flex-wrap gap-4 mb-4">
-        {[{ id: 'upper', label: 'A-Z', value: upper, set: setUpper },
+        {[
+          { id: 'upper', label: 'A-Z', value: upper, set: setUpper },
           { id: 'lower', label: 'a-z', value: lower, set: setLower },
           { id: 'digits', label: '0-9', value: digits, set: setDigits },
-          { id: 'special', label: '!@#$%', value: special, set: setSpecial }].map(opt => (
+          { id: 'special', label: '!@#$%', value: special, set: setSpecial },
+        ].map((opt) => (
           <label key={opt.id} className="flex items-center gap-2">
-            <input type="checkbox" checked={opt.value} onChange={() => opt.set(!opt.value)} className="w-4 h-4" />
+            <input
+              type="checkbox"
+              checked={opt.value}
+              onChange={() => opt.set(!opt.value)}
+              className="w-4 h-4"
+            />
             <span className="text-sm">{opt.label}</span>
           </label>
         ))}
       </div>
-      <Button onClick={generate}><RefreshCw className="w-4 h-4 mr-2" /> Generar</Button>
+      <Button onClick={generate}>
+        <RefreshCw className="w-4 h-4 mr-2" /> Generar
+      </Button>
     </div>
   );
 }

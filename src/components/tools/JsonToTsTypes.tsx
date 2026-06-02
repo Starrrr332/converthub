@@ -82,28 +82,34 @@ export function JsonToTsTypes() {
         <Button onClick={generate}>Generar tipos</Button>
         {output && (
           <Button onClick={copy} variant="outline">
-            {copied ? <Check className="w-4 h-4 mr-1 text-green-500" /> : <Copy className="w-4 h-4 mr-1" />}
+            {copied ? (
+              <Check className="w-4 h-4 mr-1 text-green-500" />
+            ) : (
+              <Copy className="w-4 h-4 mr-1" />
+            )}
             Copiar
           </Button>
         )}
       </div>
 
-      {error && (
-        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>
-      )}
+      {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-medium text-text-muted mb-1">JSON de entrada</label>
           <textarea
             value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder={'{\n  "name": "ConvertHub",\n  "version": 1,\n  "features": ["images", "pdf"]\n}'}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={
+              '{\n  "name": "ConvertHub",\n  "version": 1,\n  "features": ["images", "pdf"]\n}'
+            }
             className="input-field h-64 font-mono text-sm"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">TypeScript generado</label>
+          <label className="block text-xs font-medium text-text-muted mb-1">
+            TypeScript generado
+          </label>
           <textarea
             readOnly
             value={output}

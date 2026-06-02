@@ -42,8 +42,7 @@ export const useTemplatesStore = create<TemplatesStore>()(
           templates: state.templates.filter((t) => t.id !== id),
         })),
 
-      getTemplatesForTool: (toolPath) =>
-        get().templates.filter((t) => t.toolPath === toolPath),
+      getTemplatesForTool: (toolPath) => get().templates.filter((t) => t.toolPath === toolPath),
 
       exportTemplates: () => JSON.stringify(get().templates, null, 2),
 
@@ -58,6 +57,6 @@ export const useTemplatesStore = create<TemplatesStore>()(
         }
       },
     }),
-    { name: 'converthub-templates' }
-  )
+    { name: 'converthub-templates' },
+  ),
 );

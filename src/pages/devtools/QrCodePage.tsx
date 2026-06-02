@@ -7,7 +7,11 @@ export function QrCodePage() {
       title="Generador de QR"
       subtitle="Genera códigos QR al instante."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'DevTools', to: '/devtools' }, { label: 'QR Gen' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'DevTools', to: '/devtools' },
+        { label: 'QR Gen' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

@@ -9,16 +9,16 @@ let ffmpegLoaded = false;
 
 async function loadFFmpeg(): Promise<FFmpeg> {
   if (ffmpeg && ffmpegLoaded) return ffmpeg;
-  
+
   ffmpeg = new FFmpeg();
-  
+
   const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd';
-  
+
   await ffmpeg.load({
     coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
     wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
   });
-  
+
   ffmpegLoaded = true;
   return ffmpeg;
 }
@@ -26,37 +26,37 @@ async function loadFFmpeg(): Promise<FFmpeg> {
 // ==================== CONVERT AUDIO ====================
 
 export async function convertAudio(
-  file: File, 
+  file: File,
   options: AudioConvertOptions,
-  onProgress?: (progress: number) => void
+  onProgress?: (progress: number) => void,
 ): Promise<AudioConversionResult> {
   const ff = await loadFFmpeg();
-  
+
   const inputName = `input.${getExtensionFromMime(file.type)}`;
   const outputName = `output.${options.format}`;
-  
+
   // Write input file
   await ff.writeFile(inputName, await fetchFile(file));
-  
+
   // Set up progress tracking
   if (onProgress) {
     ff.on('progress', ({ progress }) => {
       onProgress(Math.round(progress * 100));
     });
   }
-  
+
   // Build FFmpeg command
   const args = ['-i', inputName];
-  
+
   // Add format-specific options
   if (options.bitrate) {
     args.push('-b:a', `${options.bitrate}k`);
   }
-  
+
   if (options.sampleRate) {
     args.push('-ar', String(options.sampleRate));
   }
-  
+
   // Output format
   switch (options.format) {
     case 'mp3':
@@ -75,28 +75,30 @@ export async function convertAudio(
       args.push('-codec:a', 'aac');
       break;
   }
-  
+
   args.push(outputName);
-  
+
   // Execute conversion
   await ff.exec(args);
-  
+
   // Read output file
   const outputData = await ff.readFile(outputName);
-  const blob = new Blob([new Uint8Array(outputData as Uint8Array)], { type: getMimeFromExtension(options.format) });
+  const blob = new Blob([new Uint8Array(outputData as Uint8Array)], {
+    type: getMimeFromExtension(options.format),
+  });
   const url = URL.createObjectURL(blob);
-  
+
   // Cleanup
   await ff.deleteFile(inputName);
   await ff.deleteFile(outputName);
-  
+
   const baseName = file.name.replace(/\.[^/.]+$/, '');
-  
+
   return {
     blob,
     url,
     filename: `${baseName}.${options.format}`,
-    size: blob.size
+    size: blob.size,
   };
 }
 
@@ -126,10 +128,13 @@ export function validateAudioFile(file: File): boolean {
     'audio/aac',
     'audio/mp4',
     'audio/x-m4a',
-    'audio/webm'
+    'audio/webm',
   ];
-  
-  return validTypes.includes(file.type) || file.name.match(/\.(mp3|wav|ogg|flac|aac|m4a|webm)$/i) !== null;
+
+  return (
+    validTypes.includes(file.type) ||
+    file.name.match(/\.(mp3|wav|ogg|flac|aac|m4a|webm)$/i) !== null
+  );
 }
 
 // ==================== HELPERS ====================
@@ -145,18 +150,18 @@ function getExtensionFromMime(mimeType: string): string {
     'audio/aac': 'aac',
     'audio/mp4': 'm4a',
     'audio/x-m4a': 'm4a',
-    'audio/webm': 'webm'
+    'audio/webm': 'webm',
   };
   return map[mimeType] || 'mp3';
 }
 
 function getMimeFromExtension(ext: string): string {
   const map: Record<string, string> = {
-    'mp3': 'audio/mpeg',
-    'wav': 'audio/wav',
-    'ogg': 'audio/ogg',
-    'flac': 'audio/flac',
-    'aac': 'audio/aac'
+    mp3: 'audio/mpeg',
+    wav: 'audio/wav',
+    ogg: 'audio/ogg',
+    flac: 'audio/flac',
+    aac: 'audio/aac',
   };
   return map[ext] || 'audio/mpeg';
 }

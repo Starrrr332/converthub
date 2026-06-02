@@ -28,9 +28,12 @@ export function GradientGenerator() {
   const gradientCSS = (() => {
     const stopsStr = stops.map((s) => `${s.color} ${s.position}%`).join(', ');
     switch (type) {
-      case 'linear': return `linear-gradient(${angle}deg, ${stopsStr})`;
-      case 'radial': return `radial-gradient(circle, ${stopsStr})`;
-      case 'conic': return `conic-gradient(from ${angle}deg, ${stopsStr})`;
+      case 'linear':
+        return `linear-gradient(${angle}deg, ${stopsStr})`;
+      case 'radial':
+        return `radial-gradient(circle, ${stopsStr})`;
+      case 'conic':
+        return `conic-gradient(from ${angle}deg, ${stopsStr})`;
     }
   })();
 
@@ -53,7 +56,7 @@ export function GradientGenerator() {
   };
 
   const updateStop = (index: number, field: keyof ColorStop, value: string | number) => {
-    setStops(stops.map((s, i) => i === index ? { ...s, [field]: value } : s));
+    setStops(stops.map((s, i) => (i === index ? { ...s, [field]: value } : s)));
   };
 
   const applyPreset = (gradient: string) => {
@@ -86,7 +89,9 @@ export function GradientGenerator() {
             key={t}
             onClick={() => setType(t)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              type === t ? 'bg-brand-600 text-white' : 'bg-surface-secondary text-text-secondary hover:bg-slate-200'
+              type === t
+                ? 'bg-brand-600 text-white'
+                : 'bg-surface-secondary text-text-secondary hover:bg-slate-200'
             }`}
           >
             {t}
@@ -102,7 +107,7 @@ export function GradientGenerator() {
           min="0"
           max="360"
           value={angle}
-          onChange={e => setAngle(Number(e.target.value))}
+          onChange={(e) => setAngle(Number(e.target.value))}
           className="w-full"
         />
       </div>
@@ -111,7 +116,10 @@ export function GradientGenerator() {
       <div className="space-y-2 mb-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-text">Paradas de color</label>
-          <button onClick={addStop} className="text-xs text-brand-600 hover:text-brand-700 flex items-center gap-1">
+          <button
+            onClick={addStop}
+            className="text-xs text-brand-600 hover:text-brand-700 flex items-center gap-1"
+          >
             <Plus className="w-3 h-3" /> Agregar
           </button>
         </div>
@@ -120,13 +128,13 @@ export function GradientGenerator() {
             <input
               type="color"
               value={stop.color}
-              onChange={e => updateStop(i, 'color', e.target.value)}
+              onChange={(e) => updateStop(i, 'color', e.target.value)}
               className="w-8 h-8 rounded cursor-pointer border-0"
             />
             <input
               type="text"
               value={stop.color}
-              onChange={e => updateStop(i, 'color', e.target.value)}
+              onChange={(e) => updateStop(i, 'color', e.target.value)}
               className="flex-1 p-1.5 border border-border rounded text-sm font-mono"
             />
             <input
@@ -134,7 +142,7 @@ export function GradientGenerator() {
               min="0"
               max="100"
               value={stop.position}
-              onChange={e => updateStop(i, 'position', Number(e.target.value))}
+              onChange={(e) => updateStop(i, 'position', Number(e.target.value))}
               className="w-16 p-1.5 border border-border rounded text-sm text-center"
             />
             <span className="text-xs text-text-muted">%</span>

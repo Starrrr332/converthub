@@ -8,25 +8,49 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { toolRegistry } from './config/toolRegistry';
 import './i18n';
 
-const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
-const Pricing = lazy(() => import('./pages/Pricing').then(m => ({ default: m.Pricing })));
-const Privacy = lazy(() => import('./pages/Privacy').then(m => ({ default: m.Privacy })));
-const Security = lazy(() => import('./pages/Security').then(m => ({ default: m.Security })));
-const Terms = lazy(() => import('./pages/Terms').then(m => ({ default: m.Terms })));
-const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
-const Contact = lazy(() => import('./pages/Contact').then(m => ({ default: m.Contact })));
-const FavoritesPage = lazy(() => import('./pages/FavoritesPage').then(m => ({ default: m.FavoritesPage })));
-const BlogIndex = lazy(() => import('./pages/blog/BlogIndex').then(m => ({ default: m.BlogIndex })));
-const ConvertImagesBlog = lazy(() => import('./pages/blog/ConvertImagesWithoutLosingQuality').then(m => ({ default: m.ConvertImagesWithoutLosingQuality })));
-const GuiaFormatosBlog = lazy(() => import('./pages/blog/GuiaFormatosImagen2026').then(m => ({ default: m.GuiaFormatosImagen2026 })));
-const HerramientasSegurasBlog = lazy(() => import('./pages/blog/HerramientasOnlineSeguras').then(m => ({ default: m.HerramientasOnlineSeguras })));
+const Home = lazy(() => import('./pages/Home').then((m) => ({ default: m.Home })));
+const Pricing = lazy(() => import('./pages/Pricing').then((m) => ({ default: m.Pricing })));
+const Privacy = lazy(() => import('./pages/Privacy').then((m) => ({ default: m.Privacy })));
+const Security = lazy(() => import('./pages/Security').then((m) => ({ default: m.Security })));
+const Terms = lazy(() => import('./pages/Terms').then((m) => ({ default: m.Terms })));
+const About = lazy(() => import('./pages/About').then((m) => ({ default: m.About })));
+const Contact = lazy(() => import('./pages/Contact').then((m) => ({ default: m.Contact })));
+const FavoritesPage = lazy(() =>
+  import('./pages/FavoritesPage').then((m) => ({ default: m.FavoritesPage })),
+);
+const BlogIndex = lazy(() =>
+  import('./pages/blog/BlogIndex').then((m) => ({ default: m.BlogIndex })),
+);
+const ConvertImagesBlog = lazy(() =>
+  import('./pages/blog/ConvertImagesWithoutLosingQuality').then((m) => ({
+    default: m.ConvertImagesWithoutLosingQuality,
+  })),
+);
+const GuiaFormatosBlog = lazy(() =>
+  import('./pages/blog/GuiaFormatosImagen2026').then((m) => ({
+    default: m.GuiaFormatosImagen2026,
+  })),
+);
+const HerramientasSegurasBlog = lazy(() =>
+  import('./pages/blog/HerramientasOnlineSeguras').then((m) => ({
+    default: m.HerramientasOnlineSeguras,
+  })),
+);
 
 // Category pages
-const ConvertersPage = lazy(() => import('./pages/ConvertersPage').then(m => ({ default: m.ConvertersPage })));
-const EditorsPage = lazy(() => import('./pages/EditorsPage').then(m => ({ default: m.EditorsPage })));
-const ToolsPage = lazy(() => import('./pages/ToolsPage').then(m => ({ default: m.ToolsPage })));
-const DevToolsPage = lazy(() => import('./pages/DevToolsPage').then(m => ({ default: m.DevToolsPage })));
-const UtilitiesPage = lazy(() => import('./pages/UtilitiesPage').then(m => ({ default: m.UtilitiesPage })));
+const ConvertersPage = lazy(() =>
+  import('./pages/ConvertersPage').then((m) => ({ default: m.ConvertersPage })),
+);
+const EditorsPage = lazy(() =>
+  import('./pages/EditorsPage').then((m) => ({ default: m.EditorsPage })),
+);
+const ToolsPage = lazy(() => import('./pages/ToolsPage').then((m) => ({ default: m.ToolsPage })));
+const DevToolsPage = lazy(() =>
+  import('./pages/DevToolsPage').then((m) => ({ default: m.DevToolsPage })),
+);
+const UtilitiesPage = lazy(() =>
+  import('./pages/UtilitiesPage').then((m) => ({ default: m.UtilitiesPage })),
+);
 
 function KeyboardShortcutsProvider({ children }: { children: React.ReactNode }) {
   useKeyboardShortcuts();
@@ -50,7 +74,7 @@ function App() {
             <CommandPalette />
             <TabBar />
 
-            <main className="flex-1 w-full">
+            <main id="main-content" className="flex-1 w-full" tabIndex={-1}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
@@ -61,23 +85,25 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/blog" element={<BlogIndex />} />
-                <Route path="/blog/como-convertir-imagenes-sin-perder-calidad" element={<ConvertImagesBlog />} />
+                <Route
+                  path="/blog/como-convertir-imagenes-sin-perder-calidad"
+                  element={<ConvertImagesBlog />}
+                />
                 <Route path="/blog/guia-formatos-imagen-2026" element={<GuiaFormatosBlog />} />
-                <Route path="/blog/herramientas-online-seguras" element={<HerramientasSegurasBlog />} />
-                
+                <Route
+                  path="/blog/herramientas-online-seguras"
+                  element={<HerramientasSegurasBlog />}
+                />
+
                 {/* Category landing pages */}
                 <Route path="/converter" element={<ConvertersPage />} />
                 <Route path="/editor" element={<EditorsPage />} />
                 <Route path="/tools" element={<ToolsPage />} />
                 <Route path="/devtools" element={<DevToolsPage />} />
                 <Route path="/utilities" element={<UtilitiesPage />} />
-                
-                {toolRegistry.map(tool => (
-                  <Route
-                    key={tool.path}
-                    path={tool.path}
-                    element={<tool.component />}
-                  />
+
+                {toolRegistry.map((tool) => (
+                  <Route key={tool.path} path={tool.path} element={<tool.component />} />
                 ))}
               </Routes>
             </main>

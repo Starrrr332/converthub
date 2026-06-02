@@ -57,9 +57,15 @@ export function Header() {
   };
 
   return (
-<header className={`sticky top-0 z-50 transition-all duration-200 ${
-  scrolled ? 'glass-nav' : 'bg-transparent'
-}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-200 ${
+      scrolled ? 'glass-nav' : 'bg-transparent'
+    }`}>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-accent-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2"
+      >
+        Saltar al contenido principal
+      </a>
       <div className="page-container">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
@@ -70,47 +76,52 @@ export function Header() {
             <span className="text-lg sm:text-xl font-bold text-text-primary tracking-tight">
               {t('app.name')}
             </span>
-
           </Link>
 
-{/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-1">
-              <Link
-                to="/"
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                  isActive('/') ? 'text-accent-700 bg-accent-50' : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
-                }`}
-              >
-                {t('nav.home')}
-              </Link>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-1">
+            <Link
+              to="/"
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                isActive('/')
+                  ? 'text-accent-700 bg-accent-50'
+                  : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+              }`}
+            >
+              {t('nav.home')}
+            </Link>
 
-              <DropdownMenu />
+            <DropdownMenu />
 
-              <Link
-                to="/favorites"
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
-                  isActive('/favorites') ? 'text-accent-700 bg-accent-50' : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
-                }`}
-              >
-                <Star className="w-3.5 h-3.5" />
-                Favoritos
-                {favorites.length > 0 && (
-                  <span className="ml-0.5 px-1.5 py-0.5 text-[10px] font-bold bg-accent-100 text-accent-800 rounded-full">
-                    {favorites.length}
-                  </span>
-                )}
-              </Link>
+            <Link
+              to="/favorites"
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                isActive('/favorites')
+                  ? 'text-accent-700 bg-accent-50'
+                  : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+              }`}
+            >
+              <Star className="w-3.5 h-3.5" />
+              Favoritos
+              {favorites.length > 0 && (
+                <span className="ml-0.5 px-1.5 py-0.5 text-[10px] font-bold bg-accent-100 text-accent-800 rounded-full">
+                  {favorites.length}
+                </span>
+              )}
+            </Link>
 
-              <Link
-                to="/pricing"
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
-                  isActive('/pricing') ? 'text-accent-700 bg-accent-50' : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
-                }`}
-              >
-                <Heart className="w-3.5 h-3.5" />
-                {t('nav.pricing')}
-              </Link>
-            </nav>
+            <Link
+              to="/pricing"
+              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                isActive('/pricing')
+                  ? 'text-accent-700 bg-accent-50'
+                  : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+              }`}
+            >
+              <Heart className="w-3.5 h-3.5" />
+              {t('nav.pricing')}
+            </Link>
+          </nav>
 
           {/* Right side */}
           <div className="flex items-center gap-2">
@@ -125,17 +136,28 @@ export function Header() {
               </button>
               {themeOpen && (
                 <div className="absolute top-full right-0 mt-1.5 w-56 bg-surface rounded-lg py-2 z-50 border border-border/70">
-                  <p className="px-3 pb-1 text-[11px] font-medium text-text-muted uppercase tracking-wider">Temas</p>
+                  <p className="px-3 pb-1 text-[11px] font-medium text-text-muted uppercase tracking-wider">
+                    Temas
+                  </p>
                   {themes.map((theme) => (
                     <button
                       key={theme.id}
-                      onClick={() => { setTheme(theme.id); setThemeOpen(false); }}
+                      onClick={() => {
+                        setTheme(theme.id);
+                        setThemeOpen(false);
+                      }}
                       className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-accent-50 transition-colors text-left"
                     >
                       <div className="flex gap-0.5 shrink-0">
-                        {Object.values(theme.brand).slice(4, 7).map((color, i) => (
-                          <div key={i} className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                        ))}
+                        {Object.values(theme.brand)
+                          .slice(4, 7)
+                          .map((color, i) => (
+                            <div
+                              key={i}
+                              className="w-3 h-3 rounded-full"
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
                       </div>
                       <span className="text-sm text-text-primary">{theme.name}</span>
                       {currentTheme === theme.id && (
@@ -153,7 +175,9 @@ export function Header() {
             >
               <Search className="w-4 h-4" />
               <span className="text-xs">Buscar...</span>
-              <kbd className="text-[10px] font-medium px-1 py-0.5 bg-surface rounded border border-border">⌘K</kbd>
+              <kbd className="text-[10px] font-medium px-1 py-0.5 bg-surface rounded border border-border">
+                ⌘K
+              </kbd>
             </button>
 
             <LanguageSwitcher />
@@ -201,7 +225,9 @@ export function Header() {
                       to={item.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className={`block px-3 py-2 rounded-lg text-sm ${
-                        isActive(item.path) ? 'text-brand-700 bg-brand-50 font-medium' : 'text-text-secondary hover:text-text hover:bg-slate-50'
+                        isActive(item.path)
+                          ? 'text-brand-700 bg-brand-50 font-medium'
+                          : 'text-text-secondary hover:text-text hover:bg-slate-50'
                       }`}
                     >
                       {item.label}

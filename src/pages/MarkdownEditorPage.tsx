@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Eye, Upload, Bold, Italic, Code, Link as LinkIcon, Image as ImageIcon, List, Edit3 } from 'lucide-react';
+import {
+  Eye,
+  Upload,
+  Bold,
+  Italic,
+  Code,
+  Link as LinkIcon,
+  Image as ImageIcon,
+  List,
+  Edit3,
+} from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PageLayout } from '../components/layout/PageLayout';
 import { sanitizeUrl } from '../utils/sanitization';
@@ -41,41 +51,67 @@ function hello() {
 
 function parseMarkdown(md: string): string {
   let html = md;
-  
+
   html = html.replace(/^### (.+)$/gm, '<h3 class="text-lg font-bold mt-4 mb-2">$1</h3>');
   html = html.replace(/^## (.+)$/gm, '<h2 class="text-xl font-bold mt-6 mb-3">$1</h2>');
   html = html.replace(/^# (.+)$/gm, '<h1 class="text-2xl font-bold mt-8 mb-4">$1</h1>');
-  
+
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
   html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 rounded text-sm">$1</code>');
-  
-  html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg my-3 overflow-x-auto text-sm"><code>$2</code></pre>');
-  
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m: string, text: string, url: string) =>
-    `<a href="${sanitizeUrl(url)}" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`);
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m: string, alt: string, url: string) =>
-    `<img src="${sanitizeUrl(url)}" alt="${alt}" class="max-w-full rounded my-2" />`);
-  
+
+  html = html.replace(
+    /```(\w+)?\n([\s\S]*?)```/g,
+    '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg my-3 overflow-x-auto text-sm"><code>$2</code></pre>',
+  );
+
+  html = html.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    (_m: string, text: string, url: string) =>
+      `<a href="${sanitizeUrl(url)}" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`,
+  );
+  html = html.replace(
+    /!\[([^\]]*)\]\(([^)]+)\)/g,
+    (_m: string, alt: string, url: string) =>
+      `<img src="${sanitizeUrl(url)}" alt="${alt}" class="max-w-full rounded my-2" />`,
+  );
+
   html = html.replace(/^---$/gm, '<hr class="my-4 border-gray-300" />');
-  html = html.replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-2">$1</blockquote>');
-  
+  html = html.replace(
+    /^> (.+)$/gm,
+    '<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-2">$1</blockquote>',
+  );
+
   const lines = html.split('\n');
   const result: string[] = [];
   let inList = false;
-  
+
   for (const line of lines) {
     if (/^(\d+)\. (.+)$/.test(line)) {
-      if (!inList) { result.push('<ol class="list-decimal pl-6 my-2">'); inList = true; }
+      if (!inList) {
+        result.push('<ol class="list-decimal pl-6 my-2">');
+        inList = true;
+      }
       result.push(`<li class="my-1">${line.replace(/^\d+\. /, '')}</li>`);
     } else if (/^- (.+)$/.test(line)) {
-      if (!inList) { result.push('<ul class="list-disc pl-6 my-2">'); inList = true; }
+      if (!inList) {
+        result.push('<ul class="list-disc pl-6 my-2">');
+        inList = true;
+      }
       result.push(`<li class="my-1">${line.replace(/^- /, '')}</li>`);
     } else {
-      if (inList) { result.push('</ul>'); inList = false; }
+      if (inList) {
+        result.push('</ul>');
+        inList = false;
+      }
       if (line.trim() === '') {
         result.push('<br />');
-      } else if (!line.startsWith('<h') && !line.startsWith('<pre') && !line.startsWith('<hr') && !line.startsWith('<blockquote')) {
+      } else if (
+        !line.startsWith('<h') &&
+        !line.startsWith('<pre') &&
+        !line.startsWith('<hr') &&
+        !line.startsWith('<blockquote')
+      ) {
         result.push(`<p class="my-2">${line}</p>`);
       } else {
         result.push(line);
@@ -83,7 +119,7 @@ function parseMarkdown(md: string): string {
     }
   }
   if (inList) result.push('</ul>');
-  
+
   return result.join('\n');
 }
 
@@ -96,11 +132,12 @@ export function MarkdownEditorPage() {
   const insertMarkdown = (before: string, after: string = '') => {
     const textarea = document.getElementById('md-editor') as HTMLTextAreaElement;
     if (!textarea) return;
-    
+
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selected = markdown.substring(start, end);
-    const newText = markdown.substring(0, start) + before + selected + after + markdown.substring(end);
+    const newText =
+      markdown.substring(0, start) + before + selected + after + markdown.substring(end);
     setMarkdown(newText);
   };
 
@@ -156,89 +193,148 @@ ${parseMarkdown(markdown)}
       subtitle={t('nav.editors.markdownDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.markdown') }]}
     >
-        <div className="content-panel p-3 mb-4">
-          <div className="flex flex-wrap items-center gap-1">
-            <input type="file" accept=".md,.markdown,.txt" onChange={handleFileUpload} className="hidden" id="md-upload" />
-            <Button onClick={() => document.getElementById('md-upload')?.click()} variant="ghost" size="sm">
-              <Upload className="w-4 h-4" />
-            </Button>
-            <div className="w-px h-6 bg-gray-300 mx-1" />
-            <Button onClick={() => insertMarkdown('**', '**')} variant="ghost" size="sm" title="Negrita">
-              <Bold className="w-4 h-4" />
-            </Button>
-            <Button onClick={() => insertMarkdown('*', '*')} variant="ghost" size="sm" title="Itálica">
-              <Italic className="w-4 h-4" />
-            </Button>
-            <Button onClick={() => insertMarkdown('`', '`')} variant="ghost" size="sm" title="Código inline">
-              <Code className="w-4 h-4" />
-            </Button>
-            <Button onClick={() => insertMarkdown('[', '](url)')} variant="ghost" size="sm" title="Enlace">
-              <LinkIcon className="w-4 h-4" />
-            </Button>
-            <Button onClick={() => insertMarkdown('![alt](', ')')} variant="ghost" size="sm" title="Imagen">
-              <ImageIcon className="w-4 h-4" />
-            </Button>
-            <div className="w-px h-6 bg-gray-300 mx-1" />
-            <Button onClick={() => insertMarkdown('\n- ')} variant="ghost" size="sm" title="Lista">
-              <List className="w-4 h-4" />
-            </Button>
-            <Button onClick={() => insertMarkdown('\n# ')} variant="ghost" size="sm" title="Título">
-              H1
-            </Button>
-            <Button onClick={() => insertMarkdown('\n## ')} variant="ghost" size="sm" title="Subtítulo">
-              H2
-            </Button>
-            <Button onClick={() => insertMarkdown('\n> ')} variant="ghost" size="sm" title="Cita">
-              &gt;
-            </Button>
-            <Button onClick={() => insertMarkdown('\n---\n')} variant="ghost" size="sm" title="Línea horizontal">
-              ---
-            </Button>
-            <div className="flex-1" />
-            <Button onClick={() => setShowPreview(!showPreview)} variant={showPreview ? 'primary' : 'outline'} size="sm">
-              <Eye className="w-4 h-4 mr-1" />
-              Vista previa
-            </Button>
-            <Button onClick={handleDownload} variant="outline" size="sm">Descargar .md</Button>
-            <Button onClick={downloadHtml} variant="outline" size="sm">Descargar .html</Button>
-            <div className="flex items-center gap-2 ml-2">
-              <label className="text-sm text-gray-600">Tamaño:</label>
-              <input type="number" value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))}
-                min="10" max="24" className="w-14 p-1 border rounded text-sm" />
-            </div>
-          </div>
-        </div>
-
-        <div className={`grid gap-4 ${showPreview ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="p-2 bg-gray-50 border-b flex items-center gap-2">
-              <Edit3 className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-700">Markdown</span>
-              <span className="text-xs text-gray-400 ml-auto">{markdown.length} caracteres</span>
-            </div>
-            <textarea
-              id="md-editor"
-              value={markdown}
-              onChange={(e) => setMarkdown(e.target.value)}
-              placeholder="Escribe tu Markdown aquí..."
-              className="w-full h-[600px] p-4 border-none focus:outline-none resize-none font-mono text-sm"
-              style={{ fontSize: `${fontSize}px` }}
+      <div className="content-panel p-3 mb-4">
+        <div className="flex flex-wrap items-center gap-1">
+          <input
+            type="file"
+            accept=".md,.markdown,.txt"
+            onChange={handleFileUpload}
+            className="hidden"
+            id="md-upload"
+          />
+          <Button
+            onClick={() => document.getElementById('md-upload')?.click()}
+            variant="ghost"
+            size="sm"
+          >
+            <Upload className="w-4 h-4" />
+          </Button>
+          <div className="w-px h-6 bg-gray-300 mx-1" />
+          <Button
+            onClick={() => insertMarkdown('**', '**')}
+            variant="ghost"
+            size="sm"
+            title="Negrita"
+          >
+            <Bold className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={() => insertMarkdown('*', '*')}
+            variant="ghost"
+            size="sm"
+            title="Itálica"
+          >
+            <Italic className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={() => insertMarkdown('`', '`')}
+            variant="ghost"
+            size="sm"
+            title="Código inline"
+          >
+            <Code className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={() => insertMarkdown('[', '](url)')}
+            variant="ghost"
+            size="sm"
+            title="Enlace"
+          >
+            <LinkIcon className="w-4 h-4" />
+          </Button>
+          <Button
+            onClick={() => insertMarkdown('![alt](', ')')}
+            variant="ghost"
+            size="sm"
+            title="Imagen"
+          >
+            <ImageIcon className="w-4 h-4" />
+          </Button>
+          <div className="w-px h-6 bg-gray-300 mx-1" />
+          <Button onClick={() => insertMarkdown('\n- ')} variant="ghost" size="sm" title="Lista">
+            <List className="w-4 h-4" />
+          </Button>
+          <Button onClick={() => insertMarkdown('\n# ')} variant="ghost" size="sm" title="Título">
+            H1
+          </Button>
+          <Button
+            onClick={() => insertMarkdown('\n## ')}
+            variant="ghost"
+            size="sm"
+            title="Subtítulo"
+          >
+            H2
+          </Button>
+          <Button onClick={() => insertMarkdown('\n> ')} variant="ghost" size="sm" title="Cita">
+            &gt;
+          </Button>
+          <Button
+            onClick={() => insertMarkdown('\n---\n')}
+            variant="ghost"
+            size="sm"
+            title="Línea horizontal"
+          >
+            ---
+          </Button>
+          <div className="flex-1" />
+          <Button
+            onClick={() => setShowPreview(!showPreview)}
+            variant={showPreview ? 'primary' : 'outline'}
+            size="sm"
+          >
+            <Eye className="w-4 h-4 mr-1" />
+            Vista previa
+          </Button>
+          <Button onClick={handleDownload} variant="outline" size="sm">
+            Descargar .md
+          </Button>
+          <Button onClick={downloadHtml} variant="outline" size="sm">
+            Descargar .html
+          </Button>
+          <div className="flex items-center gap-2 ml-2">
+            <label className="text-sm text-gray-600">Tamaño:</label>
+            <input
+              type="number"
+              value={fontSize}
+              onChange={(e) => setFontSize(Number(e.target.value))}
+              min="10"
+              max="24"
+              className="w-14 p-1 border rounded text-sm"
             />
           </div>
-
-          {showPreview && (
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="p-2 bg-gray-50 border-b flex items-center gap-2">
-                <Eye className="w-4 h-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">Vista previa</span>
-              </div>
-              <div
-                className="h-[600px] overflow-y-auto p-6 prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parseMarkdown(markdown)) }}
-              />
-            </div>
-          )}
         </div>
+      </div>
+
+      <div className={`grid gap-4 ${showPreview ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="p-2 bg-gray-50 border-b flex items-center gap-2">
+            <Edit3 className="w-4 h-4 text-gray-500" />
+            <span className="text-sm font-medium text-gray-700">Markdown</span>
+            <span className="text-xs text-gray-400 ml-auto">{markdown.length} caracteres</span>
+          </div>
+          <textarea
+            id="md-editor"
+            value={markdown}
+            onChange={(e) => setMarkdown(e.target.value)}
+            placeholder="Escribe tu Markdown aquí..."
+            className="w-full h-[600px] p-4 border-none focus:outline-none resize-none font-mono text-sm"
+            style={{ fontSize: `${fontSize}px` }}
+          />
+        </div>
+
+        {showPreview && (
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="p-2 bg-gray-50 border-b flex items-center gap-2">
+              <Eye className="w-4 h-4 text-gray-500" />
+              <span className="text-sm font-medium text-gray-700">Vista previa</span>
+            </div>
+            <div
+              className="h-[600px] overflow-y-auto p-6 prose prose-sm max-w-none"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parseMarkdown(markdown)) }}
+            />
+          </div>
+        )}
+      </div>
     </PageLayout>
   );
 }

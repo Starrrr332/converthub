@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Upload, Download, FileText, Trash2, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ToolInfoModal } from '../ui/ToolInfoModal';
-import { 
-  mergePdfs, 
-  splitPdf, 
-  compressPdf, 
-  imagesToPdf, 
+import {
+  mergePdfs,
+  splitPdf,
+  compressPdf,
+  imagesToPdf,
   watermarkPdf,
   rotatePdf,
   addPageNumbers,
-  unlockPdf
+  unlockPdf,
 } from '../../services/conversions/pdfConverter';
 import type { PdfTool, PdfConversionResult } from '../../types';
 
@@ -26,29 +26,31 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showToolInfo, setShowToolInfo] = useState(false);
-  
+
   const [watermarkText, setWatermarkText] = useState('WATERMARK');
   const [watermarkOpacity, setWatermarkOpacity] = useState(0.3);
   const [rotateDegrees, setRotateDegrees] = useState(90);
-  const [pageNumberPosition, setPageNumberPosition] = useState<'bottom-center' | 'bottom-right' | 'top-center'>('bottom-center');
+  const [pageNumberPosition, setPageNumberPosition] = useState<
+    'bottom-center' | 'bottom-right' | 'top-center'
+  >('bottom-center');
   const [unlockPassword, setUnlockPassword] = useState('');
-  
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
     setFiles(selectedFiles);
     setResult(null);
     setError(null);
   };
-  
+
   const handleConvert = async () => {
     if (files.length === 0) return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       let conversionResult: PdfConversionResult | PdfConversionResult[];
-      
+
       switch (tool) {
         case 'merge':
           conversionResult = await mergePdfs({ files });
@@ -63,10 +65,10 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           conversionResult = await imagesToPdf({ files });
           break;
         case 'watermark':
-          conversionResult = await watermarkPdf({ 
-            file: files[0], 
+          conversionResult = await watermarkPdf({
+            file: files[0],
             text: watermarkText,
-            opacity: watermarkOpacity
+            opacity: watermarkOpacity,
           });
           break;
         case 'rotate':
@@ -83,7 +85,7 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
         default:
           throw new Error('Tool not implemented');
       }
-      
+
       if (Array.isArray(conversionResult)) {
         setResult(conversionResult[0]);
       } else {
@@ -95,10 +97,10 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
       setLoading(false);
     }
   };
-  
+
   const handleDownload = () => {
     if (!result) return;
-    
+
     const a = document.createElement('a');
     a.href = result.url;
     a.download = result.filename;
@@ -106,44 +108,44 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
     a.click();
     document.body.removeChild(a);
   };
-  
+
   const getAcceptTypes = () => {
     if (tool === 'images-to-pdf') {
       return '.png,.jpg,.jpeg';
     }
     return '.pdf';
   };
-  
+
   const getTitle = () => {
     const titles: Record<PdfTool, string> = {
-      'merge': t('pdf.tools.merge'),
-      'split': t('pdf.tools.split'),
-      'compress': t('pdf.tools.compress'),
+      merge: t('pdf.tools.merge'),
+      split: t('pdf.tools.split'),
+      compress: t('pdf.tools.compress'),
       'images-to-pdf': t('pdf.tools.imagesToPdf'),
-      'protect': t('pdf.tools.protect'),
-      'watermark': t('pdf.tools.watermark'),
-      'rotate': t('pdf.tools.rotate'),
+      protect: t('pdf.tools.protect'),
+      watermark: t('pdf.tools.watermark'),
+      rotate: t('pdf.tools.rotate'),
       'page-numbers': t('pdf.tools.pageNumbers'),
-      'unlock': t('pdf.tools.unlock')
+      unlock: t('pdf.tools.unlock'),
     };
     return titles[tool];
   };
-  
+
   const getDescription = () => {
     const descriptions: Record<PdfTool, string> = {
-      'merge': 'Selecciona los archivos PDF que quieres unir en uno solo',
-      'split': 'Selecciona un PDF para dividirlo en páginas individuales',
-      'compress': 'Reduce el tamaño de tu PDF sin perder calidad',
+      merge: 'Selecciona los archivos PDF que quieres unir en uno solo',
+      split: 'Selecciona un PDF para dividirlo en páginas individuales',
+      compress: 'Reduce el tamaño de tu PDF sin perder calidad',
       'images-to-pdf': 'Selecciona imágenes para convertirlas a PDF',
-      'protect': 'Protege tu PDF con contraseña',
-      'watermark': 'Agrega una marca de agua personalizada a tu PDF',
-      'rotate': 'Rota todas las páginas del PDF',
+      protect: 'Protege tu PDF con contraseña',
+      watermark: 'Agrega una marca de agua personalizada a tu PDF',
+      rotate: 'Rota todas las páginas del PDF',
       'page-numbers': 'Inserta números de página automáticos',
-      'unlock': 'Remueve la contraseña de un PDF'
+      unlock: 'Remueve la contraseña de un PDF',
     };
     return descriptions[tool];
   };
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -159,7 +161,7 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           <Info className="w-5 h-5" />
         </button>
       </div>
-      
+
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
           type="file"
@@ -172,22 +174,26 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
         <label htmlFor={`pdf-input-${tool}`} className="cursor-pointer">
           <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
           <p className="text-gray-600">
-            {tool === 'images-to-pdf' 
+            {tool === 'images-to-pdf'
               ? 'Arrastra imágenes aquí o haz clic para seleccionar'
-              : 'Arrastra un PDF aquí o haz clic para seleccionar'
-            }
+              : 'Arrastra un PDF aquí o haz clic para seleccionar'}
           </p>
         </label>
       </div>
-      
+
       {files.length > 0 && (
         <div className="space-y-2">
           {files.map((file, index) => (
-            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div
+              key={index}
+              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+            >
               <div className="flex items-center gap-3">
                 <FileText className="w-5 h-5 text-red-500" />
                 <span className="text-sm text-gray-700">{file.name}</span>
-                <span className="text-xs text-gray-400">({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                <span className="text-xs text-gray-400">
+                  ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                </span>
               </div>
               <button
                 onClick={() => setFiles(files.filter((_, i) => i !== index))}
@@ -199,11 +205,13 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           ))}
         </div>
       )}
-      
+
       {tool === 'watermark' && (
         <div className="p-4 bg-gray-50 rounded-lg space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Texto de la marca de agua</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Texto de la marca de agua
+            </label>
             <input
               type="text"
               value={watermarkText}
@@ -228,12 +236,12 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           </div>
         </div>
       )}
-      
+
       {tool === 'rotate' && (
         <div className="p-4 bg-gray-50 rounded-lg">
           <label className="block text-sm font-medium text-gray-700 mb-2">Grados de rotación</label>
           <div className="flex gap-2">
-            {[90, 180, 270].map(degrees => (
+            {[90, 180, 270].map((degrees) => (
               <button
                 key={degrees}
                 onClick={() => setRotateDegrees(degrees)}
@@ -249,16 +257,18 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           </div>
         </div>
       )}
-      
+
       {tool === 'page-numbers' && (
         <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Posición del número</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Posición del número
+          </label>
           <div className="flex gap-2">
             {[
               { value: 'bottom-center' as const, label: 'Centro inferior' },
               { value: 'bottom-right' as const, label: 'Derecha inferior' },
               { value: 'top-center' as const, label: 'Centro superior' },
-            ].map(option => (
+            ].map((option) => (
               <button
                 key={option.value}
                 onClick={() => setPageNumberPosition(option.value)}
@@ -274,10 +284,12 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           </div>
         </div>
       )}
-      
+
       {tool === 'unlock' && (
         <div className="p-4 bg-gray-50 rounded-lg">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña (opcional)</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Contraseña (opcional)
+          </label>
           <input
             type="text"
             value={unlockPassword}
@@ -287,13 +299,9 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           />
         </div>
       )}
-      
-      {error && (
-        <div className="p-4 bg-red-50 text-red-700 rounded-lg">
-          {error}
-        </div>
-      )}
-      
+
+      {error && <div className="p-4 bg-red-50 text-red-700 rounded-lg">{error}</div>}
+
       <div className="flex gap-4">
         <Button
           onClick={handleConvert}
@@ -303,7 +311,7 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
         >
           {loading ? t('progress.converting') : t('actions.convert')}
         </Button>
-        
+
         {result && (
           <Button onClick={handleDownload} variant="secondary">
             <Download className="w-4 h-4 mr-2" />
@@ -311,7 +319,7 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           </Button>
         )}
       </div>
-      
+
       {result && (
         <div className="p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-green-700">
@@ -319,12 +327,8 @@ export function PdfToolContent({ tool }: PdfToolContentProps) {
           </p>
         </div>
       )}
-      
-      <ToolInfoModal 
-        isOpen={showToolInfo} 
-        onClose={() => setShowToolInfo(false)}
-        tool="pdf"
-      />
+
+      <ToolInfoModal isOpen={showToolInfo} onClose={() => setShowToolInfo(false)} tool="pdf" />
     </div>
   );
 }

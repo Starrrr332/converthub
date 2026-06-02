@@ -33,14 +33,18 @@ export function useKeyboardShortcuts() {
 
     const handler = (e: KeyboardEvent) => {
       for (const shortcut of shortcuts) {
-        const ctrlMatch = shortcut.ctrl ? (e.metaKey || e.ctrlKey) : true;
+        const ctrlMatch = shortcut.ctrl ? e.metaKey || e.ctrlKey : true;
         const shiftMatch = shortcut.shift ? e.shiftKey : true;
         const keyMatch = e.key.toLowerCase() === shortcut.key.toLowerCase();
 
         if (ctrlMatch && shiftMatch && keyMatch) {
           // Don't trigger if user is typing in an input/textarea
           const target = e.target as HTMLElement;
-          if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+          if (
+            target.tagName === 'INPUT' ||
+            target.tagName === 'TEXTAREA' ||
+            target.isContentEditable
+          ) {
             return;
           }
           e.preventDefault();

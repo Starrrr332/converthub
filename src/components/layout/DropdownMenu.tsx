@@ -2,7 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ArrowRight } from 'lucide-react';
-import { featuredConverters, featuredEditors, featuredTools, devtoolTools } from '../../config/toolRegistry';
+import {
+  featuredConverters,
+  featuredEditors,
+  featuredTools,
+  devtoolTools,
+} from '../../config/toolRegistry';
 
 export function DropdownMenu() {
   const { t } = useTranslation();
@@ -51,16 +56,22 @@ export function DropdownMenu() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-          isOpen ? 'text-brand-700 bg-brand-50' : 'text-text-secondary hover:text-text hover:bg-slate-100'
+          isOpen
+            ? 'text-brand-700 bg-brand-50'
+            : 'text-text-secondary hover:text-text hover:bg-slate-100'
         }`}
       >
         {t('nav.convert')}
-        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown
+          className={`w-3.5 h-3.5 transition-transform duration-150 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1.5 w-[580px] bg-surface rounded-xl py-3 z-50 border border-border/70 shadow-elevated"
-          onMouseLeave={() => setIsOpen(false)}>
+        <div
+          className="absolute top-full left-0 mt-1.5 w-[580px] bg-surface rounded-xl py-3 z-50 border border-border/70 shadow-elevated"
+          onMouseLeave={() => setIsOpen(false)}
+        >
           <div className="grid grid-cols-4 gap-1 px-2">
             {sections.map((section) => (
               <div key={section.title}>

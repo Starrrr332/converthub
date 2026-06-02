@@ -34,16 +34,16 @@ function escapeCsvValue(val: string, delimiter: string): string {
 function arrayToCsv(data: Record<string, unknown>[], delimiter: string): string {
   if (data.length === 0) return '';
   const allKeys = new Set<string>();
-  data.forEach(item => {
+  data.forEach((item) => {
     const flat = flattenObject(item as Record<string, unknown>);
-    Object.keys(flat).forEach(k => allKeys.add(k));
+    Object.keys(flat).forEach((k) => allKeys.add(k));
   });
   const headers = Array.from(allKeys);
   const lines = [
-    headers.map(h => escapeCsvValue(h, delimiter)).join(delimiter),
-    ...data.map(row => {
+    headers.map((h) => escapeCsvValue(h, delimiter)).join(delimiter),
+    ...data.map((row) => {
       const flat = flattenObject(row as Record<string, unknown>);
-      return headers.map(h => escapeCsvValue(flat[h] || '', delimiter)).join(delimiter);
+      return headers.map((h) => escapeCsvValue(flat[h] || '', delimiter)).join(delimiter);
     }),
   ];
   return lines.join('\n');
@@ -145,11 +145,21 @@ export function JsonToCsv() {
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-slate-700">CSV Generado</span>
             <div className="flex gap-2">
-              <button onClick={handleCopy} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-                {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+              <button
+                onClick={handleCopy}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 text-green-600" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
                 {copied ? 'Copiado' : 'Copiar'}
               </button>
-              <button onClick={handleDownload} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+              <button
+                onClick={handleDownload}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              >
                 <Download className="w-4 h-4" />
                 Descargar .csv
               </button>

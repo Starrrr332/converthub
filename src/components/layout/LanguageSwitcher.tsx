@@ -3,12 +3,12 @@ import { Globe } from 'lucide-react';
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
-  
+
   const toggleLanguage = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
   };
-  
+
   return (
     <button
       onClick={toggleLanguage}

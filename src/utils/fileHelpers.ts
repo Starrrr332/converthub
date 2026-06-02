@@ -4,23 +4,23 @@ import { PREMIUM_FORMATS, PREMIUM_MAX_SIZE } from '../types';
 export function validateImageFile(file: File): ValidationResult {
   const maxSize = PREMIUM_MAX_SIZE;
   const allowedFormats = PREMIUM_FORMATS;
-  
+
   if (file.size > maxSize) {
     return {
       valid: false,
       error: `File size exceeds 100MB limit`,
-      code: 'FILE_TOO_LARGE'
+      code: 'FILE_TOO_LARGE',
     };
   }
-  
+
   if (!allowedFormats.includes(file.type as ImageFormat)) {
     return {
       valid: false,
       error: 'Unsupported file format',
-      code: 'UNSUPPORTED_FORMAT'
+      code: 'UNSUPPORTED_FORMAT',
     };
   }
-  
+
   return { valid: true };
 }
 
@@ -73,12 +73,12 @@ export function createCanvasFromImage(img: HTMLImageElement): HTMLCanvasElement 
   const canvas = document.createElement('canvas');
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
-  
+
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     throw new Error('Could not get canvas context');
   }
-  
+
   ctx.drawImage(img, 0, 0);
   return canvas;
 }
@@ -86,7 +86,7 @@ export function createCanvasFromImage(img: HTMLImageElement): HTMLCanvasElement 
 export function canvasToBlob(
   canvas: HTMLCanvasElement,
   format: ImageFormat,
-  quality?: number
+  quality?: number,
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
     canvas.toBlob(
@@ -98,7 +98,7 @@ export function canvasToBlob(
         }
       },
       format,
-      quality ? quality / 100 : undefined
+      quality ? quality / 100 : undefined,
     );
   });
 }
@@ -114,8 +114,8 @@ export function generateFilename(originalName: string, newFormat: ImageFormat): 
     'image/svg+xml': '.svg',
     'image/x-icon': '.ico',
     'image/avif': '.avif',
-    'image/heic': '.heic'
+    'image/heic': '.heic',
   };
-  
+
   return `${baseName}${extensions[newFormat]}`;
 }

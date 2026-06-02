@@ -4,12 +4,12 @@ import { Button } from '../ui/Button';
 
 function getBarcodePattern(pos: number, digit: number): string {
   const patterns: Record<string, string[]> = {
-    '0': ['0001101','0011001','0010011','0111101','0100011','0110001','0101111'],
-    '1': ['0100111','0110011','0011011','0100001','0011101','0111001','0000101'],
+    '0': ['0001101', '0011001', '0010011', '0111101', '0100011', '0110001', '0101111'],
+    '1': ['0100111', '0110011', '0011011', '0100001', '0011101', '0111001', '0000101'],
   };
   const side = pos < 7 ? 'L' : 'R';
   if (side === 'R') {
-    const p = ['1110010','1100110','1101100','1000010','1011100','1001110','1010000'];
+    const p = ['1110010', '1100110', '1101100', '1000010', '1011100', '1001110', '1010000'];
     return p[digit];
   }
   return patterns['0'][digit];
@@ -57,13 +57,23 @@ export function BarcodeGeneratorTool() {
     <div>
       <h3 className="text-lg font-semibold mb-4">Generador Código de Barras (EAN-13)</h3>
       <div className="flex gap-2 mb-4">
-        <input value={code} onChange={e => setCode(e.target.value.replace(/\D/g, '').slice(0, 12))} placeholder="12 dígitos" className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono" />
+        <input
+          value={code}
+          onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 12))}
+          placeholder="12 dígitos"
+          className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono"
+        />
         <Button onClick={generate}>Generar</Button>
       </div>
       {image && (
         <div className="text-center">
           <img src={image} alt="Barcode" className="inline-block" />
-          <a href={image} download="barcode.png"><Button variant="outline" className="mt-2"><Download className="w-4 h-4 mr-2" />Descargar</Button></a>
+          <a href={image} download="barcode.png">
+            <Button variant="outline" className="mt-2">
+              <Download className="w-4 h-4 mr-2" />
+              Descargar
+            </Button>
+          </a>
         </div>
       )}
     </div>

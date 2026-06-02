@@ -5,17 +5,20 @@ export function About() {
     {
       icon: Shield,
       title: 'Privacidad Primero',
-      description: 'Tus archivos nunca salen de tu navegador. Todo el procesamiento es 100% local y privado.',
+      description:
+        'Tus archivos nunca salen de tu navegador. Todo el procesamiento es 100% local y privado.',
     },
     {
       icon: Heart,
       title: 'Gratis para Todos',
-      description: 'Creemos que las herramientas básicas deben ser accesibles para todos, sin excepción.',
+      description:
+        'Creemos que las herramientas básicas deben ser accesibles para todos, sin excepción.',
     },
     {
       icon: Code,
       title: 'Transparencia',
-      description: 'Nuestro código es auditable y我们的 procesos son transparentes. No hay sorpresas.',
+      description:
+        'Nuestro código es auditable y我们的 procesos son transparentes. No hay sorpresas.',
     },
     {
       icon: Globe,
@@ -59,14 +62,15 @@ export function About() {
       <div className="card mb-8">
         <h2 className="text-2xl font-bold text-slate-900 mb-4">Nuestra Misión</h2>
         <p className="text-slate-600 leading-relaxed mb-4">
-          ConvertHub nació de la necesidad de tener herramientas de conversión y edición de archivos que
-          respeten la privacidad del usuario. En un mundo donde cada vez más servicios suben nuestros datos
-          a la nube, nosotros elegimos un camino diferente: procesar todo localmente en tu navegador.
+          ConvertHub nació de la necesidad de tener herramientas de conversión y edición de archivos
+          que respeten la privacidad del usuario. En un mundo donde cada vez más servicios suben
+          nuestros datos a la nube, nosotros elegimos un camino diferente: procesar todo localmente
+          en tu navegador.
         </p>
         <p className="text-slate-600 leading-relaxed">
-          Creemos que la tecnología debe ser una herramienta al servicio de las personas, no al revés.
-          Por eso, todas nuestras herramientas son gratuitas, no requieren registro, y lo más importante:
-          tus archivos nunca salen de tu dispositivo.
+          Creemos que la tecnología debe ser una herramienta al servicio de las personas, no al
+          revés. Por eso, todas nuestras herramientas son gratuitas, no requieren registro, y lo más
+          importante: tus archivos nunca salen de tu dispositivo.
         </p>
       </div>
 
@@ -74,18 +78,18 @@ export function About() {
       <div className="card mb-8">
         <h2 className="text-2xl font-bold text-slate-900 mb-4">Nuestra Historia</h2>
         <p className="text-slate-600 leading-relaxed mb-4">
-          ConvertHub comenzó como un proyecto personal para resolver un problema común: necesitábamos
-          convertir imágenes y documentos rápidamente, sin crear cuentas ni preocuparnos por quién
-          veía nuestros archivos.
+          ConvertHub comenzó como un proyecto personal para resolver un problema común:
+          necesitábamos convertir imágenes y documentos rápidamente, sin crear cuentas ni
+          preocuparnos por quién veía nuestros archivos.
         </p>
         <p className="text-slate-600 leading-relaxed mb-4">
-          Descubrimos que con las tecnologías modernas de navegador (Canvas API, WebAssembly, File API)
-          era posible crear herramientas tan potentes como las de escritorio, pero sin las desventajas
-          de la privacidad.
+          Descubrimos que con las tecnologías modernas de navegador (Canvas API, WebAssembly, File
+          API) era posible crear herramientas tan potentes como las de escritorio, pero sin las
+          desventajas de la privacidad.
         </p>
         <p className="text-slate-600 leading-relaxed">
-          Hoy, ConvertHub ofrece más de 52 herramientas para convertir, editar y procesar todo tipo de
-          archivos: imágenes, PDF, audio, video, documentos de texto y más. Y seguimos creciendo.
+          Hoy, ConvertHub ofrece más de 52 herramientas para convertir, editar y procesar todo tipo
+          de archivos: imágenes, PDF, audio, video, documentos de texto y más. Y seguimos creciendo.
         </p>
       </div>
 
@@ -111,15 +115,25 @@ export function About() {
       <div className="card mb-8">
         <h2 className="text-2xl font-bold text-slate-900 mb-4">Tecnología</h2>
         <p className="text-slate-600 leading-relaxed mb-4">
-          ConvertHub está construido con tecnologías web modernas que nos permiten ofrecer
-          un rendimiento comparable a las aplicaciones de escritorio:
+          ConvertHub está construido con tecnologías web modernas que nos permiten ofrecer un
+          rendimiento comparable a las aplicaciones de escritorio:
         </p>
         <ul className="list-disc list-inside text-slate-600 space-y-2 ml-4">
-          <li><strong>React + TypeScript:</strong> Para una interfaz de usuario rápida y confiable</li>
-          <li><strong>Canvas API:</strong> Para procesamiento de imágenes directamente en el navegador</li>
-          <li><strong>WebAssembly:</strong> Para operaciones pesadas como compresión de video</li>
-          <li><strong>File API:</strong> Para acceso seguro a archivos locales</li>
-          <li><strong>PWA:</strong> Para experiencia de aplicación nativa en cualquier dispositivo</li>
+          <li>
+            <strong>React + TypeScript:</strong> Para una interfaz de usuario rápida y confiable
+          </li>
+          <li>
+            <strong>Canvas API:</strong> Para procesamiento de imágenes directamente en el navegador
+          </li>
+          <li>
+            <strong>WebAssembly:</strong> Para operaciones pesadas como compresión de video
+          </li>
+          <li>
+            <strong>File API:</strong> Para acceso seguro a archivos locales
+          </li>
+          <li>
+            <strong>PWA:</strong> Para experiencia de aplicación nativa en cualquier dispositivo
+          </li>
         </ul>
       </div>
 
@@ -127,8 +141,8 @@ export function About() {
       <div className="card bg-indigo-50/80 border border-indigo-200">
         <h2 className="text-2xl font-bold text-slate-900 mb-4">¿Quieres Saber Más?</h2>
         <p className="text-slate-600 mb-4">
-          Si tienes preguntas sobre ConvertHub, sugerencias de herramientas o simplemente quieres saludar,
-          no dudes en contactarnos.
+          Si tienes preguntas sobre ConvertHub, sugerencias de herramientas o simplemente quieres
+          saludar, no dudes en contactarnos.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <a

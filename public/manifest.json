@@ -1,19 +1,113 @@
 {
+  "id": "/",
   "name": "ConvertHub - Conversor de Archivos Gratis",
   "short_name": "ConvertHub",
-  "description": "Más de 35 herramientas gratis para convertir, editar y procesar archivos. 100% en tu navegador.",
+  "description": "Más de 52 herramientas gratis para convertir, editar y procesar imágenes, PDF, audio, video y más. 100% en tu navegador, sin servidores.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#4f46e5",
   "orientation": "any",
+  "lang": "es",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ],
-  "categories": ["utilities", "productivity"]
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ConvertHub - Conversor de archivos en tu navegador"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ConvertHub - Herramientas de conversión móvil"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Convertir Imágenes",
+      "short_name": "Imágenes",
+      "description": "Convertir entre PNG, JPG, WebP, GIF y más",
+      "url": "/converter/image",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Editor de PDF",
+      "short_name": "PDF",
+      "description": "Unir, dividir, comprimir y editar PDFs",
+      "url": "/converter/pdf",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Convertir Audio",
+      "short_name": "Audio",
+      "description": "Convertir entre MP3, WAV, OGG, FLAC y más",
+      "url": "/converter/audio",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Convertir Video",
+      "short_name": "Video",
+      "description": "Convertir, comprimir y recortar videos",
+      "url": "/converter/video",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Generador de QR",
+      "short_name": "QR",
+      "description": "Generar códigos QR al instante",
+      "url": "/devtools/qrcode",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "categories": ["utilities", "productivity", "developer tool"],
+  "prefer_related_applications": false
 }

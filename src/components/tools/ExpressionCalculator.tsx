@@ -25,9 +25,7 @@ function escapeRe(s: string): string {
 }
 
 function evaluate(expr: string): number {
-  let cleaned = expr
-    .replace(/\s+/g, '')
-    .replace(/\^/g, '**');
+  let cleaned = expr.replace(/\s+/g, '').replace(/\^/g, '**');
 
   for (const [name, val] of Object.entries(CONSTANTS)) {
     cleaned = cleaned.replace(new RegExp(`\\b${escapeRe(name)}\\b`, 'g'), `(${val})`);
@@ -65,16 +63,18 @@ export function ExpressionCalculator() {
     try {
       setError('');
       const val = evaluate(expression);
-      const formatted = Number.isInteger(val) ? val.toString() : val.toFixed(10).replace(/\.?0+$/, '');
+      const formatted = Number.isInteger(val)
+        ? val.toString()
+        : val.toFixed(10).replace(/\.?0+$/, '');
       setResult(formatted);
-      setHistory(prev => [`${expression} = ${formatted}`, ...prev].slice(0, 20));
+      setHistory((prev) => [`${expression} = ${formatted}`, ...prev].slice(0, 20));
     } catch {
       setError('Expresión inválida');
       setResult('');
     }
   };
 
-  const insert = (val: string) => setExpression(prev => prev + val);
+  const insert = (val: string) => setExpression((prev) => prev + val);
 
   const buttons = [
     ['7', '8', '9', '/', 'sqrt'],
@@ -92,13 +92,23 @@ export function ExpressionCalculator() {
       <div className="flex gap-2 mb-4">
         <input
           value={expression}
-          onChange={e => { setExpression(e.target.value); setError(''); }}
-          onKeyDown={e => e.key === 'Enter' && calc()}
+          onChange={(e) => {
+            setExpression(e.target.value);
+            setError('');
+          }}
+          onKeyDown={(e) => e.key === 'Enter' && calc()}
           placeholder="2*(3+4) - sqrt(16) + sin(pi/2)"
           className="flex-1 p-3 border-2 border-gray-200 rounded-lg font-mono text-lg"
         />
         <Button onClick={calc}>Calcular</Button>
-        <button onClick={() => { setExpression(''); setResult(''); setError(''); }} className="p-2 rounded-lg hover:bg-slate-100 text-text-muted">
+        <button
+          onClick={() => {
+            setExpression('');
+            setResult('');
+            setError('');
+          }}
+          className="p-2 rounded-lg hover:bg-slate-100 text-text-muted"
+        >
           <Delete className="w-5 h-5" />
         </button>
       </div>
@@ -122,7 +132,7 @@ export function ExpressionCalculator() {
             >
               {btn}
             </button>
-          ))
+          )),
         )}
       </div>
 
@@ -134,7 +144,10 @@ export function ExpressionCalculator() {
             {history.map((item, i) => (
               <button
                 key={i}
-                onClick={() => { const expr = item.split(' = ')[0]; setExpression(expr); }}
+                onClick={() => {
+                  const expr = item.split(' = ')[0];
+                  setExpression(expr);
+                }}
                 className="block w-full text-left px-3 py-1 text-sm font-mono text-text-secondary hover:bg-surface-secondary rounded transition-colors"
               >
                 {item}

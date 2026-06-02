@@ -20,31 +20,37 @@ export function CollageMaker() {
 
   const maxSlots = columns * rows;
 
-  const loadImages = useCallback((files: FileList | File[]) => {
-    const arr = Array.from(files).filter(f => f.type.startsWith('image/'));
-    setImages(prev => {
-      const remaining = maxSlots - prev.length;
-      const toAdd = arr.slice(0, remaining);
-      const newImages: CollageImage[] = [...prev];
+  const loadImages = useCallback(
+    (files: FileList | File[]) => {
+      const arr = Array.from(files).filter((f) => f.type.startsWith('image/'));
+      setImages((prev) => {
+        const remaining = maxSlots - prev.length;
+        const toAdd = arr.slice(0, remaining);
+        const newImages: CollageImage[] = [...prev];
 
-      for (const file of toAdd) {
-        const url = URL.createObjectURL(file);
-        const img = new Image();
-        img.src = url;
-        newImages.push({ file, url, img });
-      }
-      return newImages;
-    });
-  }, [maxSlots]);
+        for (const file of toAdd) {
+          const url = URL.createObjectURL(file);
+          const img = new Image();
+          img.src = url;
+          newImages.push({ file, url, img });
+        }
+        return newImages;
+      });
+    },
+    [maxSlots],
+  );
 
-  const onDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setDragOver(false);
-    loadImages(e.dataTransfer.files);
-  }, [loadImages]);
+  const onDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setDragOver(false);
+      loadImages(e.dataTransfer.files);
+    },
+    [loadImages],
+  );
 
   const removeImage = (index: number) => {
-    setImages(prev => {
+    setImages((prev) => {
       URL.revokeObjectURL(prev[index].url);
       return prev.filter((_, i) => i !== index);
     });
@@ -52,7 +58,7 @@ export function CollageMaker() {
 
   useEffect(() => {
     return () => {
-      images.forEach(img => URL.revokeObjectURL(img.url));
+      images.forEach((img) => URL.revokeObjectURL(img.url));
     };
   }, []);
 
@@ -82,7 +88,10 @@ export function CollageMaker() {
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const cellRatio = cellW / cellH;
 
-      let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+      let sx = 0,
+        sy = 0,
+        sw = img.naturalWidth,
+        sh = img.naturalHeight;
       if (imgRatio > cellRatio) {
         sw = img.naturalHeight * cellRatio;
         sx = (img.naturalWidth - sw) / 2;
@@ -98,7 +107,7 @@ export function CollageMaker() {
   const download = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    canvas.toBlob(blob => {
+    canvas.toBlob((blob) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -115,7 +124,10 @@ export function CollageMaker() {
 
       <label
         className={`dropzone flex flex-col items-center justify-center h-28 cursor-pointer mb-4 ${dragOver ? 'dropzone-active' : ''}`}
-        onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
       >
@@ -128,7 +140,9 @@ export function CollageMaker() {
           type="file"
           accept="image/*"
           multiple
-          onChange={e => { if (e.target.files) loadImages(e.target.files); }}
+          onChange={(e) => {
+            if (e.target.files) loadImages(e.target.files);
+          }}
           className="hidden"
         />
       </label>
@@ -136,7 +150,10 @@ export function CollageMaker() {
       {images.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
           {images.map((img, i) => (
-            <div key={i} className="relative group w-16 h-16 rounded-lg overflow-hidden border border-border">
+            <div
+              key={i}
+              className="relative group w-16 h-16 rounded-lg overflow-hidden border border-border"
+            >
               <img src={img.url} alt="" className="w-full h-full object-cover" />
               <button
                 onClick={() => removeImage(i)}
@@ -157,7 +174,7 @@ export function CollageMaker() {
             min={1}
             max={6}
             value={columns}
-            onChange={e => setColumns(Number(e.target.value))}
+            onChange={(e) => setColumns(Number(e.target.value))}
             className="input-field text-sm"
           />
         </div>
@@ -168,7 +185,7 @@ export function CollageMaker() {
             min={1}
             max={6}
             value={rows}
-            onChange={e => setRows(Number(e.target.value))}
+            onChange={(e) => setRows(Number(e.target.value))}
             className="input-field text-sm"
           />
         </div>
@@ -179,7 +196,7 @@ export function CollageMaker() {
             min={0}
             max={50}
             value={gap}
-            onChange={e => setGap(Number(e.target.value))}
+            onChange={(e) => setGap(Number(e.target.value))}
             className="w-full mt-1"
           />
         </div>
@@ -189,7 +206,7 @@ export function CollageMaker() {
             <input
               type="color"
               value={bgColor}
-              onChange={e => setBgColor(e.target.value)}
+              onChange={(e) => setBgColor(e.target.value)}
               className="w-8 h-8 rounded cursor-pointer border-0"
             />
             <span className="text-xs font-mono text-text-secondary">{bgColor}</span>

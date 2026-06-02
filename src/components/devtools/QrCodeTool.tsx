@@ -15,14 +15,14 @@ export function QrCodeTool() {
         margin: 2,
         color: {
           dark: '#000000',
-          light: '#ffffff'
-        }
+          light: '#ffffff',
+        },
       });
-      
+
       // Also generate data URL for preview
       QRCode.toDataURL(input, {
         width: 256,
-        margin: 2
+        margin: 2,
       }).then((url: string) => setQrUrl(url));
     }
   }, [input]);

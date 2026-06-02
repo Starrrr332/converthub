@@ -4,6 +4,7 @@ import Fuse from 'fuse.js';
 import { Search, Star, Clock, ArrowRight, X } from 'lucide-react';
 import { toolRegistry } from '../../config/toolRegistry';
 import { useCommandStore } from '../../store/commandStore';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 export function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,23 +21,23 @@ export function CommandPalette() {
         threshold: 0.4,
         includeScore: true,
       }),
-    []
+    [],
   );
 
   const recentTools = useMemo(
     () =>
       recentPaths
         .map((path) => toolRegistry.find((t) => t.path === path))
-        .filter((t): t is typeof toolRegistry[number] => Boolean(t)),
-    [recentPaths]
+        .filter((t): t is (typeof toolRegistry)[number] => Boolean(t)),
+    [recentPaths],
   );
 
   const favoriteTools = useMemo(
     () =>
       favorites
         .map((path) => toolRegistry.find((t) => t.path === path))
-        .filter((t): t is typeof toolRegistry[number] => Boolean(t)),
-    [favorites]
+        .filter((t): t is (typeof toolRegistry)[number] => Boolean(t)),
+    [favorites],
   );
 
   const results = useMemo(() => {
@@ -68,7 +69,8 @@ export function CommandPalette() {
     if (isOpen) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery('');
-      setTimeout(() => inputRef.current?.focus(), 50);
+      const raf = requestAnimationFrame(() => inputRef.current?.focus());
+      return () => cancelAnimationFrame(raf);
     }
   }, [isOpen]);
 
@@ -92,20 +94,30 @@ export function CommandPalette() {
     }
   };
 
+  const focusTrapRef = useFocusTrap(isOpen);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-
-      <div className="relative w-full max-w-lg bg-surface rounded-xl shadow-2xl border border-border overflow-hidden">
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)} aria-hidden="true" />
+      <div
+        ref={focusTrapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Paleta de comandos"
+        className="relative w-full max-w-lg bg-surface rounded-xl shadow-2xl border border-border overflow-hidden"
+      >
         {/* Search Input */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
           <Search className="w-5 h-5 text-text-muted shrink-0" />
           <input
             ref={inputRef}
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelectedIndex(0);
+            }}
             onKeyDown={handleKeyDown}
             placeholder="Buscar herramienta..."
             className="flex-1 bg-transparent text-text text-sm outline-none placeholder:text-text-muted"
@@ -113,7 +125,10 @@ export function CommandPalette() {
           <kbd className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-text-muted bg-surface-secondary rounded border border-border">
             ESC
           </kbd>
-          <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-surface-secondary rounded-lg transition-colors">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="p-1 hover:bg-surface-secondary rounded-lg transition-colors"
+          >
             <X className="w-4 h-4 text-text-muted" />
           </button>
         </div>
@@ -148,21 +163,29 @@ export function CommandPalette() {
               onClick={() => selectTool(tool.path)}
               onMouseEnter={() => setSelectedIndex(index)}
               className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${
-                index === selectedIndex ? 'bg-brand-50 text-brand-700' : 'text-text hover:bg-surface-secondary'
+                index === selectedIndex
+                  ? 'bg-brand-50 text-brand-700'
+                  : 'text-text hover:bg-surface-secondary'
               }`}
             >
-              <div className={`p-1.5 rounded-lg shrink-0 ${
-                index === selectedIndex ? 'bg-brand-100 text-brand-600' : 'bg-surface-secondary text-text-muted'
-              }`}>
+              <div
+                className={`p-1.5 rounded-lg shrink-0 ${
+                  index === selectedIndex
+                    ? 'bg-brand-100 text-brand-600'
+                    : 'bg-surface-secondary text-text-muted'
+                }`}
+              >
                 <tool.icon className="w-4 h-4" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{tool.name}</p>
                 <p className="text-xs text-text-muted truncate">{tool.homeDesc}</p>
               </div>
-              <ArrowRight className={`w-4 h-4 shrink-0 transition-opacity ${
-                index === selectedIndex ? 'opacity-100' : 'opacity-0'
-              }`} />
+              <ArrowRight
+                className={`w-4 h-4 shrink-0 transition-opacity ${
+                  index === selectedIndex ? 'opacity-100' : 'opacity-0'
+                }`}
+              />
             </button>
           ))}
         </div>
@@ -170,13 +193,16 @@ export function CommandPalette() {
         {/* Footer */}
         <div className="px-4 py-2 border-t border-border flex items-center gap-4 text-[11px] text-text-muted">
           <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 bg-surface-secondary rounded border border-border">↑↓</kbd> navegar
+            <kbd className="px-1 py-0.5 bg-surface-secondary rounded border border-border">↑↓</kbd>{' '}
+            navegar
           </span>
           <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 bg-surface-secondary rounded border border-border">↵</kbd> abrir
+            <kbd className="px-1 py-0.5 bg-surface-secondary rounded border border-border">↵</kbd>{' '}
+            abrir
           </span>
           <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 bg-surface-secondary rounded border border-border">esc</kbd> cerrar
+            <kbd className="px-1 py-0.5 bg-surface-secondary rounded border border-border">esc</kbd>{' '}
+            cerrar
           </span>
         </div>
       </div>

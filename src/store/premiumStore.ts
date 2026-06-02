@@ -22,7 +22,7 @@ export const usePremiumStore = create<PremiumState>()(
       checkPremium: () => true,
     }),
     {
-      name: 'converthub-premium'
-    }
-  )
+      name: 'converthub-premium',
+    },
+  ),
 );

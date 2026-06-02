@@ -10,8 +10,11 @@ function hexToRgb(hex: string) {
 }
 
 function rgbToHsl(r: number, g: number, b: number) {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b),
+    min = Math.min(r, g, b);
   const l = (max + min) / 2;
   if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) };
   const d = max - min;
@@ -30,19 +33,13 @@ function getComplementary(hex: string) {
 function getTriadic(hex: string) {
   const { r, g, b } = hexToRgb(hex);
   const { h, s, l } = rgbToHsl(r, g, b);
-  return [
-    `hsl(${(h + 120) % 360}, ${s}%, ${l}%)`,
-    `hsl(${(h + 240) % 360}, ${s}%, ${l}%)`,
-  ];
+  return [`hsl(${(h + 120) % 360}, ${s}%, ${l}%)`, `hsl(${(h + 240) % 360}, ${s}%, ${l}%)`];
 }
 
 function getAnalogous(hex: string) {
   const { r, g, b } = hexToRgb(hex);
   const { h, s, l } = rgbToHsl(r, g, b);
-  return [
-    `hsl(${(h + 30) % 360}, ${s}%, ${l}%)`,
-    `hsl(${(h - 30 + 360) % 360}, ${s}%, ${l}%)`,
-  ];
+  return [`hsl(${(h + 30) % 360}, ${s}%, ${l}%)`, `hsl(${(h - 30 + 360) % 360}, ${s}%, ${l}%)`];
 }
 
 export function ColorPaletteGenerator() {
@@ -85,9 +82,15 @@ export function ColorPaletteGenerator() {
   const generateHarmony = (type: string) => {
     const colors = [baseColor];
     switch (type) {
-      case 'complementary': colors.push(getComplementary(baseColor)); break;
-      case 'triadic': colors.push(...getTriadic(baseColor)); break;
-      case 'analogous': colors.push(...getAnalogous(baseColor)); break;
+      case 'complementary':
+        colors.push(getComplementary(baseColor));
+        break;
+      case 'triadic':
+        colors.push(...getTriadic(baseColor));
+        break;
+      case 'analogous':
+        colors.push(...getAnalogous(baseColor));
+        break;
       case 'split': {
         const { r, g, b } = hexToRgb(baseColor);
         const { h, s, l } = rgbToHsl(r, g, b);
@@ -125,12 +128,12 @@ export function ColorPaletteGenerator() {
         <input
           type="color"
           value={baseColor}
-          onChange={e => setBaseColor(e.target.value)}
+          onChange={(e) => setBaseColor(e.target.value)}
           className="w-12 h-12 rounded-lg cursor-pointer border-0"
         />
         <input
           value={baseColor}
-          onChange={e => setBaseColor(e.target.value)}
+          onChange={(e) => setBaseColor(e.target.value)}
           className="flex-1 p-2 border border-border rounded-lg font-mono text-sm"
         />
         <input
@@ -152,7 +155,7 @@ export function ColorPaletteGenerator() {
           { id: 'triadic', label: 'Triádico' },
           { id: 'analogous', label: 'Análogo' },
           { id: 'split', label: 'Split-complementary' },
-        ].map(h => (
+        ].map((h) => (
           <button
             key={h.id}
             onClick={() => generateHarmony(h.id)}
@@ -170,7 +173,7 @@ export function ColorPaletteGenerator() {
             {palette.map((color, i) => (
               <div key={i} className="flex-1 relative group" style={{ backgroundColor: color }}>
                 <div className="absolute inset-x-0 bottom-0 p-1 flex gap-0.5 justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  {['hex', 'rgb', 'css'].map(fmt => (
+                  {['hex', 'rgb', 'css'].map((fmt) => (
                     <button
                       key={fmt}
                       onClick={() => copyColor(color, fmt)}
@@ -189,11 +192,16 @@ export function ColorPaletteGenerator() {
             {palette.map((color, i) => {
               const { r, g, b } = hexToRgb(color);
               return (
-                <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-surface-secondary">
+                <div
+                  key={i}
+                  className="flex items-center gap-2 p-2 rounded-lg bg-surface-secondary"
+                >
                   <div className="w-8 h-8 rounded-lg shrink-0" style={{ backgroundColor: color }} />
                   <div className="min-w-0">
                     <p className="text-xs font-mono text-text truncate">{color}</p>
-                    <p className="text-[10px] text-text-muted">rgb({r}, {g}, {b})</p>
+                    <p className="text-[10px] text-text-muted">
+                      rgb({r}, {g}, {b})
+                    </p>
                   </div>
                 </div>
               );

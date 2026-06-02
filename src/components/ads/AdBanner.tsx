@@ -36,7 +36,9 @@ export function AdBanner({ position, className = '', slot, format = 'auto' }: Ad
   };
 
   return (
-    <div className={`ad-container ${styles[position]} flex items-center justify-center rounded-lg overflow-hidden ${className}`}>
+    <div
+      className={`ad-container ${styles[position]} flex items-center justify-center rounded-lg overflow-hidden ${className}`}
+    >
       <ins
         ref={adRef}
         className="adsbygoogle"

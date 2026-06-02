@@ -7,7 +7,11 @@ export function Base64ImagePage() {
       title="Base64 Image"
       subtitle="Convierte imágenes a Base64."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades', to: '/tools/utilities' }, { label: 'Base64 Image' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'Utilidades', to: '/tools/utilities' },
+        { label: 'Base64 Image' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

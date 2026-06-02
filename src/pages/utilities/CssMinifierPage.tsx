@@ -7,7 +7,11 @@ export function CssMinifierPage() {
       title="CSS Minifier"
       subtitle="Minifica tu CSS para producción."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades', to: '/tools/utilities' }, { label: 'CSS Minifier' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'Utilidades', to: '/tools/utilities' },
+        { label: 'CSS Minifier' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

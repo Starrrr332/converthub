@@ -63,7 +63,7 @@ function objToXml(obj: unknown, tagName: string, indent: number): string {
     return `${pad}<${tagName}>${escapeXml(String(obj))}</${tagName}>\n`;
   }
   if (Array.isArray(obj)) {
-    return obj.map(item => objToXml(item, tagName, indent)).join('');
+    return obj.map((item) => objToXml(item, tagName, indent)).join('');
   }
   let attrs = '';
   let children = '';
@@ -88,7 +88,12 @@ function objToXml(obj: unknown, tagName: string, indent: number): string {
 }
 
 function escapeXml(str: string): string {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 }
 
 export function XmlJsonConverter() {
@@ -156,7 +161,9 @@ export function XmlJsonConverter() {
         <button
           onClick={() => setMode('xml-to-json')}
           className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-            mode === 'xml-to-json' ? 'bg-indigo-100 text-indigo-700' : 'text-slate-600 hover:bg-slate-100'
+            mode === 'xml-to-json'
+              ? 'bg-indigo-100 text-indigo-700'
+              : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           XML → JSON
@@ -164,7 +171,9 @@ export function XmlJsonConverter() {
         <button
           onClick={() => setMode('json-to-xml')}
           className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-            mode === 'json-to-xml' ? 'bg-indigo-100 text-indigo-700' : 'text-slate-600 hover:bg-slate-100'
+            mode === 'json-to-xml'
+              ? 'bg-indigo-100 text-indigo-700'
+              : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           JSON → XML
@@ -202,11 +211,21 @@ export function XmlJsonConverter() {
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-slate-700">Resultado</span>
             <div className="flex gap-2">
-              <button onClick={handleCopy} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-                {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+              <button
+                onClick={handleCopy}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 text-green-600" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
                 {copied ? 'Copiado' : 'Copiar'}
               </button>
-              <button onClick={handleDownload} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+              <button
+                onClick={handleDownload}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              >
                 <Download className="w-4 h-4" />
                 Descargar
               </button>

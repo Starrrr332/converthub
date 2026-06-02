@@ -114,7 +114,8 @@ export function Security() {
             <div>
               <h3 className="font-semibold text-amber-900 mb-2">Reportar Vulnerabilidades</h3>
               <p className="text-sm text-amber-800 mb-3">
-                Si descubres una vulnerabilidad de seguridad, por favor repórtala de manera responsable.
+                Si descubres una vulnerabilidad de seguridad, por favor repórtala de manera
+                responsable.
               </p>
               <a
                 href="mailto:security@converthub.com"

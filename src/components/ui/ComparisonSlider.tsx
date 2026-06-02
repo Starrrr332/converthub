@@ -60,10 +60,7 @@ export function ComparisonSlider({
       />
 
       {/* Before (clipped) */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${position}%` }}
-      >
+      <div className="absolute inset-0 overflow-hidden" style={{ width: `${position}%` }}>
         <img
           src={before}
           alt={beforeLabel}

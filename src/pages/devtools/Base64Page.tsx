@@ -7,7 +7,11 @@ export function Base64Page() {
       title="Base64"
       subtitle="Codifica y decodifica en Base64."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'DevTools', to: '/devtools' }, { label: 'Base64' }]}
+      breadcrumb={[
+        { label: 'Inicio', to: '/' },
+        { label: 'DevTools', to: '/devtools' },
+        { label: 'Base64' },
+      ]}
     >
       <div className="max-w-4xl mx-auto">
         <div className="card">

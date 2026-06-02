@@ -25,7 +25,9 @@ self.onmessage = async (e: MessageEvent<ProcessVideoMessage>) => {
       wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
     });
 
-    const inputName = 'input' + (file.name.includes('.') ? file.name.substring(file.name.lastIndexOf('.')) : '.mp4');
+    const inputName =
+      'input' +
+      (file.name.includes('.') ? file.name.substring(file.name.lastIndexOf('.')) : '.mp4');
     const outputName = 'output.' + (options.format || 'mp4');
 
     await ffmpeg.writeFile(inputName, new Uint8Array(await file.arrayBuffer()));

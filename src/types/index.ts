@@ -1,7 +1,7 @@
 // ==================== IMAGE TYPES ====================
 
 // Image formats
-export type ImageFormat = 
+export type ImageFormat =
   | 'image/png'
   | 'image/jpeg'
   | 'image/webp'
@@ -13,10 +13,17 @@ export type ImageFormat =
   | 'image/heic';
 
 // File extensions
-export type FileExtension = 
-  | '.png' | '.jpg' | '.jpeg' | '.webp' 
-  | '.bmp' | '.gif' | '.svg' | '.ico'
-  | '.avif' | '.heic';
+export type FileExtension =
+  | '.png'
+  | '.jpg'
+  | '.jpeg'
+  | '.webp'
+  | '.bmp'
+  | '.gif'
+  | '.svg'
+  | '.ico'
+  | '.avif'
+  | '.heic';
 
 // Conversion options
 export interface ConvertOptions {
@@ -55,12 +62,12 @@ export interface ConversionResult {
 
 // ==================== PDF TYPES ====================
 
-export type PdfTool = 
-  | 'merge' 
-  | 'split' 
-  | 'compress' 
-  | 'images-to-pdf' 
-  | 'protect' 
+export type PdfTool =
+  | 'merge'
+  | 'split'
+  | 'compress'
+  | 'images-to-pdf'
+  | 'protect'
   | 'watermark'
   | 'rotate'
   | 'page-numbers'
@@ -118,11 +125,7 @@ export interface PdfConversionResult {
 
 // ==================== SPREADSHEET TYPES ====================
 
-export type SpreadsheetTool = 
-  | 'csv-to-xlsx' 
-  | 'xlsx-to-csv' 
-  | 'csv-to-json' 
-  | 'json-to-csv';
+export type SpreadsheetTool = 'csv-to-xlsx' | 'xlsx-to-csv' | 'csv-to-json' | 'json-to-csv';
 
 export type SpreadsheetFormat = 'csv' | 'xlsx' | 'json';
 
@@ -204,7 +207,7 @@ export const FREE_IMAGE_FORMATS: ImageFormat[] = [
   'image/jpeg',
   'image/webp',
   'image/bmp',
-  'image/gif'
+  'image/gif',
 ];
 
 export const PREMIUM_IMAGE_FORMATS: ImageFormat[] = [
@@ -212,7 +215,7 @@ export const PREMIUM_IMAGE_FORMATS: ImageFormat[] = [
   'image/svg+xml',
   'image/x-icon',
   'image/avif',
-  'image/heic'
+  'image/heic',
 ];
 
 // Aliases for backward compatibility
@@ -245,6 +248,13 @@ export const SPREADSHEET_MIME_TYPES = [
   'text/csv',
   'application/vnd.ms-excel',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  'application/json'
+  'application/json',
 ];
-export const AUDIO_MIME_TYPES = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac', 'audio/aac', 'audio/mp4'];
+export const AUDIO_MIME_TYPES = [
+  'audio/mpeg',
+  'audio/wav',
+  'audio/ogg',
+  'audio/flac',
+  'audio/aac',
+  'audio/mp4',
+];

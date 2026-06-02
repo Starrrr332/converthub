@@ -5,7 +5,9 @@ interface SeoConfig {
 }
 
 function setMeta(name: string, content: string) {
-  let el = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`) as HTMLMetaElement | null;
+  let el = document.querySelector(
+    `meta[name="${name}"], meta[property="${name}"]`,
+  ) as HTMLMetaElement | null;
   if (!el) {
     el = document.createElement('meta');
     if (name.startsWith('og:') || name.startsWith('article:')) {

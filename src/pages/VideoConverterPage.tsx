@@ -67,7 +67,9 @@ export function VideoConverterPage() {
 
       let stream: MediaStream;
       try {
-        stream = (video as HTMLVideoElement & { captureStream(fps?: number): MediaStream }).captureStream(30);
+        stream = (
+          video as HTMLVideoElement & { captureStream(fps?: number): MediaStream }
+        ).captureStream(30);
       } catch {
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth || 640;
@@ -87,9 +89,11 @@ export function VideoConverterPage() {
       const mimeType = getMimeType(outputFormat);
       const supported = MediaRecorder.isTypeSupported(mimeType);
       const actualMime = supported ? mimeType : 'video/webm;codecs=vp8';
-      
+
       if (!supported) {
-        setInfo(`Formato ${outputFormat.toUpperCase()} no soportado directamente. Se usará WebM como alternativa.`);
+        setInfo(
+          `Formato ${outputFormat.toUpperCase()} no soportado directamente. Se usará WebM como alternativa.`,
+        );
       }
 
       const chunks: BlobPart[] = [];
@@ -109,7 +113,9 @@ export function VideoConverterPage() {
         setFileName(`${fileName}.${ext}`);
         setConverting(false);
         video.pause();
-        notify('Video Converter', { body: `Video convertido a ${ext.toUpperCase()} listo para descargar` });
+        notify('Video Converter', {
+          body: `Video convertido a ${ext.toUpperCase()} listo para descargar`,
+        });
       };
 
       recorder.start();
@@ -135,7 +141,7 @@ export function VideoConverterPage() {
   const extractAudio = () => {
     if (!file || !videoUrl) return;
     setInfo('Extrayendo audio...');
-    
+
     const audioCtx = new AudioContext();
     const audio = new Audio(videoUrl);
     const source = audioCtx.createMediaElementSource(audio);
@@ -145,11 +151,11 @@ export function VideoConverterPage() {
 
     const chunks: BlobPart[] = [];
     const recorder = new MediaRecorder(dest.stream, { mimeType: 'audio/webm;codecs=opus' });
-    
+
     recorder.ondataavailable = (e) => {
       if (e.data.size > 0) chunks.push(e.data);
     };
-    
+
     recorder.onstop = () => {
       const blob = new Blob(chunks, { type: 'audio/mpeg' });
       setResultUrl(URL.createObjectURL(blob));
@@ -181,16 +187,26 @@ export function VideoConverterPage() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Video Converter</h1>
-          <p className="text-gray-600">Convierte, comprime, recorta y extrae audio de videos. 100% en tu navegador.</p>
+          <p className="text-gray-600">
+            Convierte, comprime, recorta y extrae audio de videos. 100% en tu navegador.
+          </p>
         </div>
 
         {!file ? (
           <div className="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-blue-500 transition-colors">
-            <input type="file" accept="video/*" onChange={handleFileChange} className="hidden" id="video-upload" />
+            <input
+              type="file"
+              accept="video/*"
+              onChange={handleFileChange}
+              className="hidden"
+              id="video-upload"
+            />
             <label htmlFor="video-upload" className="cursor-pointer">
               <Film className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <p className="text-xl text-gray-600 mb-2">Arrastra un video aquí</p>
-              <p className="text-sm text-gray-400">MP4, WebM, MOV, AVI, MKV - Sin límite de tamaño</p>
+              <p className="text-sm text-gray-400">
+                MP4, WebM, MOV, AVI, MKV - Sin límite de tamaño
+              </p>
             </label>
           </div>
         ) : (
@@ -199,11 +215,16 @@ export function VideoConverterPage() {
               <div className="bg-white rounded-xl shadow-lg p-4">
                 <h3 className="font-semibold text-gray-900 mb-3">Herramientas</h3>
                 <div className="space-y-2">
-                  {tools.map(t => (
-                    <button key={t.id} onClick={() => setTool(t.id)}
+                  {tools.map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => setTool(t.id)}
                       className={`w-full p-3 rounded-lg flex items-center gap-3 transition-all ${
-                        tool === t.id ? 'bg-blue-50 text-blue-700 border-2 border-blue-500' : 'hover:bg-gray-50 border-2 border-transparent'
-                      }`}>
+                        tool === t.id
+                          ? 'bg-blue-50 text-blue-700 border-2 border-blue-500'
+                          : 'hover:bg-gray-50 border-2 border-transparent'
+                      }`}
+                    >
                       {t.icon} <span className="font-medium">{t.label}</span>
                     </button>
                   ))}
@@ -215,7 +236,12 @@ export function VideoConverterPage() {
               <div className="bg-white rounded-xl shadow-lg p-6">
                 {videoUrl && (
                   <>
-                    <video ref={videoRef} src={videoUrl} className="w-full max-h-[300px] rounded-lg mb-4" controls />
+                    <video
+                      ref={videoRef}
+                      src={videoUrl}
+                      className="w-full max-h-[300px] rounded-lg mb-4"
+                      controls
+                    />
                     <canvas ref={canvasRef} className="hidden" />
                   </>
                 )}
@@ -223,23 +249,41 @@ export function VideoConverterPage() {
                 <div className="space-y-4">
                   {tool === 'convert' && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Formato de salida</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Formato de salida
+                      </label>
                       <div className="flex gap-2">
-                        {['webm', 'mp4', 'mov', 'avi'].map(f => (
-                          <button key={f} onClick={() => setOutputFormat(f)}
-                            className={`p-3 rounded-lg border-2 flex-1 transition-all ${outputFormat === f ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200'}`}>
+                        {['webm', 'mp4', 'mov', 'avi'].map((f) => (
+                          <button
+                            key={f}
+                            onClick={() => setOutputFormat(f)}
+                            className={`p-3 rounded-lg border-2 flex-1 transition-all ${outputFormat === f ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-200'}`}
+                          >
                             {f.toUpperCase()}
                           </button>
                         ))}
                       </div>
-                      <p className="text-xs text-gray-400 mt-2">Nota: Chrome/Firefox convierten a WebM nativamente. MP4/MOV/AVI pueden no estar disponibles en todos los navegadores.</p>
+                      <p className="text-xs text-gray-400 mt-2">
+                        Nota: Chrome/Firefox convierten a WebM nativamente. MP4/MOV/AVI pueden no
+                        estar disponibles en todos los navegadores.
+                      </p>
                     </div>
                   )}
 
                   {(tool === 'compress' || tool === 'convert') && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Calidad: {Math.round(quality * 100)}%</label>
-                      <input type="range" min="0.1" max="1" step="0.1" value={quality} onChange={e => setQuality(Number(e.target.value))} className="w-full" />
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Calidad: {Math.round(quality * 100)}%
+                      </label>
+                      <input
+                        type="range"
+                        min="0.1"
+                        max="1"
+                        step="0.1"
+                        value={quality}
+                        onChange={(e) => setQuality(Number(e.target.value))}
+                        className="w-full"
+                      />
                     </div>
                   )}
 
@@ -249,20 +293,40 @@ export function VideoConverterPage() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Inicio: {trimStart.toFixed(1)}s / {duration.toFixed(0)}s
                         </label>
-                        <input type="range" min="0" max={duration} step="0.5" value={trimStart} onChange={e => setTrimStart(Number(e.target.value))} className="w-full" />
+                        <input
+                          type="range"
+                          min="0"
+                          max={duration}
+                          step="0.5"
+                          value={trimStart}
+                          onChange={(e) => setTrimStart(Number(e.target.value))}
+                          className="w-full"
+                        />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Fin: {trimEnd.toFixed(1)}s / {duration.toFixed(0)}s
                         </label>
-                        <input type="range" min="0" max={duration} step="0.5" value={trimEnd} onChange={e => setTrimEnd(Number(e.target.value))} className="w-full" />
+                        <input
+                          type="range"
+                          min="0"
+                          max={duration}
+                          step="0.5"
+                          value={trimEnd}
+                          onChange={(e) => setTrimEnd(Number(e.target.value))}
+                          className="w-full"
+                        />
                       </div>
-                      <p className="text-sm text-gray-500">Duración: {(trimEnd - trimStart).toFixed(1)}s</p>
+                      <p className="text-sm text-gray-500">
+                        Duración: {(trimEnd - trimStart).toFixed(1)}s
+                      </p>
                     </div>
                   )}
 
                   {tool === 'audio' && (
-                    <p className="text-sm text-gray-500">Extrae el audio del video en formato WebM (Opus).</p>
+                    <p className="text-sm text-gray-500">
+                      Extrae el audio del video en formato WebM (Opus).
+                    </p>
                   )}
                 </div>
 
@@ -272,7 +336,12 @@ export function VideoConverterPage() {
 
                 <div className="mt-6 space-y-4">
                   {!resultUrl ? (
-                    <Button onClick={handleConvert} disabled={converting} className="w-full" loading={converting}>
+                    <Button
+                      onClick={handleConvert}
+                      disabled={converting}
+                      className="w-full"
+                      loading={converting}
+                    >
                       {converting ? 'Procesando...' : `Convertir a ${getOutputExt().toUpperCase()}`}
                     </Button>
                   ) : (
@@ -282,7 +351,14 @@ export function VideoConverterPage() {
                           <Download className="w-4 h-4 mr-2" /> Descargar
                         </Button>
                       </a>
-                      <button onClick={() => { setFile(null); setVideoUrl(null); setResultUrl(null); }} className="w-full mt-2 py-2 text-gray-500 hover:text-gray-700 text-sm">
+                      <button
+                        onClick={() => {
+                          setFile(null);
+                          setVideoUrl(null);
+                          setResultUrl(null);
+                        }}
+                        className="w-full mt-2 py-2 text-gray-500 hover:text-gray-700 text-sm"
+                      >
                         Nuevo video
                       </button>
                     </div>

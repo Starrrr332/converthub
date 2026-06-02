@@ -3,15 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { Upload, Download, Table, FileSpreadsheet, FileJson, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ToolInfoModal } from '../ui/ToolInfoModal';
-import { 
-  csvToXlsx, 
-  xlsxToCsv, 
-  csvToJson, 
+import {
+  csvToXlsx,
+  xlsxToCsv,
+  csvToJson,
   jsonToCsv,
   previewSpreadsheet,
-  getFileFormat 
+  getFileFormat,
 } from '../../services/conversions/spreadsheetConverter';
-import type { SpreadsheetTool, SpreadsheetConversionResult, SpreadsheetPreviewResult } from '../../types';
+import type {
+  SpreadsheetTool,
+  SpreadsheetConversionResult,
+  SpreadsheetPreviewResult,
+} from '../../types';
 
 interface SpreadsheetToolContentProps {
   tool: SpreadsheetTool;
@@ -25,15 +29,15 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showToolInfo, setShowToolInfo] = useState(false);
-  
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
-    
+
     setFile(selectedFile);
     setResult(null);
     setError(null);
-    
+
     try {
       const previewData = await previewSpreadsheet(selectedFile);
       setPreview(previewData);
@@ -41,16 +45,16 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
       console.error('Preview error:', err);
     }
   };
-  
+
   const handleConvert = async () => {
     if (!file) return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       let conversionResult: SpreadsheetConversionResult;
-      
+
       switch (tool) {
         case 'csv-to-xlsx':
           conversionResult = await csvToXlsx({ file });
@@ -67,7 +71,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
         default:
           throw new Error('Tool not implemented');
       }
-      
+
       setResult(conversionResult);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Conversion failed');
@@ -75,10 +79,10 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
       setLoading(false);
     }
   };
-  
+
   const handleDownload = () => {
     if (!result) return;
-    
+
     const a = document.createElement('a');
     a.href = result.url;
     a.download = result.filename;
@@ -86,7 +90,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
     a.click();
     document.body.removeChild(a);
   };
-  
+
   const getAcceptTypes = () => {
     switch (tool) {
       case 'csv-to-xlsx':
@@ -101,7 +105,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
         return '.csv,.xlsx,.xls,.json';
     }
   };
-  
+
   const getIcon = () => {
     if (!file) return <Upload className="w-12 h-12 text-gray-400" />;
     const format = getFileFormat(file);
@@ -109,7 +113,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
     if (format === 'csv') return <Table className="w-12 h-12 text-green-500" />;
     return <FileSpreadsheet className="w-12 h-12 text-blue-500" />;
   };
-  
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -122,7 +126,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
           <Info className="w-5 h-5" />
         </button>
       </div>
-      
+
       <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
         <input
           type="file"
@@ -133,12 +137,10 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
         />
         <label htmlFor={`spreadsheet-input-${tool}`} className="cursor-pointer">
           {getIcon()}
-          <p className="text-gray-600 mt-4">
-            {t('spreadsheet.dropzone')}
-          </p>
+          <p className="text-gray-600 mt-4">{t('spreadsheet.dropzone')}</p>
         </label>
       </div>
-      
+
       {preview && preview.headers.length > 0 && (
         <div className="overflow-x-auto">
           <h4 className="text-sm font-medium text-gray-700 mb-2">
@@ -148,7 +150,10 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
             <thead className="bg-gray-100">
               <tr>
                 {preview.headers.map((header, i) => (
-                  <th key={i} className="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b">
+                  <th
+                    key={i}
+                    className="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b"
+                  >
                     {header}
                   </th>
                 ))}
@@ -173,13 +178,9 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
           )}
         </div>
       )}
-      
-      {error && (
-        <div className="p-4 bg-red-50 text-red-700 rounded-lg">
-          {error}
-        </div>
-      )}
-      
+
+      {error && <div className="p-4 bg-red-50 text-red-700 rounded-lg">{error}</div>}
+
       <div className="flex gap-4">
         <Button
           onClick={handleConvert}
@@ -189,7 +190,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
         >
           {loading ? t('progress.converting') : t('actions.convert')}
         </Button>
-        
+
         {result && (
           <Button onClick={handleDownload} variant="secondary">
             <Download className="w-4 h-4 mr-2" />
@@ -197,7 +198,7 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
           </Button>
         )}
       </div>
-      
+
       {result && (
         <div className="p-4 bg-green-50 rounded-lg">
           <p className="text-sm text-green-700">
@@ -205,9 +206,9 @@ export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {
           </p>
         </div>
       )}
-      
-      <ToolInfoModal 
-        isOpen={showToolInfo} 
+
+      <ToolInfoModal
+        isOpen={showToolInfo}
         onClose={() => setShowToolInfo(false)}
         tool="spreadsheet"
       />

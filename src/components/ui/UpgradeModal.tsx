@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { X, Lock, Star } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 interface UpgradeModalProps {
   isOpen: boolean;
@@ -10,32 +11,34 @@ interface UpgradeModalProps {
 
 export function UpgradeModal({ isOpen, onClose, feature }: UpgradeModalProps) {
   const { t } = useTranslation('converter');
-  
+
+  const focusTrapRef = useFocusTrap(isOpen);
+
   if (!isOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
+      <div
+        ref={focusTrapRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={t('upgrade.title')}
+        className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
+      >
         {/* Header with gradient */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white text-center">
           <div className="inline-flex p-3 bg-white/20 rounded-full mb-4">
             <Lock className="w-8 h-8" />
           </div>
-          <h2 className="text-2xl font-bold mb-2">
-            {t('upgrade.title')}
-          </h2>
+          <h2 className="text-2xl font-bold mb-2">{t('upgrade.title')}</h2>
           <p className="text-blue-100">
             {feature ? t('upgrade.featureLocked', { feature }) : t('upgrade.subtitle')}
           </p>
         </div>
-        
+
         {/* Content */}
         <div className="p-6">
           <div className="space-y-3 mb-6">
@@ -56,17 +59,19 @@ export function UpgradeModal({ isOpen, onClose, feature }: UpgradeModalProps) {
               <span className="text-gray-700">{t('upgrade.benefits.largeFiles')}</span>
             </div>
           </div>
-          
+
           {/* Price */}
           <div className="text-center p-4 bg-gray-50 rounded-xl mb-6">
             <p className="text-sm text-gray-500">{t('upgrade.priceLabel')}</p>
-            <p className="text-3xl font-bold text-gray-900">$5.50 <span className="text-sm font-normal">USD/mes</span></p>
+            <p className="text-3xl font-bold text-gray-900">
+              $5.50 <span className="text-sm font-normal">USD/mes</span>
+            </p>
             <p className="text-sm text-green-600 mt-1">{t('upgrade.annualDeal')}</p>
           </div>
-          
+
           {/* Actions */}
           <div className="flex flex-col gap-3">
-            <Button 
+            <Button
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600"
               onClick={() => {
                 window.location.href = '/pricing';
@@ -82,12 +87,9 @@ export function UpgradeModal({ isOpen, onClose, feature }: UpgradeModalProps) {
             </button>
           </div>
         </div>
-        
+
         {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-white/80 hover:text-white"
-        >
+        <button onClick={onClose} className="absolute top-4 right-4 text-white/80 hover:text-white">
           <X className="w-5 h-5" />
         </button>
       </div>

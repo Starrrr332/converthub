@@ -43,7 +43,7 @@ export function ImageToIco() {
 
       const sizes = [16, 32, 48];
       const canvases = await Promise.all(
-        sizes.map(size => {
+        sizes.map((size) => {
           return new Promise<HTMLCanvasElement>((resolve) => {
             const canvas = document.createElement('canvas');
             canvas.width = size;
@@ -52,7 +52,7 @@ export function ImageToIco() {
             ctx.drawImage(img, 0, 0, size, size);
             resolve(canvas);
           });
-        })
+        }),
       );
 
       const icoBlob = await createIcoBlob(canvases);
@@ -133,17 +133,12 @@ export function ImageToIco() {
 
   return (
     <div className="space-y-4">
-      <div
-        onClick={() => fileRef.current?.click()}
-        className="dropzone cursor-pointer"
-      >
+      <div onClick={() => fileRef.current?.click()} className="dropzone cursor-pointer">
         <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
         <p className="text-sm text-slate-600 text-center">
           Arrastra una imagen o haz clic para seleccionar
         </p>
-        <p className="text-xs text-slate-400 text-center mt-1">
-          PNG, JPG, WebP, GIF
-        </p>
+        <p className="text-xs text-slate-400 text-center mt-1">PNG, JPG, WebP, GIF</p>
         <input
           ref={fileRef}
           type="file"
@@ -177,7 +172,10 @@ export function ImageToIco() {
             <span className="text-sm font-medium text-slate-700">
               ICO generado (16x16, 32x32, 48x48)
             </span>
-            <button onClick={handleDownload} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+            <button
+              onClick={handleDownload}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+            >
               <Download className="w-4 h-4" />
               Descargar {fileName}
             </button>

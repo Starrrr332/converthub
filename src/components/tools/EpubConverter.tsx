@@ -110,11 +110,16 @@ export function EpubConverter() {
   return (
     <div>
       <h3 className="text-lg font-semibold mb-2">EPUB a PDF</h3>
-      <p className="text-sm text-text-secondary mb-4">Convierte libros electrónicos EPUB a documentos PDF.</p>
+      <p className="text-sm text-text-secondary mb-4">
+        Convierte libros electrónicos EPUB a documentos PDF.
+      </p>
 
       <label
         className={`dropzone flex flex-col items-center justify-center h-32 cursor-pointer mb-4 ${dragOver ? 'dropzone-active' : ''}`}
-        onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
       >
@@ -126,14 +131,12 @@ export function EpubConverter() {
           ref={inputRef}
           type="file"
           accept=".epub"
-          onChange={e => handleFile(e.target.files?.[0])}
+          onChange={(e) => handleFile(e.target.files?.[0])}
           className="hidden"
         />
       </label>
 
-      {error && (
-        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>
-      )}
+      {error && <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm mb-4">{error}</div>}
 
       <Button onClick={convert} disabled={!file || loading}>
         {loading ? 'Convirtiendo...' : 'Convertir a PDF'}

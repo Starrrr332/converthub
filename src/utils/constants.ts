@@ -11,7 +11,7 @@ const FORMAT_TO_EXTENSION: Record<ImageFormat, FileExtension> = {
   'image/svg+xml': '.svg',
   'image/x-icon': '.ico',
   'image/avif': '.avif',
-  'image/heic': '.heic'
+  'image/heic': '.heic',
 };
 
 // Extension to format mapping
@@ -25,7 +25,7 @@ const EXTENSION_TO_FORMAT: Record<FileExtension, ImageFormat> = {
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
   '.avif': 'image/avif',
-  '.heic': 'image/heic'
+  '.heic': 'image/heic',
 };
 
 // Format display names
@@ -38,7 +38,7 @@ export const FORMAT_NAMES: Record<ImageFormat, string> = {
   'image/svg+xml': 'SVG',
   'image/x-icon': 'ICO',
   'image/avif': 'AVIF',
-  'image/heic': 'HEIC'
+  'image/heic': 'HEIC',
 };
 
 // Format colors for UI
@@ -51,7 +51,7 @@ export const FORMAT_COLORS: Record<ImageFormat, string> = {
   'image/svg+xml': '#EC4899',
   'image/x-icon': '#6366F1',
   'image/avif': '#14B8A6',
-  'image/heic': '#F97316'
+  'image/heic': '#F97316',
 };
 
 export function getFileExtension(mimeType: ImageFormat): FileExtension {
@@ -76,11 +76,11 @@ export function getMaxFileSize(): number {
 
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
-  
+
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  
+
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 

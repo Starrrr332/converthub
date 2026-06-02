@@ -40,6 +40,6 @@ export const useHistoryStore = create<HistoryState>()(
     }),
     {
       name: 'converthub-history',
-    }
-  )
+    },
+  ),
 );
