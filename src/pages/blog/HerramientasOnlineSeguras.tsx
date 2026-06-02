@@ -9,6 +9,7 @@ export function HerramientasOnlineSeguras() {
       date="1 de diciembre, 2025"
       readTime="6 min de lectura"
       tags={['Seguridad', 'Privacidad', 'Consejos']}
+      dateISO="2025-12-01"
     >
       <h2>Introducción</h2>
       <p>

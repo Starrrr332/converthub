@@ -9,6 +9,7 @@ export function ConvertImagesWithoutLosingQuality() {
       date="1 de enero, 2026"
       readTime="5 min de lectura"
       tags={['Imágenes', 'Guía', 'Calidad']}
+      dateISO="2026-01-01"
     >
       <h2>¿Por qué se pierde calidad al convertir imágenes?</h2>
       <p>

@@ -9,6 +9,7 @@ export function GuiaFormatosImagen2026() {
       date="15 de diciembre, 2025"
       readTime="8 min de lectura"
       tags={['Formatos', 'Imágenes', 'SEO']}
+      dateISO="2025-12-15"
     >
       <h2>Introducción</h2>
       <p>
