@@ -20,10 +20,13 @@ export function Pricing() {
   const renderedRef = useRef(false);
 
   useEffect(() => {
+    let attempts = 0;
+    const maxAttempts = 30;
     const check = () => {
+      attempts++;
       if (window.paypal?.Buttons) {
         setPaypalReady(true);
-      } else {
+      } else if (attempts < maxAttempts) {
         setTimeout(check, 300);
       }
     };
@@ -41,9 +44,11 @@ export function Pricing() {
     renderedRef.current = true;
     setLoadingPaypal(true);
 
+    let renderAttempts = 0;
     const tryRender = () => {
+      renderAttempts++;
       if (!window.paypal?.Buttons) {
-        setTimeout(tryRender, 300);
+        if (renderAttempts < 30) setTimeout(tryRender, 300);
         return;
       }
       const container = document.getElementById('paypal-donation-btn');

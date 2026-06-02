@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Upload, Eye, Edit3, Bold, Italic, Code, List, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
+import { Copy, Check, Eye, EyeOff, Download, FileDown } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PageLayout } from '../components/layout/PageLayout';
+import { sanitizeUrl } from '../utils/sanitization';
+import DOMPurify from 'dompurify';
 
 const sampleMarkdown = `# Bienvenido a ConvertHub
 
@@ -50,8 +52,10 @@ function parseMarkdown(md: string): string {
   
   html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg my-3 overflow-x-auto text-sm"><code>$2</code></pre>');
   
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline" target="_blank">$1</a>');
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded my-2" />');
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m: string, text: string, url: string) =>
+    `<a href="${sanitizeUrl(url)}" class="text-blue-600 hover:underline" target="_blank">${text}</a>`);
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m: string, alt: string, url: string) =>
+    `<img src="${sanitizeUrl(url)}" alt="${alt}" class="max-w-full rounded my-2" />`);
   
   html = html.replace(/^---$/gm, '<hr class="my-4 border-gray-300" />');
   html = html.replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-2">$1</blockquote>');
@@ -230,7 +234,7 @@ ${parseMarkdown(markdown)}
               </div>
               <div
                 className="h-[600px] overflow-y-auto p-6 prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: parseMarkdown(markdown) }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parseMarkdown(markdown)) }}
               />
             </div>
           )}

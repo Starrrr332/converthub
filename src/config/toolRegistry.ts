@@ -6,7 +6,8 @@ import {
   Wrench, Ruler, Cpu, ScanText, ImageDown, FileSearch2,
   Lock, Calculator, Smile, FileJson, Palette, Paintbrush,
   Binary, Link, Hash, QrCode, Database, FileDiff, Regex, Key, FileCode, Scan,
-  Camera, Terminal, BarChart3, Sigma, Clock, Droplets, Image as ImageIcon,
+  Camera, Terminal, BarChart3, Sigma, Clock,
+  BookOpen, Smartphone, Grid3X3,
 } from 'lucide-react';
 
 export type ToolCategory = 'converter' | 'editor' | 'tool' | 'devtool' | 'utility';
@@ -52,12 +53,12 @@ const YamlJsonPage = lazy(() => import('../pages/tools/YamlJsonPage').then(m => 
 const GradientPage = lazy(() => import('../pages/tools/GradientPage').then(m => ({ default: m.GradientPage })));
 const ColorPalettePage = lazy(() => import('../pages/tools/ColorPalettePage').then(m => ({ default: m.ColorPalettePage })));
 
-// Sprint 1 tools
-const XmlJsonPage = lazy(() => import('../pages/tools/XmlJsonPage').then(m => ({ default: m.XmlJsonPage })));
-const JsonToCsvPage = lazy(() => import('../pages/tools/JsonToCsvPage').then(m => ({ default: m.JsonToCsvPage })));
-const HtmlToMarkdownPage = lazy(() => import('../pages/tools/HtmlToMarkdownPage').then(m => ({ default: m.HtmlToMarkdownPage })));
-const ImageToIcoPage = lazy(() => import('../pages/tools/ImageToIcoPage').then(m => ({ default: m.ImageToIcoPage })));
-const WatermarkPage = lazy(() => import('../pages/tools/WatermarkPage').then(m => ({ default: m.WatermarkPage })));
+// Sprint 2 tools
+const EpubConverterPage = lazy(() => import('../pages/tools/EpubConverterPage').then(m => ({ default: m.EpubConverterPage })));
+const HeicConverterPage = lazy(() => import('../pages/tools/HeicConverterPage').then(m => ({ default: m.HeicConverterPage })));
+const MdToPdfPage = lazy(() => import('../pages/tools/MdToPdfPage').then(m => ({ default: m.MdToPdfPage })));
+const JsonToSqlPage = lazy(() => import('../pages/tools/JsonToSqlPage').then(m => ({ default: m.JsonToSqlPage })));
+const CollageMakerPage = lazy(() => import('../pages/tools/CollageMakerPage').then(m => ({ default: m.CollageMakerPage })));
 
 // DevTools (individual pages)
 const Base64Page = lazy(() => import('../pages/devtools/Base64Page').then(m => ({ default: m.Base64Page })));
@@ -152,6 +153,32 @@ export const toolRegistry: ToolDefinition[] = [
     bg: 'bg-orange-50',
     hover: 'hover:bg-orange-50 hover:border-orange-200',
     component: VideoConverterPage,
+  },
+  {
+    path: '/converter/epub',
+    icon: BookOpen,
+    name: 'EPUB ↔ PDF',
+    labelKey: 'nav.converters.epub',
+    descKey: 'nav.converters.epubDesc',
+    homeDesc: 'EPUB a PDF, PDF a EPUB',
+    category: 'converter',
+    color: 'text-rose-600',
+    bg: 'bg-rose-50',
+    hover: 'hover:bg-rose-50 hover:border-rose-200',
+    component: EpubConverterPage,
+  },
+  {
+    path: '/converter/heic',
+    icon: Smartphone,
+    name: 'HEIC → JPG/PNG',
+    labelKey: 'nav.converters.heic',
+    descKey: 'nav.converters.heicDesc',
+    homeDesc: 'Convertir HEIC de Apple a JPG o PNG',
+    category: 'converter',
+    color: 'text-cyan-600',
+    bg: 'bg-cyan-50',
+    hover: 'hover:bg-cyan-50 hover:border-cyan-200',
+    component: HeicConverterPage,
   },
 
   // ── Editors ──
@@ -367,72 +394,44 @@ export const toolRegistry: ToolDefinition[] = [
     hover: 'hover:bg-orange-50 hover:border-orange-200',
     component: ColorPalettePage,
   },
-
-  // ── Sprint 1 tools ──
   {
-    path: '/tools/xml-json',
-    icon: Code,
-    name: 'XML ↔ JSON',
-    labelKey: 'nav.tools.xmlJson',
-    descKey: 'nav.tools.xmlJsonDesc',
-    homeDesc: 'Convertir entre XML y JSON',
-    category: 'tool',
-    color: 'text-teal-600',
-    bg: 'bg-teal-50',
-    hover: 'hover:bg-teal-50 hover:border-teal-200',
-    component: XmlJsonPage,
-  },
-  {
-    path: '/tools/json-to-csv',
-    icon: FileSpreadsheet,
-    name: 'JSON → CSV',
-    labelKey: 'nav.tools.jsonToCsv',
-    descKey: 'nav.tools.jsonToCsvDesc',
-    homeDesc: 'Exportar JSON como CSV',
+    path: '/tools/md-to-pdf',
+    icon: FileText,
+    name: 'Markdown a PDF',
+    labelKey: 'nav.tools.mdToPdf',
+    descKey: 'nav.tools.mdToPdfDesc',
+    homeDesc: 'Exportar Markdown a PDF profesional',
     category: 'tool',
     color: 'text-emerald-600',
     bg: 'bg-emerald-50',
     hover: 'hover:bg-emerald-50 hover:border-emerald-200',
-    component: JsonToCsvPage,
+    component: MdToPdfPage,
   },
   {
-    path: '/tools/html-to-md',
-    icon: FileCode,
-    name: 'HTML → Markdown',
-    labelKey: 'nav.tools.htmlToMd',
-    descKey: 'nav.tools.htmlToMdDesc',
-    homeDesc: 'Convertir HTML a Markdown',
-    category: 'tool',
-    color: 'text-blue-600',
-    bg: 'bg-blue-50',
-    hover: 'hover:bg-blue-50 hover:border-blue-200',
-    component: HtmlToMarkdownPage,
-  },
-  {
-    path: '/tools/image-to-ico',
-    icon: ImageIcon,
-    name: 'Image to ICO',
-    labelKey: 'nav.tools.imageToIco',
-    descKey: 'nav.tools.imageToIcoDesc',
-    homeDesc: 'Convertir imagen a favicon ICO',
+    path: '/tools/json-to-sql',
+    icon: Database,
+    name: 'JSON a SQL',
+    labelKey: 'nav.tools.jsonToSql',
+    descKey: 'nav.tools.jsonToSqlDesc',
+    homeDesc: 'Generar INSERT statements desde JSON',
     category: 'tool',
     color: 'text-violet-600',
     bg: 'bg-violet-50',
     hover: 'hover:bg-violet-50 hover:border-violet-200',
-    component: ImageToIcoPage,
+    component: JsonToSqlPage,
   },
   {
-    path: '/tools/watermark',
-    icon: Droplets,
-    name: 'Marca de Agua',
-    labelKey: 'nav.tools.watermark',
-    descKey: 'nav.tools.watermarkDesc',
-    homeDesc: 'Agregar marca de agua a imágenes',
+    path: '/tools/collage',
+    icon: Grid3X3,
+    name: 'Collage Maker',
+    labelKey: 'nav.tools.collage',
+    descKey: 'nav.tools.collageDesc',
+    homeDesc: 'Crear collages con múltiples imágenes',
     category: 'tool',
-    color: 'text-cyan-600',
-    bg: 'bg-cyan-50',
-    hover: 'hover:bg-cyan-50 hover:border-cyan-200',
-    component: WatermarkPage,
+    color: 'text-pink-600',
+    bg: 'bg-pink-50',
+    hover: 'hover:bg-pink-50 hover:border-pink-200',
+    component: CollageMakerPage,
   },
 
   // ── DevTools (individual routes) ──

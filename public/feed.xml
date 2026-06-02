@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ConvertHub Blog</title>
+    <link>https://converthub.com</link>
+    <description>Guías, tutoriales y consejos para convertir archivos sin perder calidad.</description>
+    <language>es</language>
+    <lastBuildDate>Mon, 01 Jun 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://converthub.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cómo Convertir Imágenes Sin Perder Calidad</title>
+      <link>https://converthub.com/blog/como-convertir-imagenes-sin-perder-calidad</link>
+      <guid>https://converthub.com/blog/como-convertir-imagenes-sin-perder-calidad</guid>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 GMT</pubDate>
+      <description>Guía completa para convertir entre formatos de imagen manteniendo la máxima calidad posible.</description>
+    </item>
+    <item>
+      <title>Guía Completa de Formatos de Imagen 2026</title>
+      <link>https://converthub.com/blog/guia-formatos-imagen-2026</link>
+      <guid>https://converthub.com/blog/guia-formatos-imagen-2026</guid>
+      <pubDate>Mon, 15 Dec 2025 00:00:00 GMT</pubDate>
+      <description>PNG, JPG, WebP, AVIF: ¿cuál elegir? Conoce las diferencias y cuándo usar cada formato.</description>
+    </item>
+    <item>
+      <title>Cómo Elegir Herramientas Online Seguras</title>
+      <link>https://converthub.com/blog/herramientas-online-seguras</link>
+      <guid>https://converthub.com/blog/herramientas-online-seguras</guid>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 GMT</pubDate>
+      <description>Qué buscar en una herramienta online para proteger tus datos y archivos personales.</description>
+    </item>
+  </channel>
+</rss>

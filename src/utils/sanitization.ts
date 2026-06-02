@@ -44,17 +44,25 @@ export function sanitizeAttribute(input: string): string {
 
 /**
  * Validate and sanitize URLs (blocks javascript: protocol XSS)
+ * Allows relative URLs, http/https, mailto, tel.
  */
 export function sanitizeUrl(input: string): string {
+  const trimmed = input.trim();
+  const lower = trimmed.toLowerCase();
+
+  if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:')) {
+    return '';
+  }
+
   try {
-    const url = new URL(input);
+    const url = new URL(trimmed);
     const allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
     if (!allowedProtocols.includes(url.protocol)) {
       return '';
     }
     return url.toString();
   } catch {
-    return '';
+    return trimmed;
   }
 }
 
