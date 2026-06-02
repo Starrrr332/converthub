@@ -17,7 +17,6 @@ import type { PdfTool, PdfConversionResult } from '../../types';
 
 interface PdfToolContentProps {
   tool: PdfTool;
-  isPremium?: boolean;
 }
 
 export function PdfToolContent({ tool }: PdfToolContentProps) {

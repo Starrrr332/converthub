@@ -1,5 +1,5 @@
 import type { ImageFormat, FileExtension } from '../types';
-import { FREE_FORMATS, PREMIUM_FORMATS, FREE_MAX_SIZE, PREMIUM_MAX_SIZE } from '../types';
+import { PREMIUM_FORMATS, PREMIUM_MAX_SIZE } from '../types';
 
 // Format to extension mapping
 const FORMAT_TO_EXTENSION: Record<ImageFormat, FileExtension> = {
@@ -62,18 +62,16 @@ export function getMimeType(extension: FileExtension): ImageFormat {
   return EXTENSION_TO_FORMAT[extension];
 }
 
-export function isFormatSupported(format: string, isPremium: boolean): boolean {
-  const formats = isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
-  return formats.includes(format as ImageFormat);
+export function isFormatSupported(format: string): boolean {
+  return PREMIUM_FORMATS.includes(format as ImageFormat);
 }
 
-export function getOutputFormats(inputFormat: string, isPremium: boolean): ImageFormat[] {
-  const formats = isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
-  return formats.filter((f: ImageFormat) => f !== inputFormat);
+export function getOutputFormats(inputFormat: string): ImageFormat[] {
+  return PREMIUM_FORMATS.filter((f: ImageFormat) => f !== inputFormat);
 }
 
-export function getMaxFileSize(isPremium: boolean): number {
-  return isPremium ? PREMIUM_MAX_SIZE : FREE_MAX_SIZE;
+export function getMaxFileSize(): number {
+  return PREMIUM_MAX_SIZE;
 }
 
 export function formatFileSize(bytes: number): string {

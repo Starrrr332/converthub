@@ -1,26 +1,24 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Upload, Image as ImageIcon } from 'lucide-react';
-import { FREE_FORMATS, PREMIUM_FORMATS } from '../../types';
+import { PREMIUM_FORMATS } from '../../types';
 import { formatFileSize } from '../../utils/constants';
 
 interface FileDropzoneProps {
   onFilesSelected: (files: File[]) => void;
-  isPremium: boolean;
   maxSize: number;
   disabled?: boolean;
 }
 
 export function FileDropzone({
   onFilesSelected,
-  isPremium,
   maxSize,
   disabled = false
 }: FileDropzoneProps) {
   const { t } = useTranslation('converter');
   const [isDragActive, setIsDragActive] = useState(false);
   
-  const acceptedFormats = isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
+  const acceptedFormats = PREMIUM_FORMATS;
   
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -70,55 +68,54 @@ export function FileDropzone({
       onFilesSelected(validFiles);
     }
     
-    // Reset input
     e.target.value = '';
   }, [acceptedFormats, maxSize, onFilesSelected]);
   
-  return (
-    <div
-      className={`dropzone ${isDragActive ? 'dropzone-active' : ''} ${
-        disabled ? 'opacity-50 cursor-not-allowed' : ''
-      }`}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-    >
-      <input
-        type="file"
-        multiple
-        accept={acceptedFormats.join(',')}
-        onChange={handleFileInput}
-        className="hidden"
-        id="file-input"
-        disabled={disabled}
-      />
-      
-      <label htmlFor="file-input" className="cursor-pointer">
-        <div className="flex flex-col items-center gap-4">
-          <div className={`p-4 rounded-2xl ${isDragActive ? 'bg-indigo-100' : 'bg-slate-100'}`}>
-            {isDragActive ? (
-              <ImageIcon className="w-12 h-12 text-indigo-600" />
-            ) : (
-              <Upload className="w-12 h-12 text-slate-400" />
-            )}
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold text-slate-800">
-              {isDragActive ? t('dropzone.dragActive') : t('dropzone.title')}
-            </h3>
-            <p className="text-sm text-slate-500 mt-1">
-              {t('dropzone.subtitle')}
-            </p>
-          </div>
-          
-          <div className="text-xs text-slate-400">
-            <p>{t('dropzone.acceptedFormats')}</p>
-            <p>{t('dropzone.maxSize', { size: formatFileSize(maxSize) })}</p>
-          </div>
-        </div>
-      </label>
-    </div>
-  );
+return (
+     <div
+       className={`dropzone ${isDragActive ? 'dropzone-active' : ''} ${
+         disabled ? 'opacity-50 cursor-not-allowed' : ''
+       }`}
+       onDragEnter={handleDragEnter}
+       onDragLeave={handleDragLeave}
+       onDragOver={handleDragOver}
+       onDrop={handleDrop}
+     >
+       <input
+         type="file"
+         multiple
+         accept={acceptedFormats.join(',')}
+         onChange={handleFileInput}
+         className="hidden"
+         id="file-input"
+         disabled={disabled}
+       />
+       
+       <label htmlFor="file-input" className="cursor-pointer">
+         <div className="flex flex-col items-center gap-4">
+           <div className={`p-4 rounded-xl ${isDragActive ? 'bg-accent-50' : 'bg-surface-secondary'}`}>
+             {isDragActive ? (
+               <ImageIcon className="w-12 h-12 text-accent-500" />
+             ) : (
+               <Upload className="w-12 h-12 text-text-muted" />
+             )}
+           </div>
+           
+           <div>
+             <h3 className="text-lg font-semibold text-text-primary">
+               {isDragActive ? t('dropzone.dragActive') : t('dropzone.title')}
+             </h3>
+             <p className="text-sm text-text-secondary mt-1">
+               {t('dropzone.subtitle')}
+             </p>
+           </div>
+           
+           <div className="text-xs text-text-muted">
+             <p>{t('dropzone.acceptedFormats')}</p>
+             <p>{t('dropzone.maxSize', { size: formatFileSize(maxSize) })}</p>
+           </div>
+         </div>
+       </label>
+     </div>
+   );
 }

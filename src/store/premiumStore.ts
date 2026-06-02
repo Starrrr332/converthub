@@ -12,6 +12,7 @@ interface PremiumState {
 
 export const usePremiumStore = create<PremiumState>()(
   persist(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (_set, _get) => ({
       isPremium: () => true,
       setPlan: () => {},

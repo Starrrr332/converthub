@@ -15,7 +15,6 @@ import type { SpreadsheetTool, SpreadsheetConversionResult, SpreadsheetPreviewRe
 
 interface SpreadsheetToolContentProps {
   tool: SpreadsheetTool;
-  isPremium?: boolean;
 }
 
 export function SpreadsheetToolContent({ tool }: SpreadsheetToolContentProps) {

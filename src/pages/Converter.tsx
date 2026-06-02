@@ -25,9 +25,7 @@ export function Converter() {
     <PageLayout
       title={t('actions.convert')}
       subtitle={
-        converter.isPremium
-          ? 'Premium: sin límites'
-          : `${converter.remainingConversions} conversiones restantes hoy`
+        `${converter.remainingConversions === Infinity ? '' : converter.remainingConversions + ' conversiones restantes hoy'}`
       }
       showPrivacyBanner
       breadcrumb={[
@@ -37,7 +35,6 @@ export function Converter() {
     >
       <FileDropzone
         onFilesSelected={converter.addFiles}
-        isPremium={converter.isPremium}
         maxSize={converter.maxSize}
         disabled={converter.isConverting}
       />
@@ -91,7 +88,6 @@ export function Converter() {
           <div className="content-panel">
             <FormatSelector
               inputFormat={converter.selectedFiles[0]?.type || 'image/png'}
-              isPremium={converter.isPremium}
               selectedFormat={converter.options.format}
               onSelect={converter.setFormat}
             />

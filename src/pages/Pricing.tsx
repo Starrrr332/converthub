@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { usePremiumStore } from '../store/premiumStore';
 import { Shield, Heart, Check, AlertCircle, CreditCard, Lock } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
@@ -12,7 +11,6 @@ declare global {
 }
 
 export function Pricing() {
-  const premium = usePremiumStore();
   const [showPayPal, setShowPayPal] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
@@ -33,10 +31,9 @@ export function Pricing() {
   }, []);
 
   const handlePaymentSuccess = useCallback(() => {
-    premium.setSubscription('donation-' + Date.now(), new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString());
     setPaymentSuccess(true);
     setShowPayPal(false);
-  }, [premium]);
+  }, []);
 
   useEffect(() => {
     if (!showPayPal || !paypalReady) return;
@@ -103,7 +100,7 @@ export function Pricing() {
             <Heart className="w-6 h-6" />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-text tracking-tight mb-3">
-            Todos los features son gratuitos
+            Todo es gratuito
           </h1>
           <p className="text-text-secondary text-sm sm:text-base">
             ConvertHub es y será siempre gratuito. Si te sirvió, considera hacer una donación voluntaria.

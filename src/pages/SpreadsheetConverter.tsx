@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePremiumStore } from '../store/premiumStore';
 import { PageLayout } from '../components/layout/PageLayout';
 import { SpreadsheetToolContent } from '../components/spreadsheet/SpreadsheetToolContent';
 import { Table, FileSpreadsheet, FileJson, ArrowRightLeft } from 'lucide-react';
@@ -9,8 +8,6 @@ import type { SpreadsheetTool } from '../types';
 export function SpreadsheetConverter() {
   const { t } = useTranslation('converter');
   const { t: tc } = useTranslation('common');
-  const premium = usePremiumStore();
-  const isPremium = premium.isPremium();
   const [selectedTool, setSelectedTool] = useState<SpreadsheetTool>('csv-to-xlsx');
 
   const tools: Array<{ id: SpreadsheetTool; icon: React.ReactNode; label: string }> = [
@@ -44,7 +41,7 @@ export function SpreadsheetConverter() {
       </div>
 
       <div className="content-panel">
-        <SpreadsheetToolContent tool={selectedTool} isPremium={isPremium} />
+        <SpreadsheetToolContent tool={selectedTool} />
       </div>
     </PageLayout>
   );

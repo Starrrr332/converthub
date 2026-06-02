@@ -11,10 +11,6 @@ import {
 } from '../../services/conversions/audioConverter';
 import type { AudioFormat, AudioConversionResult } from '../../types';
 
-interface AudioToolContentProps {
-  isPremium?: boolean;
-}
-
 const ALL_FORMATS: Array<{ value: AudioFormat; label: string }> = [
   { value: 'mp3', label: 'MP3' },
   { value: 'wav', label: 'WAV' },
@@ -23,7 +19,7 @@ const ALL_FORMATS: Array<{ value: AudioFormat; label: string }> = [
   { value: 'aac', label: 'AAC' },
 ];
 
-export function AudioToolContent(_props: AudioToolContentProps) {
+export function AudioToolContent() {
   const { t } = useTranslation('converter');
   const [file, setFile] = useState<File | null>(null);
   const [targetFormat, setTargetFormat] = useState<AudioFormat>('mp3');

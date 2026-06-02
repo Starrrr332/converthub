@@ -1,24 +1,37 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Image as ImageIcon, Menu, X, Heart } from 'lucide-react';
+import { Image as ImageIcon, Menu, X, Heart, Search, Star, Palette } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { DropdownMenu } from './DropdownMenu';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { converterTools, editorTools, devtoolTools, utilityTools, standaloneTools } from '../../config/toolRegistry';
+import { useCommandStore } from '../../store/commandStore';
+import { useThemeStore, themes } from '../../store/themeStore';
 
-interface HeaderProps {
-  isPremium: boolean;
-}
-
-export function Header({ isPremium }: HeaderProps) {
+export function Header() {
   const { t } = useTranslation();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [themeOpen, setThemeOpen] = useState(false);
+  const themeRef = useRef<HTMLDivElement>(null);
+  const { favorites } = useCommandStore();
+  const { currentTheme, setTheme } = useThemeStore();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (themeRef.current && !themeRef.current.contains(event.target as Node)) {
+        setThemeOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const isActive = (path: string) => {
@@ -29,82 +42,122 @@ export function Header({ isPremium }: HeaderProps) {
   const mobileSections = [
     {
       title: 'Convertidores',
-      items: [
-        { path: '/converter/image', label: 'Imágenes' },
-        { path: '/converter/pdf', label: 'PDF' },
-        { path: '/converter/csv', label: 'CSV / Excel' },
-        { path: '/converter/audio', label: 'Audio' },
-        { path: '/converter/video', label: 'Video' },
-      ]
+      items: converterTools.map(t => ({ path: t.path, label: t.name })),
     },
     {
       title: 'Editores',
-      items: [
-        { path: '/editor/image', label: 'Editor de Imágenes' },
-        { path: '/editor/text', label: 'Editor de Texto' },
-        { path: '/editor/json', label: 'JSON Formatter' },
-        { path: '/editor/markdown', label: 'Editor Markdown' },
-        { path: '/editor/spreadsheet', label: 'CSV Online' },
-      ]
+      items: editorTools.map(t => ({ path: t.path, label: t.name })),
     },
     {
       title: 'Más herramientas',
-      items: [
-        { path: '/devtools', label: 'DevTools' },
-        { path: '/tools/unit-converter', label: 'Convertidor de Unidades' },
-        { path: '/tools/utilities', label: 'Utilidades' },
-        { path: '/tools/ocr', label: 'OCR - Texto de Imagen' },
-        { path: '/tools/image-compressor', label: 'Compresor de Imágenes' },
-        { path: '/tools/file-analyzer', label: 'Analizador de Archivos' },
-      ]
+      items: [...devtoolTools, ...utilityTools, ...standaloneTools].map(t => ({ path: t.path, label: t.name })),
     }
   ];
 
+  const openCommandPalette = () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+  };
+
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-200 ${
-      scrolled ? 'glass-nav shadow-sm' : 'bg-transparent'
-    }`}>
+<header className={`sticky top-0 z-50 transition-all duration-200 ${
+  scrolled ? 'glass-nav' : 'bg-transparent'
+}`}>
       <div className="page-container">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="p-1.5 bg-brand-600 rounded-lg">
+            <div className="p-2 bg-accent-600 rounded-lg">
               <ImageIcon className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg sm:text-xl font-bold text-text tracking-tight">
+            <span className="text-lg sm:text-xl font-bold text-text-primary tracking-tight">
               {t('app.name')}
             </span>
-            {isPremium && (
-              <span className="badge-premium">PRO</span>
-            )}
+
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            <Link
-              to="/"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                isActive('/') ? 'text-brand-700 bg-brand-50' : 'text-text-secondary hover:text-text hover:bg-slate-100'
-              }`}
-            >
-              {t('nav.home')}
-            </Link>
+{/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-1">
+              <Link
+                to="/"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  isActive('/') ? 'text-accent-700 bg-accent-50' : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+                }`}
+              >
+                {t('nav.home')}
+              </Link>
 
-            <DropdownMenu />
+              <DropdownMenu />
 
-            <Link
-              to="/pricing"
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1.5 ${
-                isActive('/pricing') ? 'text-brand-700 bg-brand-50' : 'text-text-secondary hover:text-text hover:bg-slate-100'
-              }`}
-            >
-              <Heart className="w-3.5 h-3.5" />
-              {t('nav.pricing')}
-            </Link>
-          </nav>
+              <Link
+                to="/favorites"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                  isActive('/favorites') ? 'text-accent-700 bg-accent-50' : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+                }`}
+              >
+                <Star className="w-3.5 h-3.5" />
+                Favoritos
+                {favorites.length > 0 && (
+                  <span className="ml-0.5 px-1.5 py-0.5 text-[10px] font-bold bg-accent-100 text-accent-800 rounded-full">
+                    {favorites.length}
+                  </span>
+                )}
+              </Link>
+
+              <Link
+                to="/pricing"
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+                  isActive('/pricing') ? 'text-accent-700 bg-accent-50' : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+                }`}
+              >
+                <Heart className="w-3.5 h-3.5" />
+                {t('nav.pricing')}
+              </Link>
+            </nav>
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            {/* Theme Selector */}
+            <div className="relative" ref={themeRef}>
+              <button
+                onClick={() => setThemeOpen(!themeOpen)}
+                className="p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-accent-50 transition-colors"
+                title="Cambiar tema"
+              >
+                <Palette className="w-4 h-4" />
+              </button>
+              {themeOpen && (
+                <div className="absolute top-full right-0 mt-1.5 w-56 bg-surface rounded-lg py-2 z-50 border border-border/70">
+                  <p className="px-3 pb-1 text-[11px] font-medium text-text-muted uppercase tracking-wider">Temas</p>
+                  {themes.map((theme) => (
+                    <button
+                      key={theme.id}
+                      onClick={() => { setTheme(theme.id); setThemeOpen(false); }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-accent-50 transition-colors text-left"
+                    >
+                      <div className="flex gap-0.5 shrink-0">
+                        {Object.values(theme.brand).slice(4, 7).map((color, i) => (
+                          <div key={i} className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                        ))}
+                      </div>
+                      <span className="text-sm text-text-primary">{theme.name}</span>
+                      {currentTheme === theme.id && (
+                        <span className="ml-auto text-accent-600 text-xs font-medium">✓</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={openCommandPalette}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 text-sm text-text-muted bg-surface-secondary hover:bg-accent-50 transition-colors border border-border"
+            >
+              <Search className="w-4 h-4" />
+              <span className="text-xs">Buscar...</span>
+              <kbd className="text-[10px] font-medium px-1 py-0.5 bg-surface rounded border border-border">⌘K</kbd>
+            </button>
+
             <LanguageSwitcher />
 
             <Link to="/pricing" className="hidden sm:inline-flex">

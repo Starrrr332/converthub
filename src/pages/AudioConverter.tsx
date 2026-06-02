@@ -1,13 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { usePremiumStore } from '../store/premiumStore';
 import { PageLayout } from '../components/layout/PageLayout';
 import { AudioToolContent } from '../components/audio/AudioToolContent';
 
 export function AudioConverter() {
   const { t } = useTranslation('converter');
   const { t: tc } = useTranslation('common');
-  const premium = usePremiumStore();
-  const isPremium = premium.isPremium();
 
   return (
     <PageLayout
@@ -19,7 +16,7 @@ export function AudioConverter() {
       ]}
     >
       <div className="content-panel">
-        <AudioToolContent isPremium={isPremium} />
+        <AudioToolContent />
       </div>
     </PageLayout>
   );

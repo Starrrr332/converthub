@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { usePremiumStore } from '../../store/premiumStore';
 
 declare global {
   interface Window {
@@ -15,11 +14,8 @@ interface AdBannerProps {
 }
 
 export function AdBanner({ position, className = '', slot, format = 'auto' }: AdBannerProps) {
-  const { isPremium } = usePremiumStore();
   const adRef = useRef<HTMLModElement>(null);
   const pushed = useRef(false);
-
-  if (isPremium()) return null;
 
   useEffect(() => {
     if (pushed.current) return;

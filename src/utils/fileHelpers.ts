@@ -1,14 +1,14 @@
 import type { ValidationResult, ImageFormat } from '../types';
-import { FREE_FORMATS, PREMIUM_FORMATS, FREE_MAX_SIZE, PREMIUM_MAX_SIZE } from '../types';
+import { PREMIUM_FORMATS, PREMIUM_MAX_SIZE } from '../types';
 
-export function validateImageFile(file: File, isPremium: boolean): ValidationResult {
-  const maxSize = isPremium ? PREMIUM_MAX_SIZE : FREE_MAX_SIZE;
-  const allowedFormats = isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
+export function validateImageFile(file: File): ValidationResult {
+  const maxSize = PREMIUM_MAX_SIZE;
+  const allowedFormats = PREMIUM_FORMATS;
   
   if (file.size > maxSize) {
     return {
       valid: false,
-      error: `File size exceeds ${isPremium ? '100MB' : '10MB'} limit`,
+      error: `File size exceeds 100MB limit`,
       code: 'FILE_TOO_LARGE'
     };
   }

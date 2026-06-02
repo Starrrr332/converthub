@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePremiumStore } from '../store/premiumStore';
 import { PageLayout } from '../components/layout/PageLayout';
 import { PdfToolSelector } from '../components/pdf/PdfToolSelector';
 import { PdfToolContent } from '../components/pdf/PdfToolContent';
@@ -9,8 +8,6 @@ import type { PdfTool } from '../types';
 export function PdfConverter() {
   const { t } = useTranslation('converter');
   const { t: tc } = useTranslation('common');
-  const premium = usePremiumStore();
-  const isPremium = premium.isPremium();
   const [selectedTool, setSelectedTool] = useState<PdfTool>('merge');
 
   return (
@@ -27,7 +24,7 @@ export function PdfConverter() {
       </div>
 
       <div className="content-panel">
-        <PdfToolContent tool={selectedTool} isPremium={isPremium} />
+        <PdfToolContent tool={selectedTool} />
       </div>
     </PageLayout>
   );
