@@ -9,7 +9,23 @@
     "edit": "Edit",
     "pricing": "Donate",
     "privacy": "Privacy",
+    "favorites": "Favorites",
     "devtools": "DevTools",
+    "categories": "Categories",
+    "backToHome": "Back to home",
+    "viewAll": "View all",
+    "viewAllF": "View all",
+    "search": "Search...",
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "donate": "Donate",
+    "theme": {
+      "title": "Themes",
+      "change": "Change theme",
+      "light": "Light mode",
+      "dark": "Dark mode"
+    },
     "converters": {
       "image": "Image",
       "imageDesc": "PNG, JPEG, WebP, BMP, GIF",
@@ -41,6 +57,18 @@
       "markdownDesc": "Live preview",
       "spreadsheet": "Spreadsheet",
       "spreadsheetDesc": "Edit CSV in the browser"
+    },
+    "sections": {
+      "converters": "Converters",
+      "convertersDesc": "Convert between multiple formats",
+      "editors": "Editors",
+      "editorsDesc": "Edit images, text and more",
+      "tools": "Tools",
+      "toolsDesc": "Standalone utilities",
+      "devtools": "DevTools",
+      "devtoolsDesc": "For developers",
+      "utilities": "Utilities",
+      "utilitiesDesc": "Generators and more"
     }
   },
   "hero": {
@@ -50,10 +78,25 @@
     "cta": "Start converting",
     "donate": "Support the project",
     "searchPlaceholder": "Search for a tool…",
+    "badge": "Over 52 free tools",
+    "headline": "Convert and edit files",
+    "headlineHighlight": "without servers",
+    "subhead": "Total privacy, no signup, no limits.",
+    "subheadHighlight": "All in your browser.",
+    "exploreTools": "Explore tools",
+    "trustServerless": "Serverless",
+    "trustBrowser": "100% in your browser",
+    "trustNoSignup": "No signup",
     "stats": {
-      "tools": "15+ tools",
-      "privacy": "100% local",
-      "free": "No signup"
+      "tools": "52+ tools",
+      "browser": "100% in your browser",
+      "free": "Free",
+      "noSignup": "No signup",
+      "private": "Private",
+      "noServers": "No servers",
+      "tools_alt": "Tools",
+      "inBrowser": "In your browser",
+      "freeLabel": "Free"
     }
   },
   "home": {
@@ -64,9 +107,49 @@
     "pdfTools": "PDF tools",
     "pdfToolsDesc": "Quick access to the most used operations",
     "why": "Why ConvertHub?",
+    "whyDesc": "The best free alternative to paid tools.",
     "viewAllPdf": "View all PDF tools",
     "allTools": "All",
-    "noResults": "No tools match your search"
+    "noResults": "No tools match your search",
+    "categories": "Categories",
+    "categoriesDesc": "Explore our tools by category.",
+    "howItWorks": "How it works",
+    "howItWorksDesc": "Three simple steps. No complications.",
+    "popularConverters": "Popular converters",
+    "popularEditors": "Popular editors",
+    "usefulTools": "Useful tools",
+    "toolsCount": "{{count}} tools",
+    "readyToStart": "Ready to start?",
+    "readyDesc": "Over 52 free tools. No signup, no limits.",
+    "startNow": "Start now for free",
+    "steps": {
+      "upload": {
+        "title": "Upload your file",
+        "desc": "Drag or select the file you want to process."
+      },
+      "choose": {
+        "title": "Choose the tool",
+        "desc": "Select the conversion, edit or utility you need."
+      },
+      "download": {
+        "title": "Download the result",
+        "desc": "Get your processed file instantly. No waiting."
+      }
+    },
+    "features": {
+      "privacy": {
+        "title": "Total privacy",
+        "desc": "Your files never leave your browser. Everything is processed locally."
+      },
+      "fast": {
+        "title": "Fast and efficient",
+        "desc": "Instant conversions without uploading files to servers."
+      },
+      "free": {
+        "title": "Completely free",
+        "desc": "No limits, no registration, no ads. All free."
+      }
+    }
   },
   "features": {
     "privacy": {
@@ -101,6 +184,8 @@
   },
   "language": {
     "es": "Español",
-    "en": "English"
+    "en": "English",
+    "switchToEs": "Switch to Spanish",
+    "switchToEn": "Switch to English"
   }
 }

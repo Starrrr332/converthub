@@ -59,7 +59,7 @@ export function Converter() {
     <PageLayout
       title={t('actions.convert')}
       description="Convierte imágenes online gratis entre PNG, JPG, WebP, GIF, SVG, AVIF e ICO. Procesamiento 100% local en tu navegador, sin límites."
-      subtitle={`${converter.remainingConversions === Infinity ? '' : converter.remainingConversions + ' conversiones restantes hoy'}`}
+      subtitle={`${converter.remainingConversions === Infinity ? '' : t('limits.remaining', { count: converter.remainingConversions })}`}
       showPrivacyBanner
       breadcrumb={[{ label: tc('nav.home'), to: '/' }, { label: tc('nav.converters.image') }]}
     >

@@ -9,7 +9,23 @@
     "edit": "Editar",
     "pricing": "Donar",
     "privacy": "Privacidad",
+    "favorites": "Favoritos",
     "devtools": "DevTools",
+    "categories": "Categorías",
+    "backToHome": "Volver al inicio",
+    "viewAll": "Ver todos",
+    "viewAllF": "Ver todas",
+    "search": "Buscar...",
+    "skipToContent": "Saltar al contenido principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "donate": "Donar",
+    "theme": {
+      "title": "Temas",
+      "change": "Cambiar tema",
+      "light": "Modo claro",
+      "dark": "Modo oscuro"
+    },
     "converters": {
       "image": "Imagen",
       "imageDesc": "PNG, JPEG, WebP, BMP, GIF",
@@ -41,6 +57,18 @@
       "markdownDesc": "Vista previa en tiempo real",
       "spreadsheet": "Hoja de cálculo",
       "spreadsheetDesc": "Editar CSV en el navegador"
+    },
+    "sections": {
+      "converters": "Convertidores",
+      "convertersDesc": "Convierte entre múltiples formatos",
+      "editors": "Editores",
+      "editorsDesc": "Edita imágenes, texto y más",
+      "tools": "Herramientas",
+      "toolsDesc": "Utilidades standalone",
+      "devtools": "DevTools",
+      "devtoolsDesc": "Para desarrolladores",
+      "utilities": "Utilidades",
+      "utilitiesDesc": "Generadores y más"
     }
   },
   "hero": {
@@ -50,10 +78,25 @@
     "cta": "Empezar a convertir",
     "donate": "Apoyar el proyecto",
     "searchPlaceholder": "Buscar herramienta…",
+    "badge": "Más de 52 herramientas gratuitas",
+    "headline": "Convierte y edita archivos",
+    "headlineHighlight": "sin servidores",
+    "subhead": "Privacidad total, sin registro, sin límites.",
+    "subheadHighlight": "Todo en tu navegador.",
+    "exploreTools": "Explorar herramientas",
+    "trustServerless": "Sin servidores",
+    "trustBrowser": "100% en tu navegador",
+    "trustNoSignup": "Sin registro",
     "stats": {
-      "tools": "15+ herramientas",
-      "privacy": "100% local",
-      "free": "Sin registro"
+      "tools": "52+ herramientas",
+      "browser": "100% en tu navegador",
+      "free": "Gratis",
+      "noSignup": "Sin registro",
+      "private": "Privado",
+      "noServers": "Sin servidores",
+      "tools_alt": "Herramientas",
+      "inBrowser": "En tu navegador",
+      "freeLabel": "Gratis"
     }
   },
   "home": {
@@ -64,9 +107,49 @@
     "pdfTools": "Herramientas PDF",
     "pdfToolsDesc": "Acceso rápido a las operaciones más usadas",
     "why": "¿Por qué ConvertHub?",
+    "whyDesc": "La mejor alternativa gratuita a las herramientas de pago.",
     "viewAllPdf": "Ver todas las herramientas PDF",
     "allTools": "Todas",
-    "noResults": "No hay herramientas que coincidan con tu búsqueda"
+    "noResults": "No hay herramientas que coincidan con tu búsqueda",
+    "categories": "Categorías",
+    "categoriesDesc": "Explora nuestras herramientas por categoría.",
+    "howItWorks": "Cómo funciona",
+    "howItWorksDesc": "Tres pasos simples. Sin complicaciones.",
+    "popularConverters": "Convertidores populares",
+    "popularEditors": "Editores populares",
+    "usefulTools": "Herramientas útiles",
+    "toolsCount": "{{count}} herramientas",
+    "readyToStart": "¿Listo para empezar?",
+    "readyDesc": "Más de 52 herramientas gratuitas. Sin registro, sin límites.",
+    "startNow": "Comienza ahora gratis",
+    "steps": {
+      "upload": {
+        "title": "Sube tu archivo",
+        "desc": "Arrastra o selecciona el archivo que quieras procesar."
+      },
+      "choose": {
+        "title": "Elige la herramienta",
+        "desc": "Selecciona la conversión, edición o utilidad que necesites."
+      },
+      "download": {
+        "title": "Descarga el resultado",
+        "desc": "Obtén tu archivo procesado al instante. Sin esperas."
+      }
+    },
+    "features": {
+      "privacy": {
+        "title": "Privacidad total",
+        "desc": "Tus archivos nunca salen de tu navegador. Todo se procesa localmente."
+      },
+      "fast": {
+        "title": "Rápido y eficiente",
+        "desc": "Conversiones instantáneas sin subir archivos a servidores."
+      },
+      "free": {
+        "title": "Completamente gratis",
+        "desc": "Sin límites, sin registro, sin anuncios. Todo gratuito."
+      }
+    }
   },
   "features": {
     "privacy": {
@@ -101,6 +184,8 @@
   },
   "language": {
     "es": "Español",
-    "en": "English"
+    "en": "English",
+    "switchToEs": "Cambiar a Español",
+    "switchToEn": "Switch to English"
   }
 }

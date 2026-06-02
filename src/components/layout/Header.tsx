@@ -41,13 +41,13 @@ export function Header() {
 
   const mobileSections = [
     {
-      title: 'Categorías',
+      title: t('nav.categories'),
       items: [
-        { path: '/converter', label: 'Convertidores' },
-        { path: '/editor', label: 'Editores' },
-        { path: '/tools', label: 'Herramientas' },
-        { path: '/devtools', label: 'DevTools' },
-        { path: '/utilities', label: 'Utilidades' },
+        { path: '/converter', label: t('nav.sections.converters') },
+        { path: '/editor', label: t('nav.sections.editors') },
+        { path: '/tools', label: t('nav.sections.tools') },
+        { path: '/devtools', label: t('nav.sections.devtools') },
+        { path: '/utilities', label: t('nav.sections.utilities') },
       ],
     },
   ];
@@ -66,7 +66,7 @@ export function Header() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-accent-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2"
       >
-        Saltar al contenido principal
+        {t('nav.skipToContent')}
       </a>
       <div className="page-container">
         <div className="flex justify-between items-center h-14 sm:h-16">
@@ -104,7 +104,7 @@ export function Header() {
               }`}
             >
               <Star className="w-3.5 h-3.5" />
-              Favoritos
+              {t('nav.favorites')}
               {favorites.length > 0 && (
                 <span className="ml-0.5 px-1.5 py-0.5 text-[10px] font-bold bg-accent-100 text-accent-800 rounded-full">
                   {favorites.length}
@@ -132,14 +132,14 @@ export function Header() {
               <button
                 onClick={() => setThemeOpen(!themeOpen)}
                 className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-accent-50 transition-all duration-200"
-                title="Cambiar tema"
+                title={t('nav.theme.change')}
               >
                 <Palette className="w-4 h-4" />
               </button>
               {themeOpen && (
                 <div className="absolute top-full right-0 mt-2 w-56 bg-surface rounded-xl py-2 z-50 border border-border shadow-elevated animate-slide-down">
                   <p className="px-3 pb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
-                    Temas
+                    {t('nav.theme.title')}
                   </p>
                   {themes.map((theme) => (
                     <button
@@ -181,7 +181,7 @@ export function Header() {
                       <Moon className="w-4 h-4 text-text-muted" />
                     )}
                     <span className="text-sm text-text-primary">
-                      {darkMode ? 'Modo claro' : 'Modo oscuro'}
+                      {darkMode ? t('nav.theme.light') : t('nav.theme.dark')}
                     </span>
                     {darkMode && (
                       <span className="ml-auto text-accent-600 text-xs font-bold">✓</span>
@@ -197,7 +197,7 @@ export function Header() {
               className="hidden sm:flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-secondary hover:bg-surface hover:border-accent-200 transition-all duration-200 border border-border rounded-lg"
             >
               <Search className="w-4 h-4" />
-              <span className="text-xs">Buscar...</span>
+              <span className="text-xs">{t('nav.search')}</span>
               <kbd className="text-[10px] font-medium px-1.5 py-0.5 bg-surface rounded border border-border shadow-sm">
                 ⌘K
               </kbd>
@@ -207,14 +207,14 @@ export function Header() {
 
             <Link to="/pricing" className="hidden sm:inline-flex">
               <button className="px-4 py-1.5 text-xs font-semibold bg-accent-600 text-white rounded-full hover:bg-accent-700 transition-all duration-200 shadow-sm hover:shadow-md">
-                Donar
+                {t('nav.pricing')}
               </button>
             </Link>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-secondary transition-all duration-200"
-              aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-label={mobileMenuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -269,7 +269,7 @@ export function Header() {
                 className="flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium text-accent-600 hover:bg-accent-50 transition-all duration-200"
               >
                 <Heart className="w-4 h-4" />
-                Donar
+                {t('nav.donate')}
               </Link>
             </div>
           </nav>

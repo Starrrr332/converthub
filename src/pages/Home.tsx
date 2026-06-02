@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -30,46 +31,48 @@ import {
 } from '../config/toolRegistry';
 
 export function Home() {
+  const { t } = useTranslation();
+
   const stats = [
-    { value: '52+', label: 'Herramientas' },
-    { value: '100%', label: 'En tu navegador' },
-    { value: 'Gratis', label: 'Sin registro' },
-    { value: 'Privado', label: 'Sin servidores' },
+    { value: '52+', label: t('hero.stats.tools_alt') },
+    { value: '100%', label: t('hero.stats.inBrowser') },
+    { value: t('hero.stats.freeLabel'), label: t('hero.stats.noSignup') },
+    { value: t('hero.stats.private'), label: t('hero.stats.noServers') },
   ];
 
   const howItWorks = [
     {
       icon: Upload,
-      title: 'Sube tu archivo',
-      description: 'Arrastra o selecciona el archivo que quieras procesar.',
+      title: t('home.steps.upload.title'),
+      description: t('home.steps.upload.desc'),
     },
     {
       icon: Sliders,
-      title: 'Elige la herramienta',
-      description: 'Selecciona la conversión, edición o utilidad que necesites.',
+      title: t('home.steps.choose.title'),
+      description: t('home.steps.choose.desc'),
     },
     {
       icon: Download,
-      title: 'Descarga el resultado',
-      description: 'Obtén tu archivo procesado al instante. Sin esperas.',
+      title: t('home.steps.download.title'),
+      description: t('home.steps.download.desc'),
     },
   ];
 
   const features = [
     {
       icon: Shield,
-      title: 'Privacidad total',
-      description: 'Tus archivos nunca salen de tu navegador. Todo se procesa localmente.',
+      title: t('home.features.privacy.title'),
+      description: t('home.features.privacy.desc'),
     },
     {
       icon: Zap,
-      title: 'Rápido y eficiente',
-      description: 'Conversiones instantáneas sin subir archivos a servidores.',
+      title: t('home.features.fast.title'),
+      description: t('home.features.fast.desc'),
     },
     {
       icon: Sparkles,
-      title: 'Completamente gratis',
-      description: 'Sin límites, sin registro, sin anuncios. Todo gratuito.',
+      title: t('home.features.free.title'),
+      description: t('home.features.free.desc'),
     },
   ];
 
@@ -77,8 +80,8 @@ export function Home() {
     {
       key: 'converter',
       icon: Image,
-      label: 'Convertidores',
-      description: 'Convierte entre múltiples formatos',
+      label: t('nav.sections.converters'),
+      description: t('nav.sections.convertersDesc'),
       count: converterTools.length,
       color: 'text-indigo-600',
       bg: 'bg-indigo-50',
@@ -88,8 +91,8 @@ export function Home() {
     {
       key: 'editor',
       icon: Edit3,
-      label: 'Editores',
-      description: 'Edita imágenes, texto y más',
+      label: t('nav.sections.editors'),
+      description: t('nav.sections.editorsDesc'),
       count: editorTools.length,
       color: 'text-violet-600',
       bg: 'bg-violet-50',
@@ -99,8 +102,8 @@ export function Home() {
     {
       key: 'tool',
       icon: Wrench,
-      label: 'Herramientas',
-      description: 'Utilidades standalone',
+      label: t('nav.sections.tools'),
+      description: t('nav.sections.toolsDesc'),
       count: standaloneTools.length,
       color: 'text-purple-600',
       bg: 'bg-purple-50',
@@ -110,8 +113,8 @@ export function Home() {
     {
       key: 'devtool',
       icon: Cpu,
-      label: 'DevTools',
-      description: 'Para desarrolladores',
+      label: t('nav.sections.devtools'),
+      description: t('nav.sections.devtoolsDesc'),
       count: devtoolTools.length,
       color: 'text-slate-600',
       bg: 'bg-slate-50',
@@ -121,8 +124,8 @@ export function Home() {
     {
       key: 'utility',
       icon: FileText,
-      label: 'Utilidades',
-      description: 'Generadores y más',
+      label: t('nav.sections.utilities'),
+      description: t('nav.sections.utilitiesDesc'),
       count: utilityTools.length,
       color: 'text-fuchsia-600',
       bg: 'bg-fuchsia-50',
@@ -137,10 +140,10 @@ export function Home() {
   return (
     <>
       <SEOHead
-        title="ConvertHub - Convierte archivos gratis y seguro en tu navegador"
-        description="Más de 52 herramientas gratis para convertir, editar y procesar imágenes, PDF, audio, video y más. 100% en tu navegador, sin servidores. Privacidad total."
+        title={t('app.name') + ' - ' + t('hero.headline')}
+        description={t('hero.subtitle')}
         canonical="https://converthub.com"
-        breadcrumbs={[{ name: 'Inicio', url: 'https://converthub.com' }]}
+        breadcrumbs={[{ name: t('nav.home'), url: 'https://converthub.com' }]}
         structuredData={[orgSchema, webSiteSchema]}
       />
       <div>
@@ -158,32 +161,32 @@ export function Home() {
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-accent-50 text-accent-700 rounded-full text-xs font-medium mb-6 animate-slide-up stagger-1 border border-accent-100">
                 <Sparkles className="w-3.5 h-3.5" />
-                Más de 52 herramientas gratuitas
+                {t('hero.badge')}
               </div>
 
               {/* Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-primary tracking-tight leading-[1.1] animate-slide-up stagger-2">
-                Convierte y edita archivos <span className="text-gradient">sin servidores</span>
+                {t('hero.headline')} <span className="text-gradient">{t('hero.headlineHighlight')}</span>
               </h1>
 
               {/* Subtitle */}
               <p className="mt-5 text-lg sm:text-xl text-text-secondary max-w-lg mx-auto leading-relaxed animate-slide-up stagger-3">
-                Privacidad total, sin registro, sin límites.{' '}
-                <span className="text-text-primary font-medium">Todo en tu navegador.</span>
+                {t('hero.subhead')}{' '}
+                <span className="text-text-primary font-medium">{t('hero.subheadHighlight')}</span>
               </p>
 
               {/* CTA Buttons */}
               <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center animate-slide-up stagger-4">
                 <Link to="/converter/image">
                   <Button size="lg" className="shadow-lg hover:shadow-xl">
-                    Explorar herramientas
+                    {t('hero.exploreTools')}
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Link to="/pricing">
                   <Button variant="outline" size="lg">
                     <Heart className="w-4 h-4" />
-                    Donar
+                    {t('nav.pricing')}
                   </Button>
                 </Link>
               </div>
@@ -192,12 +195,12 @@ export function Home() {
               <div className="mt-8 flex items-center justify-center gap-4 text-xs text-text-muted animate-fade-in stagger-6">
                 <span className="flex items-center gap-1">
                   <Shield className="w-3.5 h-3.5 text-success" />
-                  Sin servidores
+                  {t('hero.trustServerless')}
                 </span>
                 <span className="w-1 h-1 rounded-full bg-border" />
-                <span>100% en tu navegador</span>
+                <span>{t('hero.trustBrowser')}</span>
                 <span className="w-1 h-1 rounded-full bg-border" />
-                <span>Sin registro</span>
+                <span>{t('hero.trustNoSignup')}</span>
               </div>
             </div>
           </div>
@@ -227,8 +230,8 @@ export function Home() {
         {/* ───── How It Works ───── */}
         <section className="page-container mt-20 sm:mt-24">
           <div className="text-center mb-12 animate-slide-up">
-            <h2 className="section-heading">Cómo funciona</h2>
-            <p className="section-subheading mx-auto">Tres pasos simples. Sin complicaciones.</p>
+            <h2 className="section-heading">{t('home.howItWorks')}</h2>
+            <p className="section-subheading mx-auto">{t('home.howItWorksDesc')}</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
             {howItWorks.map((item, i) => (
@@ -251,9 +254,9 @@ export function Home() {
         {/* ───── Categories ───── */}
         <section className="page-container mt-20 sm:mt-24">
           <div className="text-center mb-12 animate-slide-up">
-            <h2 className="section-heading">Categorías</h2>
+            <h2 className="section-heading">{t('home.categories')}</h2>
             <p className="section-subheading mx-auto">
-              Explora nuestras herramientas por categoría.
+              {t('home.categoriesDesc')}
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -271,7 +274,7 @@ export function Home() {
                 <div className="min-w-0 flex-1">
                   <h3 className="font-semibold text-text-primary">{cat.label}</h3>
                   <p className="text-sm text-text-secondary">{cat.description}</p>
-                  <p className="text-xs text-text-muted mt-1">{cat.count} herramientas</p>
+                  <p className="text-xs text-text-muted mt-1">{t('home.toolsCount', { count: cat.count })}</p>
                 </div>
                 <ArrowRight className="w-4 h-4 text-text-muted shrink-0 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
@@ -281,13 +284,12 @@ export function Home() {
 
         {/* ───── Featured Converters ───── */}
         <section className="page-container mt-20 sm:mt-24">
-          <div className="flex items-center justify-between mb-8 animate-slide-up">
-            <h2 className="section-heading">Convertidores populares</h2>
+          <div className="flex items-center justify-between mb-8 animate-slide-up">              <h2 className="section-heading">{t('home.popularConverters')}</h2>
             <Link
               to="/converter"
               className="text-sm font-medium text-accent-600 hover:text-accent-700 flex items-center gap-1 transition-colors"
             >
-              Ver todos <ArrowRight className="w-3.5 h-3.5" />
+              {t('nav.viewAll')} <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
@@ -313,12 +315,12 @@ export function Home() {
         <section className="bg-surface-secondary mt-20 sm:mt-24 py-20 sm:py-24">
           <div className="page-container">
             <div className="flex items-center justify-between mb-8 animate-slide-up">
-              <h2 className="section-heading">Editores populares</h2>
+              <h2 className="section-heading">{t('home.popularEditors')}</h2>
               <Link
                 to="/editor"
                 className="text-sm font-medium text-accent-600 hover:text-accent-700 flex items-center gap-1 transition-colors"
               >
-                Ver todos <ArrowRight className="w-3.5 h-3.5" />
+                {t('nav.viewAll')} <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
@@ -344,12 +346,12 @@ export function Home() {
         {/* ───── Featured Tools ───── */}
         <section className="page-container mt-20 sm:mt-24">
           <div className="flex items-center justify-between mb-8 animate-slide-up">
-            <h2 className="section-heading">Herramientas útiles</h2>
+            <h2 className="section-heading">{t('home.usefulTools')}</h2>
             <Link
               to="/tools"
               className="text-sm font-medium text-accent-600 hover:text-accent-700 flex items-center gap-1 transition-colors"
             >
-              Ver todas <ArrowRight className="w-3.5 h-3.5" />
+              {t('nav.viewAllF')} <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -381,10 +383,10 @@ export function Home() {
           <div className="page-container">
             <div className="text-center mb-12 animate-slide-up">
               <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                ¿Por qué ConvertHub?
+                {t('home.why')}
               </h2>
               <p className="text-accent-200 mt-3 max-w-xl mx-auto">
-                La mejor alternativa gratuita a las herramientas de pago.
+                {t('home.whyDesc')}
               </p>
             </div>
             <div className="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -413,16 +415,16 @@ export function Home() {
                 'linear-gradient(135deg, var(--color-accent-600), var(--color-accent-800))',
             }}
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">¿Listo para empezar?</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">{t('home.readyToStart')}</h2>
             <p className="text-accent-100 text-sm sm:text-base mb-8 leading-relaxed">
-              Más de 52 herramientas gratuitas. Sin registro, sin límites.
+              {t('home.readyDesc')}
             </p>
             <Link to="/converter/image">
               <Button
                 size="lg"
                 className="bg-white text-accent-700 hover:bg-accent-50 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Comienza ahora gratis
+                {t('home.startNow')}
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>

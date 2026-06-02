@@ -26,28 +26,28 @@ export function DropdownMenu() {
 
   const sections = [
     {
-      title: 'Convertidores',
+      title: t('nav.sections.converters'),
       items: featuredConverters.slice(0, 4),
       link: '/converter',
-      linkText: 'Ver todos',
+      linkText: t('nav.viewAll'),
     },
     {
-      title: 'Editores',
+      title: t('nav.sections.editors'),
       items: featuredEditors.slice(0, 4),
       link: '/editor',
-      linkText: 'Ver todos',
+      linkText: t('nav.viewAll'),
     },
     {
-      title: 'Herramientas',
+      title: t('nav.sections.tools'),
       items: featuredTools.slice(0, 4),
       link: '/tools',
-      linkText: 'Ver todas',
+      linkText: t('nav.viewAllF'),
     },
     {
-      title: 'DevTools',
+      title: t('nav.sections.devtools'),
       items: devtoolTools.slice(0, 4),
       link: '/devtools',
-      linkText: 'Ver todos',
+      linkText: t('nav.viewAll'),
     },
   ];
 
@@ -57,8 +57,8 @@ export function DropdownMenu() {
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
           isOpen
-            ? 'text-brand-700 bg-brand-50'
-            : 'text-text-secondary hover:text-text hover:bg-slate-100'
+          ? 'text-brand-700 bg-brand-50'
+          : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
         }`}
       >
         {t('nav.convert')}
@@ -83,9 +83,9 @@ export function DropdownMenu() {
                     key={tool.path}
                     to={tool.path}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors group"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-accent-50 transition-colors group"
                   >
-                    <div className="p-1.5 rounded-lg bg-slate-100 text-slate-500 group-hover:bg-brand-50 group-hover:text-brand-600 transition-colors shrink-0">
+                    <div className="p-1.5 rounded-lg bg-surface-secondary text-text-muted group-hover:bg-brand-50 group-hover:text-brand-600 transition-colors shrink-0">
                       <tool.icon className="w-4.5 h-4.5" />
                     </div>
                     <div className="min-w-0">
