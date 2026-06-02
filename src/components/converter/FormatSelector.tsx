@@ -2,10 +2,10 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Crown } from 'lucide-react';
 import type { ImageFormat } from '../../types';
+import { PREMIUM_FORMATS } from '../../types';
 import {
   FORMAT_NAMES,
   FORMAT_COLORS,
-  PREMIUM_FORMATS,
   isPremiumFormat,
 } from '../../utils/constants';
 
@@ -26,15 +26,15 @@ export const FormatSelector = memo(function FormatSelector({
 
   // Show ALL formats, but mark non-premium ones differently
   // For premium users, show all. For free, show all but disable premium ones.
-  const allFormats = PREMIUM_FORMATS.filter((f) => f !== inputFormat);
-  const hasPremiumDisabled = !isPremium && allFormats.some((f) => isPremiumFormat(f));
+  const allFormats = PREMIUM_FORMATS.filter((f: ImageFormat) => f !== inputFormat);
+  const hasPremiumDisabled = !isPremium && allFormats.some((f: ImageFormat) => isPremiumFormat(f));
 
   return (
     <div className="space-y-2">
       <label className="block text-sm font-medium text-text-secondary">{t('formats.output')}</label>
 
       <div role="radiogroup" aria-label="Formato de salida" className="flex flex-wrap gap-2">
-        {allFormats.map((format) => {
+        {allFormats.map((format: ImageFormat) => {
           const isSelected = selectedFormat === format;
           const color = FORMAT_COLORS[format];
           const name = FORMAT_NAMES[format];
@@ -67,7 +67,8 @@ export const FormatSelector = memo(function FormatSelector({
         })}
       </div>
 
-      {hasPremiumDisabled && (          <p className="text-xs text-amber-600 flex items-center gap-1 mt-1">
+      {hasPremiumDisabled && (
+          <p className="text-xs text-amber-600 flex items-center gap-1 mt-1">
           <Crown className="w-3 h-3" />
           {t('formats.premiumNotice')}{' '}
           <a href="/pricing" className="underline font-medium hover:text-amber-700">
