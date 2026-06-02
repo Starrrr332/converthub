@@ -53,6 +53,8 @@ export function Footer() {
             <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Legal</h4>
             <ul className="space-y-2">
               <li><Link to="/privacy" className="text-sm text-text-secondary hover:text-text-primary transition-colors">{t('footer.privacyPolicy')}</Link></li>
+              <li><Link to="/security" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Seguridad</Link></li>
+              <li><Link to="/blog" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Blog</Link></li>
               <li><Link to="/devtools" className="text-sm text-text-secondary hover:text-text-primary transition-colors">DevTools</Link></li>
               <li><Link to="/tools/utilities" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Utilidades</Link></li>
             </ul>

@@ -1,0 +1,58 @@
+{
+  "title": "Security & Privacy",
+  "subtitle": "Your privacy is our priority. Learn how ConvertHub protects your data.",
+  "features": {
+    "localProcessing": {
+      "title": "Local Processing",
+      "description": "Everything runs in your browser. No files are uploaded to external servers."
+    },
+    "noStorage": {
+      "title": "No Storage",
+      "description": "We don't store your files, form data, or personal information."
+    },
+    "noTracking": {
+      "title": "No Tracking",
+      "description": "We don't use tracking cookies or sell data to third parties."
+    },
+    "openCode": {
+      "title": "Transparent Code",
+      "description": "Our processing is auditable in the browser."
+    }
+  },
+  "howItWorks": "How We Protect Your Data",
+  "practices": [
+    "All files are processed locally using browser Web APIs",
+    "No intermediate servers are used for any conversion",
+    "Temporary files are automatically deleted when you close the tab",
+    "No metadata from processed files is stored",
+    "AES-256-GCM encryption available for sensitive files",
+    "No external service dependencies for processing"
+  ],
+  "technicalDetails": "Technical Details",
+  "technologies": {
+    "title": "Technologies Used",
+    "items": [
+      "Native browser Web APIs (File API, Canvas, WebAssembly)",
+      "Sandboxed JavaScript (no file system access)",
+      "Service Worker for offline functionality",
+      "HTTPS required for all connections"
+    ]
+  },
+  "whatWeDontDo": {
+    "title": "What We DON'T Do",
+    "items": [
+      "We don't upload files to servers",
+      "We don't sell personal data",
+      "We don't use tracking cookies",
+      "We don't share information with third parties"
+    ]
+  },
+  "reportVulnerability": {
+    "title": "Report Vulnerabilities",
+    "description": "If you discover a security vulnerability, please report it responsibly."
+  },
+  "contact": {
+    "title": "Have security questions?",
+    "description": "If you have any questions about how we protect your data, feel free to contact us."
+  }
+}

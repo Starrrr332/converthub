@@ -11,7 +11,10 @@ import './i18n';
 const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
 const Pricing = lazy(() => import('./pages/Pricing').then(m => ({ default: m.Pricing })));
 const Privacy = lazy(() => import('./pages/Privacy').then(m => ({ default: m.Privacy })));
+const Security = lazy(() => import('./pages/Security').then(m => ({ default: m.Security })));
 const FavoritesPage = lazy(() => import('./pages/FavoritesPage').then(m => ({ default: m.FavoritesPage })));
+const BlogIndex = lazy(() => import('./pages/blog/BlogIndex').then(m => ({ default: m.BlogIndex })));
+const ConvertImagesBlog = lazy(() => import('./pages/blog/ConvertImagesWithoutLosingQuality').then(m => ({ default: m.ConvertImagesWithoutLosingQuality })));
 
 function KeyboardShortcutsProvider({ children }: { children: React.ReactNode }) {
   useKeyboardShortcuts();
@@ -41,6 +44,9 @@ function App() {
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/privacy" element={<Privacy />} />
+                <Route path="/security" element={<Security />} />
+                <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog/como-convertir-imagenes-sin-perder-calidad" element={<ConvertImagesBlog />} />
                 {toolRegistry.map(tool => (
                   <Route
                     key={tool.path}

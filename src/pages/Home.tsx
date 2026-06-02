@@ -40,10 +40,10 @@ export function Home() {
          <div className="absolute inset-0 bg-gradient-to-b from-accent-50/60 to-transparent pointer-events-none" />
          <div className="page-container relative">
            <div className="max-w-2xl mx-auto text-center">
-             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-50 text-accent-700 rounded-full text-xs font-medium mb-5">
-               <Sparkles className="w-3.5 h-3.5" />
-               Más de 35 herramientas gratuitas
-             </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-50 text-accent-700 rounded-full text-xs font-medium mb-5">
+                <Sparkles className="w-3.5 h-3.5" />
+                Más de 52 herramientas gratuitas
+              </div>
              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-primary tracking-tight leading-tight">
                Convierte y edita archivos{' '}
                <span className="text-gradient">sin servidores</span>
@@ -213,9 +213,9 @@ export function Home() {
       <section className="page-container my-16 sm:my-20 text-center">
         <div className="max-w-lg mx-auto p-8 sm:p-10 rounded-2xl" style={{ background: 'linear-gradient(to bottom right, var(--color-brand-500), var(--color-brand-700))' }}>
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">¿Listo para empezar?</h2>
-          <p className="text-brand-100 text-sm sm:text-base mb-6">
-            Más de 35 herramientas gratuitas. Sin registro, sin límites.
-          </p>
+            <p className="text-brand-100 text-sm sm:text-base mb-6">
+              Más de 52 herramientas gratuitas. Sin registro, sin límites.
+            </p>
           <Link to="/converter/image">
             <Button size="lg" className="bg-white text-brand-700 hover:bg-brand-100 shadow-lg">
               Comienza ahora gratis

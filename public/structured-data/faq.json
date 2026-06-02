@@ -1,0 +1,54 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿ConvertHub es realmente gratis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, ConvertHub es 100% gratuito. No hay límites de uso, no se requiere registro y todas las herramientas funcionan directamente en tu navegador. No hay versiones premium ni funciones bloqueadas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Mis archivos son seguros en ConvertHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, tu privacidad está garantizada. ConvertHub procesa todos los archivos localmente en tu navegador usando JavaScript. Ningún archivo se sube a servidores externos. Tus datos nunca salen de tu dispositivo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué formatos de imagen soporta ConvertHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ConvertHub soporta los formatos más populares: PNG, JPG/JPEG, WebP, GIF, SVG, ICO, AVIF y HEIC. Puedes convertir entre todos estos formatos, así como comprimir y editar imágenes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito instalar algo para usar ConvertHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, ConvertHub funciona directamente en tu navegador web. No necesitas descargar ni instalar ningún software. Solo necesitas una conexión a internet para acceder al sitio, pero el procesamiento es completamente local."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo usar ConvertHub en el móvil?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, ConvertHub está optimizado para funcionar en dispositivos móviles y tablets. La interfaz se adapta automáticamente al tamaño de tu pantalla para ofrecer la mejor experiencia posible."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué herramientas de PDF ofrece ConvertHub?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ConvertHub incluye herramientas completas para PDF: unir múltiples PDFs, dividir en páginas individuales, comprimir tamaño, rotar páginas, agregar marcas de agua, añadir números de página, convertir imágenes a PDF y desbloquear PDFs protegidos."
+      }
+    }
+  ]
+}

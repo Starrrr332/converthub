@@ -1,0 +1,28 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ConvertHub",
+  "url": "https://converthub.com",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "description": "Convierte y edita archivos online gratis. 52+ herramientas para imágenes, PDF, audio, video y más. 100% privado, sin servidores.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Conversión de imágenes (PNG, JPG, WebP, GIF, SVG, AVIF)",
+    "Edición de PDF online (unir, dividir, comprimir)",
+    "Compresión de archivos audio y video",
+    "Herramientas de desarrollo (Base64, Hash, QR, JWT)",
+    "Utilidades (contraseñas, UUID, códigos de barras)",
+    "100% procesamiento local en el navegador",
+    "Sin registro requerido",
+    "Sin límites de uso"
+  ],
+  "inLanguage": ["es", "en"],
+  "browserRequirements": "Requires a modern browser with JavaScript enabled",
+  "softwareVersion": "1.0",
+  "dateModified": "2026-01-01"
+}
