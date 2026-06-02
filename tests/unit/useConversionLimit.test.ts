@@ -152,6 +152,9 @@ describe('useConversionLimit', () => {
     };
     localStorage.setItem('converthub-limits', JSON.stringify(initial));
 
+    // Force Zustand persist middleware to re-read from localStorage
+    await useConversionLimit.persist.rehydrate();
+
     const { result } = renderHook(() => useConversionLimit());
     await waitFor(() => {
       expect(result.current.count).toBe(5);
