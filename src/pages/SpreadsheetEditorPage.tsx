@@ -137,6 +137,7 @@ export function SpreadsheetEditorPage() {
     <PageLayout
       wide
       title={t('nav.editors.spreadsheet')}
+      description="Editor de hojas de cálculo online gratis. Edita CSV, ordena columnas, exporta a JSON. Procesamiento 100% local."
       subtitle={t('nav.editors.spreadsheetDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.spreadsheet') }]}
     >

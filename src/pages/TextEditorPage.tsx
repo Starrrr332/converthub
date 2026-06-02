@@ -110,6 +110,7 @@ export function TextEditorPage() {
     <PageLayout
       wide
       title={t('nav.editors.text')}
+      description="Editor de texto online gratis con conteo de palabras, transformación de mayúsculas/minúsculas, ordenamiento y más herramientas."
       subtitle={t('nav.editors.textDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.text') }]}
     >

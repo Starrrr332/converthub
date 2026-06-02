@@ -94,6 +94,7 @@ export function JsonFormatterPage() {
     <PageLayout
       wide
       title={t('nav.editors.json')}
+      description="Formatea, minifica y valida JSON online gratis. Identa, extrae claves y descarga archivos JSON desde tu navegador."
       subtitle={t('nav.editors.jsonDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.json') }]}
     >

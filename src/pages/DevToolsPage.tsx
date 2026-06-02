@@ -7,6 +7,7 @@ export function DevToolsPage() {
   return (
     <PageLayout
       title="DevTools"
+      description="Herramientas para desarrolladores online gratis: Base64, JWT, QR, hash, colores, UUID y más. Sin registro."
       subtitle="Herramientas para desarrolladores. Sin registro."
       showPrivacyBanner={false}
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'DevTools' }]}

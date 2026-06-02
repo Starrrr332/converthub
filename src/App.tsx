@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LoadingSkeleton } from './components/ui/LoadingSkeleton';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { CommandPalette } from './components/ui/CommandPalette';
@@ -68,14 +69,7 @@ function PageTracker() {
 
 function App() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-slate-50">
-          <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
-          <p className="text-sm text-slate-500 font-medium">ConvertHub</p>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingSkeleton />}>
       <Router>
         <KeyboardShortcutsProvider>
           <PageTracker />

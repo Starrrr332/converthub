@@ -110,30 +110,38 @@ export const themes: ThemeDefinition[] = [
 
 interface ThemeStore {
   currentTheme: ThemeId;
+  darkMode: boolean;
   setTheme: (id: ThemeId) => void;
+  toggleDarkMode: () => void;
 }
 
 export const useThemeStore = create<ThemeStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       currentTheme: 'default',
+      darkMode: false,
       setTheme: (id) => {
         set({ currentTheme: id });
-        applyTheme(id);
+        applyTheme(id, get().darkMode);
+      },
+      toggleDarkMode: () => {
+        const next = !get().darkMode;
+        set({ darkMode: next });
+        applyTheme(get().currentTheme, next);
       },
     }),
     {
       name: 'converthub-theme',
       onRehydrateStorage: () => (state) => {
-        if (state?.currentTheme) {
-          applyTheme(state.currentTheme);
+        if (state) {
+          applyTheme(state.currentTheme, state.darkMode);
         }
       },
     },
   ),
 );
 
-function applyTheme(id: ThemeId) {
+function applyTheme(id: ThemeId, dark: boolean) {
   const theme = themes.find((t) => t.id === id);
   if (!theme) return;
 
@@ -141,25 +149,30 @@ function applyTheme(id: ThemeId) {
   Object.entries(theme.brand).forEach(([key, value]) => {
     root.style.setProperty(`--color-brand-${key}`, value);
   });
+
+  // Toggle dark mode class on <html>
+  root.classList.toggle('dark', dark);
 }
 
 // Apply theme on initial load
 if (typeof window !== 'undefined') {
-  const applyStoredTheme = () => {
+  const applyStored = () => {
     const stored = localStorage.getItem('converthub-theme');
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        const id = parsed?.state?.currentTheme as ThemeId;
-        if (id) applyTheme(id);
+        const state = parsed?.state;
+        if (state) {
+          applyTheme(state.currentTheme || 'default', !!state.darkMode);
+        }
       } catch {
         // Ignore invalid JSON in localStorage
       }
     }
   };
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(applyStoredTheme);
+    requestIdleCallback(applyStored);
   } else {
-    setTimeout(applyStoredTheme, 0);
+    setTimeout(applyStored, 0);
   }
 }

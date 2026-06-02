@@ -190,6 +190,7 @@ ${parseMarkdown(markdown)}
     <PageLayout
       wide
       title={t('nav.editors.markdown')}
+      description="Editor Markdown online con vista previa en tiempo real. Escribe y exporta a HTML desde tu navegador, 100% gratis."
       subtitle={t('nav.editors.markdownDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.markdown') }]}
     >

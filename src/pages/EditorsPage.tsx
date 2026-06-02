@@ -7,6 +7,7 @@ export function EditorsPage() {
   return (
     <PageLayout
       title="Editores"
+      description="Edita imágenes, texto, JSON, Markdown y hojas de cálculo online gratis. Todas las herramientas funcionan en tu navegador."
       subtitle="Edita imágenes, texto, JSON, Markdown y hojas de cálculo."
       showPrivacyBanner={false}
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Editores' }]}

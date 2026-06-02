@@ -36,6 +36,7 @@ export function SpreadsheetConverter() {
   return (
     <PageLayout
       title={t('spreadsheet.title')}
+      description="Convierte archivos CSV a XLSX, XLSX a CSV, CSV a JSON y JSON a CSV online gratis. Procesamiento 100% local."
       subtitle={t('spreadsheet.subtitle')}
       breadcrumb={[{ label: tc('nav.home'), to: '/' }, { label: tc('nav.converters.csv') }]}
     >

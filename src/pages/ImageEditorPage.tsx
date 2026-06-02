@@ -155,6 +155,7 @@ export function ImageEditorPage() {
     <PageLayout
       wide
       title={t('nav.editors.image')}
+      description="Editor de imágenes online gratis: redimensiona, rota, voltea, aplica filtros y comprime imágenes. Sin registro ni servidores."
       subtitle={t('nav.editors.imageDesc')}
       breadcrumb={[{ label: t('nav.home'), to: '/' }, { label: t('nav.editors.image') }]}
     >

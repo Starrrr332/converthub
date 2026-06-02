@@ -25,6 +25,7 @@ export function ConvertersPage() {
   return (
     <PageLayout
       title="Convertidores"
+      description="Convierte imágenes, documentos, audio y video online gratis. Más de 20 herramientas de conversión con procesamiento 100% local."
       subtitle="Convierte entre múltiples formatos de archivo al instante."
       showPrivacyBanner={false}
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Convertidores' }]}

@@ -56,6 +56,7 @@ export function ImageCompressorPage() {
   return (
     <PageLayout
       title="Compresor de Imágenes"
+      description="Comprime imágenes PNG, JPG y WebP online gratis. Reduce el tamaño sin perder calidad. Procesamiento local en tu navegador."
       subtitle="Reduce el tamaño de tus imágenes sin perder calidad notable."
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Compresor de Imágenes' }]}
     >

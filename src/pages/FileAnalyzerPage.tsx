@@ -99,6 +99,7 @@ export function FileAnalyzerPage() {
   return (
     <PageLayout
       title="Analizador de Archivos"
+      description="Analiza cualquier archivo online gratis: metadatos, tipo MIME, firma hexadecimal, dimensiones de imagen. 100% local."
       subtitle="Inspecciona metadatos, tipo MIME, firma hexadecimal y más de cualquier archivo."
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Analizador de Archivos' }]}
     >

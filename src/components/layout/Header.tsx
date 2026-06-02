@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Image as ImageIcon, Menu, X, Heart, Search, Star, Palette } from 'lucide-react';
+import { Image as ImageIcon, Menu, X, Heart, Search, Star, Palette, Sun, Moon } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { DropdownMenu } from './DropdownMenu';
 import { useState, useEffect, useRef } from 'react';
@@ -16,7 +16,7 @@ export function Header() {
   const [themeOpen, setThemeOpen] = useState(false);
   const themeRef = useRef<HTMLDivElement>(null);
   const { favorites } = useCommandStore();
-  const { currentTheme, setTheme } = useThemeStore();
+  const { currentTheme, setTheme, darkMode, toggleDarkMode } = useThemeStore();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -167,6 +167,26 @@ export function Header() {
                       )}
                     </button>
                   ))}
+                  <hr className="mx-3 my-1.5 border-border" />
+                  <button
+                    onClick={() => {
+                      toggleDarkMode();
+                      setThemeOpen(false);
+                    }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-accent-50 transition-all duration-150 text-left"
+                  >
+                    {darkMode ? (
+                      <Sun className="w-4 h-4 text-text-muted" />
+                    ) : (
+                      <Moon className="w-4 h-4 text-text-muted" />
+                    )}
+                    <span className="text-sm text-text-primary">
+                      {darkMode ? 'Modo claro' : 'Modo oscuro'}
+                    </span>
+                    {darkMode && (
+                      <span className="ml-auto text-accent-600 text-xs font-bold">✓</span>
+                    )}
+                  </button>
                 </div>
               )}
             </div>

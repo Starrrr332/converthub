@@ -7,6 +7,7 @@ export function ToolsPage() {
   return (
     <PageLayout
       title="Herramientas"
+      description="Herramientas online gratis: conversor de YAML/JSON, watermark, gradientes, collage y más. Procesamiento 100% local."
       subtitle="Utilidades standalone para tareas comunes."
       showPrivacyBanner={false}
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Herramientas' }]}

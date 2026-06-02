@@ -13,6 +13,7 @@ export function PdfConverter() {
   return (
     <PageLayout
       title={t('pdf.title')}
+      description="Herramientas PDF online gratis: unir, dividir, comprimir y rotar documentos PDF. Procesamiento 100% local y seguro en tu navegador."
       subtitle={t('pdf.subtitle')}
       breadcrumb={[{ label: tc('nav.home'), to: '/' }, { label: tc('nav.converters.pdf') }]}
     >

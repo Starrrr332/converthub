@@ -7,6 +7,7 @@ export function UtilitiesPage() {
   return (
     <PageLayout
       title="Utilidades"
+      description="Utilidades online gratis: generador de UUID, contraseñas, códigos de barras, timestamps y más herramientas prácticas."
       subtitle="Generadores y herramientas útiles para el día a día."
       showPrivacyBanner={false}
       breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Utilidades' }]}
