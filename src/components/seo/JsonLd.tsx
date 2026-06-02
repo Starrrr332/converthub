@@ -1,43 +1,19 @@
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 interface JsonLdProps {
-  name: string;
-  description: string;
-  url: string;
-  applicationCategory?: string;
-  offers?: { price: string; priceCurrency: string };
+  data: Record<string, unknown> | Record<string, unknown>[];
 }
 
-export function JsonLd({
-  name,
-  description,
-  url,
-  applicationCategory = 'UtilitiesApplication',
-  offers = { price: '0', priceCurrency: 'USD' },
-}: JsonLdProps) {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'SoftwareApplication',
-      name: `ConvertHub - ${name}`,
-      description,
-      url,
-      operatingSystem: 'Any',
-      applicationCategory,
-      offers: {
-        '@type': 'Offer',
-        price: offers.price,
-        priceCurrency: offers.priceCurrency,
-      },
-    });
-    document.head.appendChild(script);
+export function JsonLd({ data }: JsonLdProps) {
+  const schemas = Array.isArray(data) ? data : [data];
 
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [name, description, url, applicationCategory, offers]);
-
-  return null;
+  return (
+    <Helmet>
+      {schemas.map((schema, i) => (
+        <script key={i} type="application/ld+json">
+          {JSON.stringify({ '@context': 'https://schema.org', ...schema })}
+        </script>
+      ))}
+    </Helmet>
+  );
 }

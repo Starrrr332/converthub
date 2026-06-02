@@ -1,5 +1,23 @@
 import { useState } from 'react';
 
+/**
+ * Safely decode a base64url segment, returning null on failure
+ * instead of throwing like bare atob().
+ */
+function safeDecodeBase64Url(segment: string): string | null {
+  try {
+    // Convert base64url to base64
+    const base64 = segment.replace(/-/g, '+').replace(/_/g, '/');
+    // Validate characters before decoding
+    if (!/^[A-Za-z0-9+/]*={0,2}$/.test(base64)) {
+      return null;
+    }
+    return atob(base64);
+  } catch {
+    return null;
+  }
+}
+
 export function JwtDecoderTool() {
   const [token, setToken] = useState('');
   const [header, setHeader] = useState('');
@@ -8,13 +26,30 @@ export function JwtDecoderTool() {
 
   const decode = () => {
     try {
-      const parts = token.split('.');
+      const trimmed = token.trim();
+      const parts = trimmed.split('.');
       if (parts.length !== 3) {
-        setError('Invalid JWT format');
+        setError('Invalid JWT format: expected 3 dot-separated segments');
         return;
       }
-      setHeader(JSON.stringify(JSON.parse(atob(parts[0])), null, 2));
-      setPayload(JSON.stringify(JSON.parse(atob(parts[1])), null, 2));
+
+      const headerDecoded = safeDecodeBase64Url(parts[0]);
+      if (headerDecoded === null) {
+        setError('Failed to decode header segment: invalid base64url');
+        return;
+      }
+
+      const payloadDecoded = safeDecodeBase64Url(parts[1]);
+      if (payloadDecoded === null) {
+        setError('Failed to decode payload segment: invalid base64url');
+        return;
+      }
+
+      const headerParsed = JSON.parse(headerDecoded);
+      const payloadParsed = JSON.parse(payloadDecoded);
+
+      setHeader(JSON.stringify(headerParsed, null, 2));
+      setPayload(JSON.stringify(payloadParsed, null, 2));
       setError('');
     } catch (e) {
       setError((e as Error).message);

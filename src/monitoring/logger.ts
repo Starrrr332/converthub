@@ -1,5 +1,12 @@
 type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
+/** Global gtag function type (Google Analytics) */
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 interface LogEntry {
   timestamp: string;
   level: LogLevel;
@@ -116,8 +123,8 @@ class Logger {
       'converter',
     );
 
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'conversion', {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'conversion', {
         event_category: 'converter',
         event_label: log.tool,
         value: log.duration,

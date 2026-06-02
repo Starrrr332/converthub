@@ -143,16 +143,24 @@ function applyTheme(id: ThemeId) {
   });
 }
 
-// Apply theme on initial load
+// Apply theme on initial load (deferred to avoid module-level side effects)
 if (typeof window !== 'undefined') {
-  const stored = localStorage.getItem('converthub-theme');
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored);
-      const id = parsed?.state?.currentTheme as ThemeId;
-      if (id) applyTheme(id);
-    } catch {
-      /* ignore parse errors */
+  // Use requestIdleCallback to defer non-critical work
+  const applyStoredTheme = () => {
+    const stored = localStorage.getItem('converthub-theme');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        const id = parsed?.state?.currentTheme as ThemeId;
+        if (id) applyTheme(id);
+      } catch {
+        // Ignore invalid JSON in localStorage
+      }
     }
+  };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(applyStoredTheme);
+  } else {
+    setTimeout(applyStoredTheme, 0);
   }
 }

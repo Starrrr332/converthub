@@ -6,6 +6,7 @@ import { CommandPalette } from './components/ui/CommandPalette';
 import { TabBar } from './components/ui/TabBar';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { toolRegistry } from './config/toolRegistry';
+import { ErrorBoundary, usePageTracking } from './monitoring';
 import './i18n';
 
 const Home = lazy(() => import('./pages/Home').then((m) => ({ default: m.Home })));
@@ -51,10 +52,18 @@ const DevToolsPage = lazy(() =>
 const UtilitiesPage = lazy(() =>
   import('./pages/UtilitiesPage').then((m) => ({ default: m.UtilitiesPage })),
 );
+const MetricsDashboard = lazy(() =>
+  import('./pages/MetricsDashboard').then((m) => ({ default: m.MetricsDashboard })),
+);
 
 function KeyboardShortcutsProvider({ children }: { children: React.ReactNode }) {
   useKeyboardShortcuts();
   return <>{children}</>;
+}
+
+function PageTracker() {
+  usePageTracking();
+  return null;
 }
 
 function App() {
@@ -69,43 +78,49 @@ function App() {
     >
       <Router>
         <KeyboardShortcutsProvider>
+          <PageTracker />
           <div className="app-shell">
             <Header />
             <CommandPalette />
             <TabBar />
 
             <main id="main-content" className="flex-1 w-full" tabIndex={-1}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/favorites" element={<FavoritesPage />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/security" element={<Security />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/blog" element={<BlogIndex />} />
-                <Route
-                  path="/blog/como-convertir-imagenes-sin-perder-calidad"
-                  element={<ConvertImagesBlog />}
-                />
-                <Route path="/blog/guia-formatos-imagen-2026" element={<GuiaFormatosBlog />} />
-                <Route
-                  path="/blog/herramientas-online-seguras"
-                  element={<HerramientasSegurasBlog />}
-                />
+              <ErrorBoundary>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/favorites" element={<FavoritesPage />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/security" element={<Security />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/blog" element={<BlogIndex />} />
+                  <Route
+                    path="/blog/como-convertir-imagenes-sin-perder-calidad"
+                    element={<ConvertImagesBlog />}
+                  />
+                  <Route path="/blog/guia-formatos-imagen-2026" element={<GuiaFormatosBlog />} />
+                  <Route
+                    path="/blog/herramientas-online-seguras"
+                    element={<HerramientasSegurasBlog />}
+                  />
 
-                {/* Category landing pages */}
-                <Route path="/converter" element={<ConvertersPage />} />
-                <Route path="/editor" element={<EditorsPage />} />
-                <Route path="/tools" element={<ToolsPage />} />
-                <Route path="/devtools" element={<DevToolsPage />} />
-                <Route path="/utilities" element={<UtilitiesPage />} />
+                  {/* Category landing pages */}
+                  <Route path="/converter" element={<ConvertersPage />} />
+                  <Route path="/editor" element={<EditorsPage />} />
+                  <Route path="/tools" element={<ToolsPage />} />
+                  <Route path="/devtools" element={<DevToolsPage />} />
+                  <Route path="/utilities" element={<UtilitiesPage />} />
 
-                {toolRegistry.map((tool) => (
-                  <Route key={tool.path} path={tool.path} element={<tool.component />} />
-                ))}
-              </Routes>
+                  {/* Metrics Dashboard */}
+                  <Route path="/metrics" element={<MetricsDashboard />} />
+
+                  {toolRegistry.map((tool) => (
+                    <Route key={tool.path} path={tool.path} element={<tool.component />} />
+                  ))}
+                </Routes>
+              </ErrorBoundary>
             </main>
 
             <Footer />

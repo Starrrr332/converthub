@@ -1,149 +1,160 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { renderHook, act } from '@testing-library/react'
-import { useConversionLimit } from '../../src/hooks/useConversionLimit'
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { renderHook, act, waitFor } from '@testing-library/react';
+import { useConversionLimit } from '../../src/hooks/useConversionLimit';
+
+function getToday(): string {
+  return new Date().toISOString().split('T')[0];
+}
 
 beforeEach(() => {
-  localStorage.clear()
-})
+  localStorage.clear();
+  useConversionLimit.setState({ date: getToday(), count: 0, limit: 50 });
+});
 
 describe('useConversionLimit', () => {
   it('initializes with default state', () => {
-    const { result } = renderHook(() => useConversionLimit())
-    expect(result.current.count).toBe(0)
-    expect(result.current.limit).toBe(50)
-    expect(result.current.canConvert()).toBe(true)
-  })
+    const { result } = renderHook(() => useConversionLimit());
+    expect(result.current.count).toBe(0);
+    expect(result.current.limit).toBe(50);
+    expect(result.current.canConvert()).toBe(true);
+  });
 
   it('increments usage count', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+    });
 
-    expect(result.current.count).toBe(1)
-  })
+    expect(result.current.count).toBe(1);
+  });
 
   it('increments multiple times', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-      result.current.incrementUsage()
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+      result.current.incrementUsage();
+      result.current.incrementUsage();
+    });
 
-    expect(result.current.count).toBe(3)
-  })
+    expect(result.current.count).toBe(3);
+  });
 
   it('returns remaining count correctly', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+      result.current.incrementUsage();
+    });
 
-    expect(result.current.getRemaining()).toBe(48)
-  })
+    expect(result.current.getRemaining()).toBe(48);
+  });
 
   it('canConvert returns true when under limit', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+    });
 
-    expect(result.current.canConvert()).toBe(true)
-  })
+    expect(result.current.canConvert()).toBe(true);
+  });
 
   it('canConvert returns false at limit', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
       for (let i = 0; i < 50; i++) {
-        result.current.incrementUsage()
+        result.current.incrementUsage();
       }
-    })
+    });
 
-    expect(result.current.canConvert()).toBe(false)
-  })
+    expect(result.current.canConvert()).toBe(false);
+  });
 
   it('resets daily count', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+      result.current.incrementUsage();
+    });
 
     act(() => {
-      result.current.resetDaily()
-    })
+      result.current.resetDaily();
+    });
 
-    expect(result.current.count).toBe(0)
-    expect(result.current.canConvert()).toBe(true)
-  })
+    expect(result.current.count).toBe(0);
+    expect(result.current.canConvert()).toBe(true);
+  });
 
   it('getRemaining returns full limit when date changes', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+      result.current.incrementUsage();
+    });
 
-    vi.spyOn(Date.prototype, 'toISOString').mockReturnValue('2099-01-01T00:00:00.000Z')
+    vi.spyOn(Date.prototype, 'toISOString').mockReturnValue('2099-01-01T00:00:00.000Z');
 
-    expect(result.current.getRemaining()).toBe(50)
-  })
+    expect(result.current.getRemaining()).toBe(50);
+
+    vi.restoreAllMocks();
+  });
 
   it('canConvert returns true when date changes', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
       for (let i = 0; i < 50; i++) {
-        result.current.incrementUsage()
+        result.current.incrementUsage();
       }
-    })
+    });
 
-    vi.spyOn(Date.prototype, 'toISOString').mockReturnValue('2099-01-01T00:00:00.000Z')
+    vi.spyOn(Date.prototype, 'toISOString').mockReturnValue('2099-01-01T00:00:00.000Z');
 
-    expect(result.current.canConvert()).toBe(true)
-  })
+    expect(result.current.canConvert()).toBe(true);
+
+    vi.restoreAllMocks();
+  });
 
   it('getRemaining never goes below 0', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
       for (let i = 0; i < 60; i++) {
-        result.current.incrementUsage()
+        result.current.incrementUsage();
       }
-    })
+    });
 
-    expect(result.current.getRemaining()).toBe(0)
-  })
+    expect(result.current.getRemaining()).toBe(0);
+  });
 
   it('persists state to localStorage', () => {
-    const { result } = renderHook(() => useConversionLimit())
+    const { result } = renderHook(() => useConversionLimit());
 
     act(() => {
-      result.current.incrementUsage()
-      result.current.incrementUsage()
-    })
+      result.current.incrementUsage();
+      result.current.incrementUsage();
+    });
 
-    const stored = JSON.parse(localStorage.getItem('converthub-limits') || '{}')
-    expect(stored.state.count).toBe(2)
-  })
+    const stored = JSON.parse(localStorage.getItem('converthub-limits') || '{}');
+    expect(stored.state.count).toBe(2);
+  });
 
-  it('restores state from localStorage', () => {
+  it('restores state from localStorage', async () => {
     const initial = {
-      state: { date: new Date().toISOString().split('T')[0], count: 5, limit: 50 },
+      state: { date: getToday(), count: 5, limit: 50 },
       version: 0,
-    }
-    localStorage.setItem('converthub-limits', JSON.stringify(initial))
+    };
+    localStorage.setItem('converthub-limits', JSON.stringify(initial));
 
-    const { result } = renderHook(() => useConversionLimit())
-    expect(result.current.count).toBe(5)
-  })
-})
+    const { result } = renderHook(() => useConversionLimit());
+    await waitFor(() => {
+      expect(result.current.count).toBe(5);
+    });
+  });
+});

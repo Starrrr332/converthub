@@ -1,26 +1,31 @@
-import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import type { AudioConvertOptions, AudioConversionResult } from '../../types';
 
-let ffmpeg: FFmpeg | null = null;
-let ffmpegLoaded = false;
+let ffmpegPromise: Promise<typeof import('@ffmpeg/ffmpeg').FFmpeg> | null = null;
+let loadedInstance: Awaited<ReturnType<typeof loadFFmpeg>> | null = null;
 
 // ==================== INITIALIZATION ====================
 
-async function loadFFmpeg(): Promise<FFmpeg> {
-  if (ffmpeg && ffmpegLoaded) return ffmpeg;
+async function loadFFmpeg() {
+  if (loadedInstance) return loadedInstance;
 
-  ffmpeg = new FFmpeg();
+  if (!ffmpegPromise) {
+    ffmpegPromise = (async () => {
+      const [{ FFmpeg }, { fetchFile, toBlobURL }] = await Promise.all([
+        import('@ffmpeg/ffmpeg'),
+        import('@ffmpeg/util'),
+      ]);
+      const ff = new FFmpeg();
+      const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd';
+      await ff.load({
+        coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+        wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+      });
+      return { ff, fetchFile };
+    })();
+  }
 
-  const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.10/dist/umd';
-
-  await ffmpeg.load({
-    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-  });
-
-  ffmpegLoaded = true;
-  return ffmpeg;
+  loadedInstance = await ffmpegPromise;
+  return loadedInstance;
 }
 
 // ==================== CONVERT AUDIO ====================
@@ -30,25 +35,21 @@ export async function convertAudio(
   options: AudioConvertOptions,
   onProgress?: (progress: number) => void,
 ): Promise<AudioConversionResult> {
-  const ff = await loadFFmpeg();
+  const { ff, fetchFile } = await loadFFmpeg();
 
   const inputName = `input.${getExtensionFromMime(file.type)}`;
   const outputName = `output.${options.format}`;
 
-  // Write input file
   await ff.writeFile(inputName, await fetchFile(file));
 
-  // Set up progress tracking
   if (onProgress) {
     ff.on('progress', ({ progress }) => {
       onProgress(Math.round(progress * 100));
     });
   }
 
-  // Build FFmpeg command
   const args = ['-i', inputName];
 
-  // Add format-specific options
   if (options.bitrate) {
     args.push('-b:a', `${options.bitrate}k`);
   }
@@ -57,7 +58,6 @@ export async function convertAudio(
     args.push('-ar', String(options.sampleRate));
   }
 
-  // Output format
   switch (options.format) {
     case 'mp3':
       args.push('-codec:a', 'libmp3lame');
@@ -78,17 +78,14 @@ export async function convertAudio(
 
   args.push(outputName);
 
-  // Execute conversion
   await ff.exec(args);
 
-  // Read output file
   const outputData = await ff.readFile(outputName);
   const blob = new Blob([new Uint8Array(outputData as Uint8Array)], {
     type: getMimeFromExtension(options.format),
   });
   const url = URL.createObjectURL(blob);
 
-  // Cleanup
   await ff.deleteFile(inputName);
   await ff.deleteFile(outputName);
 
@@ -172,10 +169,5 @@ export function formatDuration(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-export function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
+// Re-export formatFileSize from shared utils for backward compatibility
+export { formatFileSize } from '../../utils/constants';

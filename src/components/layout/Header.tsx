@@ -53,13 +53,15 @@ export function Header() {
   ];
 
   const openCommandPalette = () => {
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+    window.dispatchEvent(new CustomEvent('toggle-command-palette'));
   };
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-200 ${
-      scrolled ? 'glass-nav' : 'bg-transparent'
-    }`}>
+    <header
+      className={`sticky top-0 z-50 transition-all duration-200 ${
+        scrolled ? 'glass-nav' : 'bg-transparent'
+      }`}
+    >
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-accent-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2"

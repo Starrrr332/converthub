@@ -5,11 +5,23 @@ import type {
   SpreadsheetConversionResult,
 } from '../../types';
 
+// Max file size: 50MB for spreadsheet processing (XLSX lib memory constraints)
+const MAX_SPREADSHEET_SIZE = 50 * 1024 * 1024;
+
+function validateFileSize(file: File): void {
+  if (file.size > MAX_SPREADSHEET_SIZE) {
+    throw new Error(
+      `File exceeds ${MAX_SPREADSHEET_SIZE / (1024 * 1024)}MB limit for spreadsheet processing`,
+    );
+  }
+}
+
 // ==================== CSV TO XLSX ====================
 
 export async function csvToXlsx(
   options: SpreadsheetConvertOptions,
 ): Promise<SpreadsheetConversionResult> {
+  validateFileSize(options.file);
   const text = await options.file.text();
   const workbook = XLSX.read(text, { type: 'string' });
   const xlsxBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
@@ -33,6 +45,7 @@ export async function csvToXlsx(
 export async function xlsxToCsv(
   options: SpreadsheetConvertOptions,
 ): Promise<SpreadsheetConversionResult> {
+  validateFileSize(options.file);
   const buffer = await options.file.arrayBuffer();
   const workbook = XLSX.read(buffer, { type: 'array' });
   const sheetName = options.sheetName || workbook.SheetNames[0];
@@ -60,6 +73,7 @@ export async function xlsxToCsv(
 export async function csvToJson(
   options: SpreadsheetConvertOptions,
 ): Promise<SpreadsheetConversionResult> {
+  validateFileSize(options.file);
   const text = await options.file.text();
   const workbook = XLSX.read(text, { type: 'string' });
   const sheetName = options.sheetName || workbook.SheetNames[0];
@@ -89,6 +103,7 @@ export async function csvToJson(
 export async function jsonToCsv(
   options: SpreadsheetConvertOptions,
 ): Promise<SpreadsheetConversionResult> {
+  validateFileSize(options.file);
   const text = await options.file.text();
   const jsonData = JSON.parse(text);
 
@@ -121,6 +136,7 @@ export async function jsonToCsv(
 // ==================== PREVIEW ====================
 
 export async function previewSpreadsheet(file: File): Promise<SpreadsheetPreviewResult> {
+  validateFileSize(file);
   let workbook: XLSX.WorkBook;
 
   if (file.type === 'application/json') {

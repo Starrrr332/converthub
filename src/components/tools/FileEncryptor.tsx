@@ -103,16 +103,22 @@ export function FileEncryptor() {
       </div>
 
       {/* File input */}
-      <label className="dropzone flex flex-col items-center justify-center h-24 cursor-pointer mb-4">
-        <p className="text-sm text-text-secondary">
-          {file ? file.name : 'Arrastra o selecciona un archivo'}
-        </p>
+      <div>
+        <label
+          htmlFor="encrypt-file-input"
+          className="dropzone flex flex-col items-center justify-center h-24 cursor-pointer mb-4"
+        >
+          <p className="text-sm text-text-secondary">
+            {file ? file.name : 'Arrastra o selecciona un archivo'}
+          </p>
+        </label>
         <input
+          id="encrypt-file-input"
           type="file"
           onChange={(e) => setFile(e.target.files?.[0] || null)}
           className="hidden"
         />
-      </label>
+      </div>
 
       {/* Password */}
       <input

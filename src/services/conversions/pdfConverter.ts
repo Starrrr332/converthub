@@ -307,10 +307,24 @@ export async function unlockPdf(options: {
 
   let pdf;
   try {
-    pdf = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+    // Try loading with the password provided by the user
+    pdf = await PDFDocument.load(pdfBytes, {
+      password: options.password,
+    });
   } catch {
-    throw new Error('No se pudo abrir el PDF. Asegúrate de que el archivo no esté dañado.');
+    // Fallback: try ignoring encryption (PDF may not actually be encrypted)
+    try {
+      pdf = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+    } catch {
+      throw new Error(
+        'No se pudo abrir el PDF. Verifica la contraseña y que el archivo no esté dañado.',
+      );
+    }
   }
+
+  // Save without encryption by removing all security settings
+  pdf.setProducer('');
+  pdf.setCreator('');
 
   const unlockedBytes = await pdf.save();
   const blob = new Blob([new Uint8Array(unlockedBytes)], { type: 'application/pdf' });

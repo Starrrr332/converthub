@@ -61,8 +61,13 @@ export function CommandPalette() {
         setIsOpen((prev) => !prev);
       }
     };
+    const customHandler = () => setIsOpen((prev) => !prev);
     window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    window.addEventListener('toggle-command-palette', customHandler);
+    return () => {
+      window.removeEventListener('keydown', handler);
+      window.removeEventListener('toggle-command-palette', customHandler);
+    };
   }, []);
 
   useEffect(() => {
@@ -100,7 +105,11 @@ export function CommandPalette() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)} aria-hidden="true" />
+      <div
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={() => setIsOpen(false)}
+        aria-hidden="true"
+      />
       <div
         ref={focusTrapRef}
         role="dialog"
