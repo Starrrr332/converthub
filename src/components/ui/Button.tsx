@@ -17,22 +17,22 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-[--radius-button] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2 select-none';
+    'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2 select-none';
 
   const variantStyles = {
     primary:
-      'bg-accent-500 text-white hover:bg-accent-600 active:bg-accent-700 shadow-sm hover:shadow',
+      'bg-accent-500 text-white hover:bg-accent-600 active:bg-accent-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0',
     secondary:
-      'bg-surface-secondary text-text-secondary hover:bg-accent-50 active:bg-surface-secondary',
+      'bg-surface-secondary text-text-secondary hover:bg-accent-50 active:bg-surface-secondary hover:-translate-y-0.5 active:translate-y-0',
     outline:
-      'border border-border text-text-secondary hover:bg-accent-50 active:bg-surface-secondary',
+      'border border-border text-text-secondary hover:bg-accent-50 hover:border-accent-200 active:bg-surface-secondary hover:-translate-y-0.5 active:translate-y-0',
     ghost: 'text-text-secondary hover:bg-accent-50 active:bg-surface-secondary',
   };
 
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm gap-1.5 rounded-md',
-    md: 'px-4 py-2 text-sm gap-2 rounded-md',
-    lg: 'px-5 py-2.5 text-base gap-2 rounded-md',
+    sm: 'px-3.5 py-1.5 text-sm gap-1.5',
+    md: 'px-5 py-2.5 text-sm gap-2',
+    lg: 'px-6 py-3 text-base gap-2.5',
   };
 
   return (

@@ -58,21 +58,21 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-200 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled ? 'glass-nav' : 'bg-transparent'
       }`}
     >
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-accent-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-accent-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2"
       >
         Saltar al contenido principal
       </a>
       <div className="page-container">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="p-2 bg-accent-600 rounded-lg">
+          <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+            <div className="p-2 bg-accent-600 rounded-xl transition-transform duration-200 group-hover:scale-105 shadow-sm">
               <ImageIcon className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg sm:text-xl font-bold text-text-primary tracking-tight">
@@ -84,10 +84,10 @@ export function Header() {
           <nav className="hidden md:flex items-center gap-1">
             <Link
               to="/"
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                 isActive('/')
                   ? 'text-accent-700 bg-accent-50'
-                  : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
               }`}
             >
               {t('nav.home')}
@@ -97,10 +97,10 @@ export function Header() {
 
             <Link
               to="/favorites"
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 ${
                 isActive('/favorites')
                   ? 'text-accent-700 bg-accent-50'
-                  : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
               }`}
             >
               <Star className="w-3.5 h-3.5" />
@@ -114,10 +114,10 @@ export function Header() {
 
             <Link
               to="/pricing"
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 ${
                 isActive('/pricing')
                   ? 'text-accent-700 bg-accent-50'
-                  : 'text-text-secondary hover:text-text hover:bg-surface-secondary'
+                  : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
               }`}
             >
               <Heart className="w-3.5 h-3.5" />
@@ -131,14 +131,14 @@ export function Header() {
             <div className="relative" ref={themeRef}>
               <button
                 onClick={() => setThemeOpen(!themeOpen)}
-                className="p-2 rounded-md text-text-secondary hover:text-text-primary hover:bg-accent-50 transition-colors"
+                className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-accent-50 transition-all duration-200"
                 title="Cambiar tema"
               >
                 <Palette className="w-4 h-4" />
               </button>
               {themeOpen && (
-                <div className="absolute top-full right-0 mt-1.5 w-56 bg-surface rounded-lg py-2 z-50 border border-border/70">
-                  <p className="px-3 pb-1 text-[11px] font-medium text-text-muted uppercase tracking-wider">
+                <div className="absolute top-full right-0 mt-2 w-56 bg-surface rounded-xl py-2 z-50 border border-border/70 shadow-elevated animate-slide-down">
+                  <p className="px-3 pb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
                     Temas
                   </p>
                   {themes.map((theme) => (
@@ -148,7 +148,7 @@ export function Header() {
                         setTheme(theme.id);
                         setThemeOpen(false);
                       }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-accent-50 transition-colors text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-accent-50 transition-all duration-150 text-left"
                     >
                       <div className="flex gap-0.5 shrink-0">
                         {Object.values(theme.brand)
@@ -156,14 +156,14 @@ export function Header() {
                           .map((color, i) => (
                             <div
                               key={i}
-                              className="w-3 h-3 rounded-full"
+                              className="w-3.5 h-3.5 rounded-full ring-1 ring-black/5"
                               style={{ backgroundColor: color }}
                             />
                           ))}
                       </div>
                       <span className="text-sm text-text-primary">{theme.name}</span>
                       {currentTheme === theme.id && (
-                        <span className="ml-auto text-accent-600 text-xs font-medium">✓</span>
+                        <span className="ml-auto text-accent-600 text-xs font-bold">✓</span>
                       )}
                     </button>
                   ))}
@@ -171,13 +171,14 @@ export function Header() {
               )}
             </div>
 
+            {/* Search */}
             <button
               onClick={openCommandPalette}
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 text-sm text-text-muted bg-surface-secondary hover:bg-accent-50 transition-colors border border-border"
+              className="hidden sm:flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-secondary hover:bg-surface hover:border-accent-200 transition-all duration-200 border border-border rounded-lg"
             >
               <Search className="w-4 h-4" />
               <span className="text-xs">Buscar...</span>
-              <kbd className="text-[10px] font-medium px-1 py-0.5 bg-surface rounded border border-border">
+              <kbd className="text-[10px] font-medium px-1.5 py-0.5 bg-surface rounded border border-border shadow-sm">
                 ⌘K
               </kbd>
             </button>
@@ -185,14 +186,14 @@ export function Header() {
             <LanguageSwitcher />
 
             <Link to="/pricing" className="hidden sm:inline-flex">
-              <button className="px-3 py-1.5 text-xs font-semibold bg-brand-600 text-white rounded-full hover:bg-brand-700 transition-colors">
+              <button className="px-4 py-1.5 text-xs font-semibold bg-brand-600 text-white rounded-full hover:bg-brand-700 transition-all duration-200 shadow-sm hover:shadow-md">
                 Donar
               </button>
             </Link>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-text-secondary hover:text-text hover:bg-slate-100 transition-colors"
+              className="md:hidden p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-secondary transition-all duration-200"
               aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -203,13 +204,15 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border/50 bg-surface max-h-[calc(100vh-3.5rem)] overflow-y-auto">
+        <div className="md:hidden border-t border-border/50 bg-surface max-h-[calc(100vh-3.5rem)] overflow-y-auto animate-slide-down">
           <nav className="page-container py-4 space-y-1">
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-3 py-2.5 rounded-lg text-sm font-medium ${
-                isActive('/') ? 'text-brand-700 bg-brand-50' : 'text-text-secondary'
+              className={`block px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                isActive('/')
+                  ? 'text-brand-700 bg-brand-50'
+                  : 'text-text-secondary hover:bg-surface-secondary'
               }`}
             >
               {t('nav.home')}
@@ -217,7 +220,7 @@ export function Header() {
 
             {mobileSections.map((section) => (
               <div key={section.title} className="pt-3 first:pt-0">
-                <p className="px-3 pb-1 text-xs font-semibold text-text-muted uppercase tracking-wider">
+                <p className="px-3 pb-1.5 text-xs font-semibold text-text-muted uppercase tracking-wider">
                   {section.title}
                 </p>
                 <div className="space-y-0.5">
@@ -226,10 +229,10 @@ export function Header() {
                       key={item.path}
                       to={item.path}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`block px-3 py-2 rounded-lg text-sm ${
+                      className={`block px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${
                         isActive(item.path)
                           ? 'text-brand-700 bg-brand-50 font-medium'
-                          : 'text-text-secondary hover:text-text hover:bg-slate-50'
+                          : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
                       }`}
                     >
                       {item.label}
@@ -243,7 +246,7 @@ export function Header() {
               <Link
                 to="/pricing"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium text-brand-600"
+                className="flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium text-brand-600 hover:bg-brand-50 transition-all duration-200"
               >
                 <Heart className="w-4 h-4" />
                 Donar
