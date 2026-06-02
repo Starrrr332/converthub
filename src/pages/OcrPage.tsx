@@ -9,7 +9,7 @@ export function OcrPage() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [progress, setProgress] = useState('');
-  const workerRef = useRef<any>(null);
+  const workerRef = useRef<Awaited<ReturnType<typeof import('tesseract.js').createWorker>> | null>(null);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -29,7 +29,7 @@ export function OcrPage() {
     try {
       const Tesseract = await import('tesseract.js');
       const worker = await Tesseract.createWorker('spa+eng', 1, {
-        logger: (m: any) => {
+        logger: (m: { status: string; progress: number }) => {
           if (m.status === 'recognizing text') {
             setProgress(`Reconociendo... ${Math.round(m.progress * 100)}%`);
           } else if (m.status === 'loading tesseract core') {

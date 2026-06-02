@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Upload, Image as ImageIcon } from 'lucide-react';
 import { PREMIUM_FORMATS } from '../../types';
+import type { ImageFormat } from '../../types';
 import { formatFileSize } from '../../utils/constants';
 
 interface FileDropzoneProps {
@@ -46,7 +47,7 @@ export function FileDropzone({
     
     const files = Array.from(e.dataTransfer.files);
     const validFiles = files.filter(file => {
-      const isValidType = acceptedFormats.includes(file.type as any);
+      const isValidType = acceptedFormats.includes(file.type as ImageFormat);
       const isValidSize = file.size <= maxSize;
       return isValidType && isValidSize;
     });
@@ -59,7 +60,7 @@ export function FileDropzone({
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const validFiles = files.filter(file => {
-      const isValidType = acceptedFormats.includes(file.type as any);
+      const isValidType = acceptedFormats.includes(file.type as ImageFormat);
       const isValidSize = file.size <= maxSize;
       return isValidType && isValidSize;
     });

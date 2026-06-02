@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { Download, Scissors, Film, Music } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { useNotifications } from '../hooks/useNotifications';
 
 type VideoTool = 'convert' | 'compress' | 'trim' | 'audio';
 
 export function VideoConverterPage() {
+  const { notify } = useNotifications();
   const [file, setFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [tool, setTool] = useState<VideoTool>('convert');
@@ -65,7 +67,7 @@ export function VideoConverterPage() {
 
       let stream: MediaStream;
       try {
-        stream = (video as any).captureStream(30);
+        stream = (video as HTMLVideoElement & { captureStream(fps?: number): MediaStream }).captureStream(30);
       } catch {
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth || 640;
@@ -107,6 +109,7 @@ export function VideoConverterPage() {
         setFileName(`${fileName}.${ext}`);
         setConverting(false);
         video.pause();
+        notify('Video Converter', { body: `Video convertido a ${ext.toUpperCase()} listo para descargar` });
       };
 
       recorder.start();
@@ -123,7 +126,7 @@ export function VideoConverterPage() {
       } else {
         video.onended = () => recorder.stop();
       }
-    } catch (err) {
+    } catch {
       setInfo('Error al procesar el video. Intenta con otro formato.');
       setConverting(false);
     }
@@ -153,6 +156,7 @@ export function VideoConverterPage() {
       setFileName(`${fileName}.webm`);
       setConverting(false);
       setInfo('Audio extraído correctamente. Descarga el archivo.');
+      notify('Video Converter', { body: 'Audio extraído listo para descargar' });
     };
 
     recorder.start();

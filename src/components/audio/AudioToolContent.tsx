@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Download, Music, Trash2, Loader2, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { ToolInfoModal } from '../ui/ToolInfoModal';
+import { useNotifications } from '../../hooks/useNotifications';
 import { 
   convertAudio, 
   validateAudioFile, 
@@ -21,6 +22,7 @@ const ALL_FORMATS: Array<{ value: AudioFormat; label: string }> = [
 
 export function AudioToolContent() {
   const { t } = useTranslation('converter');
+  const { notify } = useNotifications();
   const [file, setFile] = useState<File | null>(null);
   const [targetFormat, setTargetFormat] = useState<AudioFormat>('mp3');
   const [result, setResult] = useState<AudioConversionResult | null>(null);
@@ -66,6 +68,7 @@ export function AudioToolContent() {
       );
       
       setResult(conversionResult);
+      notify(t('audio.title'), { body: `Audio convertido a ${targetFormat.toUpperCase()} listo para descargar` });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Conversion failed');
     } finally {

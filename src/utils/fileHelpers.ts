@@ -24,7 +24,7 @@ export function validateImageFile(file: File): ValidationResult {
   return { valid: true };
 }
 
-export function createDownloadUrl(blob: Blob, _filename: string): string {
+export function createDownloadUrl(blob: Blob): string {
   const url = URL.createObjectURL(blob);
   return url;
 }

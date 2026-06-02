@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 
 type Category = 'length' | 'weight' | 'temperature' | 'volume' | 'speed' | 'area' | 'digital' | 'currency';
 
@@ -106,30 +106,28 @@ export function UnitConverterPage() {
   const [fromUnit, setFromUnit] = useState('');
   const [toUnit, setToUnit] = useState('');
   const [value, setValue] = useState('1');
-  const [result, setResult] = useState('');
 
   const cat = categories[category];
 
-  useEffect(() => {
-    if (cat.units.length > 0) {
-      setFromUnit(cat.units[0].id);
-      setToUnit(cat.units.length > 1 ? cat.units[1].id : cat.units[0].id);
-    }
-  }, [category]);
+  const resolvedFrom = fromUnit || cat.units[0]?.id || '';
+  const resolvedTo = toUnit || (cat.units.length > 1 ? cat.units[1].id : cat.units[0]?.id || '');
 
-  useEffect(() => {
-    convert();
-  }, [fromUnit, toUnit, value, category]);
-
-  const convert = () => {
-    const from = cat.units.find(u => u.id === fromUnit);
-    const to = cat.units.find(u => u.id === toUnit);
-    if (!from || !to || !value) { setResult(''); return; }
+  const result = useMemo(() => {
+    const from = cat.units.find(u => u.id === resolvedFrom);
+    const to = cat.units.find(u => u.id === resolvedTo);
+    if (!from || !to || !value) return '';
     const num = parseFloat(value);
-    if (isNaN(num)) { setResult(''); return; }
+    if (isNaN(num)) return '';
     const base = from.toBase(num);
     const converted = to.fromBase(base);
-    setResult(converted.toLocaleString(undefined, { maximumSignificantDigits: 12 }));
+    return converted.toLocaleString(undefined, { maximumSignificantDigits: 12 });
+  }, [cat.units, resolvedFrom, resolvedTo, value]);
+
+  const handleCategoryChange = (newCategory: Category) => {
+    setCategory(newCategory);
+    const newCat = categories[newCategory];
+    setFromUnit(newCat.units[0]?.id || '');
+    setToUnit(newCat.units.length > 1 ? newCat.units[1].id : newCat.units[0]?.id || '');
   };
 
   return (
@@ -143,7 +141,7 @@ export function UnitConverterPage() {
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="flex flex-wrap gap-2 mb-6">
             {Object.entries(categories).map(([key, cat]) => (
-              <button key={key} onClick={() => setCategory(key as Category)}
+              <button key={key} onClick={() => handleCategoryChange(key as Category)}
                 className={`p-2 rounded-lg text-sm font-medium transition-all ${
                   category === key ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}>
@@ -158,7 +156,7 @@ export function UnitConverterPage() {
               <div className="flex gap-2">
                 <input type="number" value={value} onChange={e => setValue(e.target.value)}
                   className="flex-1 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 outline-none" />
-                <select value={fromUnit} onChange={e => setFromUnit(e.target.value)}
+                <select value={resolvedFrom} onChange={e => setFromUnit(e.target.value)}
                   className="p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 outline-none bg-white">
                   {cat.units.map(u => <option key={u.id} value={u.id}>{u.label}</option>)}
                 </select>
@@ -170,7 +168,7 @@ export function UnitConverterPage() {
                 <div className="flex-1 p-3 bg-gray-50 border-2 border-gray-200 rounded-lg text-lg font-semibold">
                   {result}
                 </div>
-                <select value={toUnit} onChange={e => setToUnit(e.target.value)}
+                <select value={resolvedTo} onChange={e => setToUnit(e.target.value)}
                   className="p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 outline-none bg-white">
                   {cat.units.map(u => <option key={u.id} value={u.id}>{u.label}</option>)}
                 </select>
@@ -182,7 +180,7 @@ export function UnitConverterPage() {
             <h3 className="text-sm font-medium text-gray-700 mb-2">Referencia rápida</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
               {cat.units.slice(0, 6).map(u => {
-                const baseValue = fromUnit ? cat.units.find(uu => uu.id === fromUnit)?.toBase(parseFloat(value || '1')) || 0 : 0;
+                const baseValue = resolvedFrom ? cat.units.find(uu => uu.id === resolvedFrom)?.toBase(parseFloat(value || '1')) || 0 : 0;
                 return (
                   <div key={u.id} className="flex justify-between p-1">
                     <span className="text-gray-500">{u.label}:</span>

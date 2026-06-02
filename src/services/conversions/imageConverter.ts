@@ -202,7 +202,7 @@ export async function rotateImage(
 
 export async function changeDpi(
   file: File,
-  _dpi: number
+  _dpi: number // eslint-disable-line @typescript-eslint/no-unused-vars
 ): Promise<ConversionResult> {
   // Note: DPI is metadata, actual pixel dimensions remain the same
   // This function ensures the output has the correct DPI metadata

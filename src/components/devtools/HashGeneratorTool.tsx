@@ -90,7 +90,7 @@ export function HashGeneratorTool() {
       return (a + b) & 0xFFFFFFFF;
     }
     const n = string.length;
-    let state = [1732584193, -271733879, -1732584194, 271733878];
+    const state = [1732584193, -271733879, -1732584194, 271733878];
     let i;
     for (i = 64; i <= n; i += 64) {
       md5cycle(state, md5blk(string.substring(i - 64, i)));

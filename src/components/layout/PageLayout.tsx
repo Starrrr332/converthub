@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
-import { ChevronRight, Home } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { ChevronRight, Home, ExternalLink } from 'lucide-react';
 import { PrivacyBanner } from '../converter/PrivacyBanner';
+import { FavoriteButton } from '../ui/FavoriteButton';
+import { ShareButton } from '../ui/ShareButton';
+import { useTabsStore } from '../../store/tabsStore';
 
 interface PageLayoutProps {
   title: string;
@@ -19,6 +22,13 @@ export function PageLayout({
   showPrivacyBanner = true,
   breadcrumb,
 }: PageLayoutProps) {
+  const location = useLocation();
+  const { addTab } = useTabsStore();
+
+  const handleOpenInTab = () => {
+    addTab(location.pathname, title);
+  };
+
   return (
     <div className={wide ? 'page-container-wide' : 'page-container'}>
       {breadcrumb && breadcrumb.length > 0 && (
@@ -41,9 +51,22 @@ export function PageLayout({
         </nav>
       )}
 
-      <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">{title}</h1>
-        {subtitle && <p className="mt-2 text-lg text-slate-600 max-w-2xl">{subtitle}</p>}
+      <header className="mb-8 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">{title}</h1>
+          {subtitle && <p className="mt-2 text-lg text-slate-600 max-w-2xl">{subtitle}</p>}
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0 mt-1">
+          <FavoriteButton path={location.pathname} />
+          <ShareButton />
+          <button
+            onClick={handleOpenInTab}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-text-secondary hover:text-text bg-surface-secondary hover:bg-slate-200 rounded-lg transition-colors"
+            title="Abrir en nueva pestaña"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </header>
 
       {showPrivacyBanner && (

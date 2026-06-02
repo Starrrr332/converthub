@@ -33,9 +33,9 @@ export function ImageCompressorPage() {
         maxWidthOrHeight: Math.max(maxWidth, maxHeight),
         useWebWorker: true,
         quality: quality / 100,
-        fileType: original.file.type as any,
+        fileType: original.file.type,
       };
-      const blob = await imageCompression.default(original.file, options as any);
+      const blob = await imageCompression.default(original.file, options);
       setCompressed({ blob, url: URL.createObjectURL(blob), size: blob.size });
     } catch (err) {
       console.error('Compression error:', err);

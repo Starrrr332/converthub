@@ -13,20 +13,20 @@ export function ProgressIndicator({
   currentFile
 }: ProgressIndicatorProps) {
   const { t } = useTranslation('converter');
-  
+   
   const getStatusIcon = () => {
     switch (status) {
       case 'converting':
-        return <Loader2 className="w-5 h-5 text-blue-500 animate-spin" />;
+        return <Loader2 className="w-5 h-5 text-accent-400 animate-spin" />;
       case 'complete':
-        return <Check className="w-5 h-5 text-green-500" />;
+        return <Check className="w-5 h-5 text-accent-500" />;
       case 'error':
-        return <AlertCircle className="w-5 h-5 text-red-500" />;
+        return <AlertCircle className="w-5 h-5 text-error" />;
       default:
         return null;
     }
   };
-  
+   
   const getStatusText = () => {
     switch (status) {
       case 'converting':
@@ -41,41 +41,36 @@ export function ProgressIndicator({
         return t('progress.idle');
     }
   };
-  
-  const getStatusColor = () => {
-    switch (status) {
-      case 'converting':
-        return 'bg-blue-500';
-      case 'complete':
-        return 'bg-green-500';
-      case 'error':
-        return 'bg-red-500';
-      default:
-        return 'bg-gray-300';
-    }
-  };
-  
+    
   if (status === 'idle') {
     return null;
   }
-  
+   
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           {getStatusIcon()}
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-sm font-medium text-text-primary">
             {getStatusText()}
           </span>
         </div>
         {status === 'converting' && (
-          <span className="text-sm text-gray-500">{progress}%</span>
+          <span className="text-sm text-text-muted">{progress}%</span>
         )}
       </div>
-      
-      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+       
+      <div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
         <div
-          className={`h-full transition-all duration-300 ${getStatusColor()}`}
+          className={`h-full transition-all duration-300 ${
+            status === 'converting' 
+              ? 'bg-accent-400' 
+              : status === 'complete'
+                ? 'bg-accent-500'
+                : status === 'error'
+                  ? 'bg-error'
+                  : 'bg-surface-secondary'
+          }`}
           style={{ width: `${progress}%` }}
         />
       </div>
