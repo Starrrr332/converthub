@@ -1,18 +1,19 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { PageLayout } from '../components/layout/PageLayout';
-import { devtoolTools } from '../config/toolRegistry';
+import { standaloneTools } from '../config/toolRegistry';
 
-export function DevToolsPage() {
+export function ToolsPage() {
   return (
     <PageLayout
-      title="DevTools"
-      subtitle="Herramientas para desarrolladores. Sin registro."
+      title="Herramientas"
+      subtitle="Utilidades standalone para tareas comunes."
       showPrivacyBanner={false}
-      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'DevTools' }]}
+      breadcrumb={[{ label: 'Inicio', to: '/' }, { label: 'Herramientas' }]}
     >
+      {/* Tools grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {devtoolTools.filter(t => t.path !== '/devtools').map((tool) => (
+        {standaloneTools.map((tool) => (
           <Link
             key={tool.path}
             to={tool.path}
@@ -27,6 +28,7 @@ export function DevToolsPage() {
         ))}
       </div>
 
+      {/* Back to home */}
       <div className="mt-12 text-center">
         <Link
           to="/"

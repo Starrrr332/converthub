@@ -4,7 +4,7 @@ import { Image as ImageIcon, Menu, X, Heart, Search, Star, Palette } from 'lucid
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { DropdownMenu } from './DropdownMenu';
 import { useState, useEffect, useRef } from 'react';
-import { converterTools, editorTools, devtoolTools, utilityTools, standaloneTools } from '../../config/toolRegistry';
+
 import { useCommandStore } from '../../store/commandStore';
 import { useThemeStore, themes } from '../../store/themeStore';
 
@@ -41,17 +41,15 @@ export function Header() {
 
   const mobileSections = [
     {
-      title: 'Convertidores',
-      items: converterTools.map(t => ({ path: t.path, label: t.name })),
+      title: 'Categorías',
+      items: [
+        { path: '/converter', label: 'Convertidores' },
+        { path: '/editor', label: 'Editores' },
+        { path: '/tools', label: 'Herramientas' },
+        { path: '/devtools', label: 'DevTools' },
+        { path: '/utilities', label: 'Utilidades' },
+      ],
     },
-    {
-      title: 'Editores',
-      items: editorTools.map(t => ({ path: t.path, label: t.name })),
-    },
-    {
-      title: 'Más herramientas',
-      items: [...devtoolTools, ...utilityTools, ...standaloneTools].map(t => ({ path: t.path, label: t.name })),
-    }
   ];
 
   const openCommandPalette = () => {

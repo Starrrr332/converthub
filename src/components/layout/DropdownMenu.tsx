@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown } from 'lucide-react';
-import { converterTools, editorTools, devtoolTools, utilityTools, standaloneTools } from '../../config/toolRegistry';
+import { ChevronDown, ArrowRight } from 'lucide-react';
+import { featuredConverters, featuredEditors, featuredTools, devtoolTools } from '../../config/toolRegistry';
 
 export function DropdownMenu() {
   const { t } = useTranslation();
@@ -22,16 +22,28 @@ export function DropdownMenu() {
   const sections = [
     {
       title: 'Convertidores',
-      items: converterTools,
+      items: featuredConverters.slice(0, 4),
+      link: '/converter',
+      linkText: 'Ver todos',
     },
     {
       title: 'Editores',
-      items: editorTools,
+      items: featuredEditors.slice(0, 4),
+      link: '/editor',
+      linkText: 'Ver todos',
     },
     {
-      title: 'Más herramientas',
-      items: [...devtoolTools, ...utilityTools, ...standaloneTools],
-    }
+      title: 'Herramientas',
+      items: featuredTools.slice(0, 4),
+      link: '/tools',
+      linkText: 'Ver todas',
+    },
+    {
+      title: 'DevTools',
+      items: devtoolTools.slice(0, 4),
+      link: '/devtools',
+      linkText: 'Ver todos',
+    },
   ];
 
   return (
@@ -49,7 +61,7 @@ export function DropdownMenu() {
       {isOpen && (
         <div className="absolute top-full left-0 mt-1.5 w-[580px] bg-surface rounded-xl py-3 z-50 border border-border/70 shadow-elevated"
           onMouseLeave={() => setIsOpen(false)}>
-          <div className="grid grid-cols-3 gap-1 px-2">
+          <div className="grid grid-cols-4 gap-1 px-2">
             {sections.map((section) => (
               <div key={section.title}>
                 <p className="text-[11px] font-semibold text-text-muted uppercase tracking-widest px-3 pb-1">
@@ -71,6 +83,14 @@ export function DropdownMenu() {
                     </div>
                   </Link>
                 ))}
+                <Link
+                  to={section.link}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-1 px-3 py-2 text-xs font-medium text-accent-600 hover:text-accent-700"
+                >
+                  {section.linkText}
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
             ))}
           </div>

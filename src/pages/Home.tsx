@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Shield, Zap, Sparkles,
-  Upload, Sliders, Download, Heart,
+  Upload, Sliders, Download, Heart, Image, FileText,
+  Edit3, Wrench, Cpu,
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PrivacyBanner } from '../components/converter/PrivacyBanner';
-import { converterTools, editorTools, standaloneTools, devtoolTools, utilityTools } from '../config/toolRegistry';
+import {
+  featuredConverters, featuredEditors, featuredTools,
+  converterTools, editorTools, standaloneTools, devtoolTools, utilityTools,
+} from '../config/toolRegistry';
 
 export function Home() {
 
@@ -28,9 +32,12 @@ export function Home() {
     { icon: Sparkles, title: 'Completamente gratis', description: 'Sin límites, sin registro, sin anuncios. Todo gratuito.' },
   ];
 
-  const pdfTools = [
-    'Unir PDF', 'Dividir PDF', 'Comprimir PDF', 'Rotar PDF',
-    'Marca de agua', 'Números de página', 'Imágenes a PDF', 'Desbloquear PDF',
+  const categories = [
+    { key: 'converter', icon: Image, label: 'Convertidores', description: 'Convierte entre múltiples formatos', count: converterTools.length, color: 'text-blue-600', bg: 'bg-blue-50', path: '/converter' },
+    { key: 'editor', icon: Edit3, label: 'Editores', description: 'Edita imágenes, texto y más', count: editorTools.length, color: 'text-pink-600', bg: 'bg-pink-50', path: '/editor' },
+    { key: 'tool', icon: Wrench, label: 'Herramientas', description: 'Utilidades standalone', count: standaloneTools.length, color: 'text-cyan-600', bg: 'bg-cyan-50', path: '/tools' },
+    { key: 'devtool', icon: Cpu, label: 'DevTools', description: 'Para desarrolladores', count: devtoolTools.length, color: 'text-slate-600', bg: 'bg-slate-50', path: '/devtools' },
+    { key: 'utility', icon: FileText, label: 'Utilidades', description: 'Generadores y más', count: utilityTools.length, color: 'text-amber-600', bg: 'bg-amber-50', path: '/utilities' },
   ];
 
   return (
@@ -110,14 +117,40 @@ export function Home() {
          </div>
        </section>
 
-{/* ───── Converters ───── */}
+{/* ───── Categories ───── */}
        <section className="page-container mt-16 sm:mt-20">
          <div className="text-center mb-10">
-           <h2 className="section-heading">Convertidores</h2>
-           <p className="section-subheading mx-auto">Convierte entre múltiples formatos de archivo al instante.</p>
+           <h2 className="section-heading">Categorías</h2>
+           <p className="section-subheading mx-auto">Explora nuestras herramientas por categoría.</p>
+         </div>
+         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+           {categories.map((cat) => (
+             <Link key={cat.key} to={cat.path}
+               className={`card-interactive flex items-center gap-4 ${cat.bg} hover:border-${cat.color.replace('text-', '')}-200`}>
+               <div className={`p-3 rounded-xl ${cat.bg} ${cat.color}`}>
+                 <cat.icon className="w-6 h-6" />
+               </div>
+               <div className="min-w-0">
+                 <h3 className="font-semibold text-text-primary">{cat.label}</h3>
+                 <p className="text-sm text-text-secondary">{cat.description}</p>
+                 <p className="text-xs text-text-muted mt-1">{cat.count} herramientas</p>
+               </div>
+               <ArrowRight className="w-4 h-4 text-text-muted ml-auto" />
+             </Link>
+           ))}
+         </div>
+       </section>
+
+       {/* ───── Featured Converters ───── */}
+       <section className="page-container mt-16 sm:mt-20">
+         <div className="flex items-center justify-between mb-6">
+           <h2 className="section-heading">Convertidores populares</h2>
+           <Link to="/converter" className="text-sm font-medium text-accent-600 hover:text-accent-700 flex items-center gap-1">
+             Ver todos <ArrowRight className="w-3.5 h-3.5" />
+           </Link>
          </div>
          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-           {converterTools.map((tool) => (
+           {featuredConverters.map((tool) => (
              <Link key={tool.path} to={tool.path}
                className={`card-interactive text-center ${tool.hover}`}>
                <div className={`inline-flex p-3 rounded-xl ${tool.bg} ${tool.color} mb-3`}>
@@ -130,15 +163,17 @@ export function Home() {
          </div>
        </section>
 
-{/* ───── Editors ───── */}
+       {/* ───── Featured Editors ───── */}
        <section className="bg-surface-secondary mt-16 sm:mt-20 py-16 sm:py-20">
          <div className="page-container">
-           <div className="text-center mb-10">
-             <h2 className="section-heading">Editores Online</h2>
-             <p className="section-subheading mx-auto">Edita imágenes, texto, JSON, Markdown y hojas de cálculo.</p>
+           <div className="flex items-center justify-between mb-6">
+             <h2 className="section-heading">Editores populares</h2>
+             <Link to="/editor" className="text-sm font-medium text-accent-600 hover:text-accent-700 flex items-center gap-1">
+               Ver todos <ArrowRight className="w-3.5 h-3.5" />
+             </Link>
            </div>
            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-             {editorTools.map((tool) => (
+             {featuredEditors.map((tool) => (
                <Link key={tool.path} to={tool.path}
                  className={`card-interactive flex items-center gap-4 ${tool.hover}`}>
                  <div className="p-2.5 rounded-xl bg-accent-50 text-accent-700 shrink-0">
@@ -154,15 +189,16 @@ export function Home() {
          </div>
        </section>
 
-{/* ───── More Tools + PDF ───── */}
+       {/* ───── Featured Tools ───── */}
        <section className="page-container mt-16 sm:mt-20">
-         <div className="text-center mb-10">
-           <h2 className="section-heading">Más herramientas</h2>
-           <p className="section-subheading mx-auto">Utilidades, dev tools y herramientas PDF profesionales.</p>
+         <div className="flex items-center justify-between mb-6">
+           <h2 className="section-heading">Herramientas útiles</h2>
+           <Link to="/tools" className="text-sm font-medium text-accent-600 hover:text-accent-700 flex items-center gap-1">
+             Ver todas <ArrowRight className="w-3.5 h-3.5" />
+           </Link>
          </div>
- 
-         <div className="grid sm:grid-cols-3 gap-4 mb-6">
-           {[...standaloneTools, ...devtoolTools, ...utilityTools].map((tool) => (
+         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+           {featuredTools.map((tool) => (
              <Link key={tool.path} to={tool.path}
                className={`card-interactive text-center ${tool.hover}`}>
                <div className={`inline-flex p-3 rounded-xl ${tool.bg} ${tool.color} mb-3`}>
@@ -173,20 +209,9 @@ export function Home() {
              </Link>
            ))}
          </div>
- 
-         <div className="card">
-           <h3 className="font-semibold text-text-primary text-center mb-4">Herramientas PDF</h3>
-           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-             {pdfTools.map((tool, i) => (
-               <Link key={i} to="/converter/pdf"
-                 className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-accent-50 transition-colors text-sm text-text-secondary hover:text-text-primary">
-                 <span className="w-1.5 h-1.5 rounded-full bg-accent-400 shrink-0" />
-                 {tool}
-               </Link>
-             ))}
-           </div>
-         </div>
        </section>
+
+
 
 {/* ───── Why ConvertHub ───── */}
        <section className="bg-text mt-16 sm:mt-20 py-16 sm:py-20">

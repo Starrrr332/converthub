@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Copy, Check, Eye, EyeOff, Download, FileDown } from 'lucide-react';
+import { Eye, Upload, Bold, Italic, Code, Link as LinkIcon, Image as ImageIcon, List, Edit3 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { PageLayout } from '../components/layout/PageLayout';
 import { sanitizeUrl } from '../utils/sanitization';

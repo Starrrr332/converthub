@@ -136,6 +136,59 @@ export function Converter() {
           ))}
         </div>
       )}
+
+      {/* Contenido descriptivo para SEO */}
+      <div className="mt-16 border-t border-slate-200 pt-10">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">
+            Convertidor de Imágenes Online Gratis
+          </h2>
+          <p className="text-slate-600 leading-relaxed mb-4">
+            Nuestro convertidor de imágenes te permite transformar fácilmente entre los formatos más populares:
+            PNG, JPG, WebP, GIF, SVG, AVIF y ICO. Todo el procesamiento se realiza directamente en tu navegador,
+            garantizando que tus imágenes nunca salgan de tu dispositivo.
+          </p>
+          
+          <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">
+            ¿Por qué usar nuestro convertidor?
+          </h3>
+          <ul className="list-disc list-inside text-slate-600 space-y-2 mb-4">
+            <li><strong>Privacidad total:</strong> Tus archivos se procesan localmente en tu navegador. No se suben a ningún servidor.</li>
+            <li><strong>Sin límites:</strong> Convierte tantas imágenes como necesites, sin restricciones de tamaño o cantidad.</li>
+            <li><strong>Rápido y eficiente:</strong> Obtén tus imágenes convertidas en segundos gracias al procesamiento moderno del navegador.</li>
+            <li><strong>Gratis:</strong> No hay costos ocultos, no se requiere registro y todas las funciones están disponibles.</li>
+          </ul>
+
+          <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">
+            Formatos soportados
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            {['PNG', 'JPG/WebP', 'GIF', 'SVG', 'AVIF', 'ICO', 'BMP', 'TIFF'].map((format) => (
+              <div key={format} className="px-3 py-2 bg-slate-100 rounded-lg text-center text-sm font-medium text-slate-700">
+                {format}
+              </div>
+            ))}
+          </div>
+
+          <h3 className="text-xl font-semibold text-slate-900 mb-3 mt-6">
+            Cómo convertir imágenes
+          </h3>
+          <ol className="list-decimal list-inside text-slate-600 space-y-2 mb-4">
+            <li>Arrastra y suelta tu imagen o haz clic para seleccionarla</li>
+            <li>Elige el formato de salida deseado</li>
+            <li>Haz clic en "Convertir" y espera unos segundos</li>
+            <li>Descarga tu imagen convertida con un solo clic</li>
+          </ol>
+
+          <div className="bg-indigo-50 rounded-xl p-6 mt-6">
+            <h4 className="font-semibold text-slate-900 mb-2">¿Necesitas convertir múltiples imágenes?</h4>
+            <p className="text-slate-600 text-sm">
+              Nuestro convertidor soporta procesamiento por lotes. Puedes seleccionar varias imágenes a la vez
+              y convertirlas todas al mismo formato de manera rápida y eficiente.
+            </p>
+          </div>
+        </div>
+      </div>
     </PageLayout>
   );
 }

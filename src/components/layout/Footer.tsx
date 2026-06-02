@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield, Heart } from 'lucide-react';
-import { converterTools, editorTools } from '../../config/toolRegistry';
+
 
 export function Footer() {
   const { t } = useTranslation();
@@ -20,31 +20,15 @@ export function Footer() {
             </Link>
           </div>
 
-          {/* Convertidores */}
+          {/* Categorías */}
           <div>
-            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Convertidores</h4>
+            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Categorías</h4>
             <ul className="space-y-2">
-              {converterTools.slice(0, 4).map(tool => (
-                <li key={tool.path}>
-                  <Link to={tool.path} className="text-sm text-text-secondary hover:text-text-primary transition-colors">
-                    {tool.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Editores */}
-          <div>
-            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Editores</h4>
-            <ul className="space-y-2">
-              {editorTools.slice(0, 4).map(tool => (
-                <li key={tool.path}>
-                  <Link to={tool.path} className="text-sm text-text-secondary hover:text-text-primary transition-colors">
-                    {tool.name}
-                  </Link>
-                </li>
-              ))}
+              <li><Link to="/converter" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Convertidores</Link></li>
+              <li><Link to="/editor" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Editores</Link></li>
+              <li><Link to="/tools" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Herramientas</Link></li>
+              <li><Link to="/devtools" className="text-sm text-text-secondary hover:text-text-primary transition-colors">DevTools</Link></li>
+              <li><Link to="/utilities" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Utilidades</Link></li>
             </ul>
           </div>
 
@@ -53,10 +37,10 @@ export function Footer() {
             <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Legal</h4>
             <ul className="space-y-2">
               <li><Link to="/privacy" className="text-sm text-text-secondary hover:text-text-primary transition-colors">{t('footer.privacyPolicy')}</Link></li>
+              <li><Link to="/terms" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Términos de Servicio</Link></li>
               <li><Link to="/security" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Seguridad</Link></li>
-              <li><Link to="/blog" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Blog</Link></li>
-              <li><Link to="/devtools" className="text-sm text-text-secondary hover:text-text-primary transition-colors">DevTools</Link></li>
-              <li><Link to="/tools/utilities" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Utilidades</Link></li>
+              <li><Link to="/about" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Acerca de</Link></li>
+              <li><Link to="/contact" className="text-sm text-text-secondary hover:text-text-primary transition-colors">Contacto</Link></li>
             </ul>
             <div className="flex items-center gap-1.5 mt-4 text-xs text-accent-600">
               <Shield className="w-3.5 h-3.5" />

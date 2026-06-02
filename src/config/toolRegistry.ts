@@ -20,6 +20,8 @@ export interface ToolDefinition {
   descKey: string;
   homeDesc?: string;
   category: ToolCategory;
+  subCategory?: string;
+  featured?: boolean;
   color: string;
   bg: string;
   hover: string;
@@ -97,6 +99,8 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.imageDesc',
     homeDesc: 'PNG, JPG, WebP, GIF, SVG, ICO, AVIF, HEIC',
     category: 'converter',
+    subCategory: 'image',
+    featured: true,
     color: 'text-blue-600',
     bg: 'bg-blue-50',
     hover: 'hover:bg-blue-50 hover:border-blue-200',
@@ -110,6 +114,8 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.pdfDesc',
     homeDesc: 'Unir, dividir, comprimir, rotar, marca de agua',
     category: 'converter',
+    subCategory: 'document',
+    featured: true,
     color: 'text-red-600',
     bg: 'bg-red-50',
     hover: 'hover:bg-red-50 hover:border-red-200',
@@ -123,6 +129,8 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.csvDesc',
     homeDesc: 'CSV a XLSX, XLSX a CSV, CSV a JSON',
     category: 'converter',
+    subCategory: 'document',
+    featured: true,
     color: 'text-emerald-600',
     bg: 'bg-emerald-50',
     hover: 'hover:bg-emerald-50 hover:border-emerald-200',
@@ -136,6 +144,8 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.audioDesc',
     homeDesc: 'MP3, WAV, OGG, FLAC, AAC',
     category: 'converter',
+    subCategory: 'audio',
+    featured: true,
     color: 'text-purple-600',
     bg: 'bg-purple-50',
     hover: 'hover:bg-purple-50 hover:border-purple-200',
@@ -149,6 +159,8 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.videoDesc',
     homeDesc: 'Convertir, comprimir, recortar, extraer audio',
     category: 'converter',
+    subCategory: 'video',
+    featured: true,
     color: 'text-orange-600',
     bg: 'bg-orange-50',
     hover: 'hover:bg-orange-50 hover:border-orange-200',
@@ -162,6 +174,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.epubDesc',
     homeDesc: 'EPUB a PDF, PDF a EPUB',
     category: 'converter',
+    subCategory: 'document',
     color: 'text-rose-600',
     bg: 'bg-rose-50',
     hover: 'hover:bg-rose-50 hover:border-rose-200',
@@ -175,6 +188,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.converters.heicDesc',
     homeDesc: 'Convertir HEIC de Apple a JPG o PNG',
     category: 'converter',
+    subCategory: 'image',
     color: 'text-cyan-600',
     bg: 'bg-cyan-50',
     hover: 'hover:bg-cyan-50 hover:border-cyan-200',
@@ -190,6 +204,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.editors.imageDesc',
     homeDesc: 'Redimensionar, rotar, filtros, brillo, contraste',
     category: 'editor',
+    featured: true,
     color: 'text-pink-600',
     bg: 'bg-pink-50',
     hover: 'hover:bg-pink-50 hover:border-pink-200',
@@ -216,6 +231,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.editors.jsonDesc',
     homeDesc: 'Formatear, minificar, validar y extraer claves',
     category: 'editor',
+    featured: true,
     color: 'text-amber-600',
     bg: 'bg-amber-50',
     hover: 'hover:bg-amber-50 hover:border-amber-200',
@@ -229,6 +245,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.editors.markdownDesc',
     homeDesc: 'Live preview, exportar a HTML',
     category: 'editor',
+    featured: true,
     color: 'text-teal-600',
     bg: 'bg-teal-50',
     hover: 'hover:bg-teal-50 hover:border-teal-200',
@@ -257,6 +274,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.tools.unitsDesc',
     homeDesc: 'Longitud, peso, temperatura, volumen',
     category: 'tool',
+    featured: true,
     color: 'text-cyan-600',
     bg: 'bg-cyan-50',
     hover: 'hover:bg-cyan-50 hover:border-cyan-200',
@@ -270,6 +288,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.tools.ocrDesc',
     homeDesc: 'Extraer texto de imágenes con Tesseract.js',
     category: 'tool',
+    featured: true,
     color: 'text-violet-600',
     bg: 'bg-violet-50',
     hover: 'hover:bg-violet-50 hover:border-violet-200',
@@ -283,6 +302,7 @@ export const toolRegistry: ToolDefinition[] = [
     descKey: 'nav.tools.imageCompressorDesc',
     homeDesc: 'Reduce el peso de imágenes PNG, JPG, WebP',
     category: 'tool',
+    featured: true,
     color: 'text-green-600',
     bg: 'bg-green-50',
     hover: 'hover:bg-green-50 hover:border-green-200',
@@ -749,11 +769,57 @@ export const getToolsByCategory = (category: ToolCategory): ToolDefinition[] =>
 export const getToolByPath = (path: string): ToolDefinition | undefined =>
   toolRegistry.find(t => t.path === path);
 
+export const getFeaturedTools = (category: ToolCategory): ToolDefinition[] =>
+  toolRegistry.filter(t => t.category === category && t.featured);
+
+export const getToolsBySubCategory = (subCategory: string): ToolDefinition[] =>
+  toolRegistry.filter(t => t.subCategory === subCategory);
+
 export const converterTools = getToolsByCategory('converter');
 export const editorTools = getToolsByCategory('editor');
 export const standaloneTools = getToolsByCategory('tool');
 export const devtoolTools = getToolsByCategory('devtool');
 export const utilityTools = getToolsByCategory('utility');
+
+// Featured tools for homepage
+export const featuredConverters = getFeaturedTools('converter');
+export const featuredEditors = getFeaturedTools('editor');
+export const featuredTools = getFeaturedTools('tool');
+
+// Category groups for landing pages
+export const categoryGroups = {
+  converter: {
+    label: 'Convertidores',
+    description: 'Convierte entre múltiples formatos de archivo al instante.',
+    tools: converterTools,
+    subCategories: {
+      image: converterTools.filter(t => t.subCategory === 'image'),
+      document: converterTools.filter(t => t.subCategory === 'document'),
+      audio: converterTools.filter(t => t.subCategory === 'audio'),
+      video: converterTools.filter(t => t.subCategory === 'video'),
+    },
+  },
+  editor: {
+    label: 'Editores',
+    description: 'Edita imágenes, texto, JSON, Markdown y hojas de cálculo.',
+    tools: editorTools,
+  },
+  tool: {
+    label: 'Herramientas',
+    description: 'Utilidades standalone para tareas comunes.',
+    tools: standaloneTools,
+  },
+  devtool: {
+    label: 'DevTools',
+    description: 'Herramientas para desarrolladores. Sin registro.',
+    tools: devtoolTools,
+  },
+  utility: {
+    label: 'Utilidades',
+    description: 'Generadores y herramientas útiles para el día a día.',
+    tools: utilityTools,
+  },
+};
 
 // All tools for Home page grouping
 export const homePageGroups = {
