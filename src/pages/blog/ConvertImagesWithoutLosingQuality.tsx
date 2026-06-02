@@ -65,7 +65,7 @@ export function ConvertImagesWithoutLosingQuality() {
         <li>No se suben archivos a servidores externos</li>
         <li>Puedes controlar la calidad de compresión</li>
         <li>Soporta múltiples formatos: PNG, JPG, WebP, GIF, SVG, AVIF</li>
-        <li>Es completamente gratuito y sin registro</li>
+        <li>No requiere registro y funciona directamente en tu navegador</li>
       </ul>
 
       <div className="not-prose">

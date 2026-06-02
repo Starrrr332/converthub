@@ -184,8 +184,8 @@ export function GuiaFormatosImagen2026() {
       <h2>Convierte tus imágenes con ConvertHub</h2>
       <p>
         ConvertHub te permite convertir entre todos estos formatos directamente en tu navegador.
-        Nuestro convertidor es completamente gratuito, no requiere registro y garantiza la
-        privacidad de tus archivos.
+        Nuestro convertidor funciona directamente en tu navegador, no requiere registro y
+        garantiza la privacidad de tus archivos. Plan gratuito disponible con 50 conversiones al día.
       </p>
       <ul>
         <li>Conversión instantánea entre PNG, JPEG, WebP, AVIF y más</li>

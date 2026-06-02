@@ -10,9 +10,9 @@ export function About() {
     },
     {
       icon: Heart,
-      title: 'Gratis para Todos',
+      title: 'Plan gratuito',
       description:
-        'Creemos que las herramientas básicas deben ser accesibles para todos, sin excepción.',
+        'Creemos que las herramientas básicas deben ser accesibles para todos. Upgrade a Premium para funciones avanzadas.',
     },
     {
       icon: Code,
@@ -69,8 +69,8 @@ export function About() {
         </p>
         <p className="text-slate-600 leading-relaxed">
           Creemos que la tecnología debe ser una herramienta al servicio de las personas, no al
-          revés. Por eso, todas nuestras herramientas son gratuitas, no requieren registro, y lo más
-          importante: tus archivos nunca salen de tu dispositivo.
+          revés. Por eso, ofrecemos un plan gratuito con herramientas básicas y un plan Premium
+          para quienes necesitan más. Y lo más importante: tus archivos nunca salen de tu dispositivo.
         </p>
       </div>
 

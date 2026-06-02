@@ -94,16 +94,16 @@ export function PdfConverter() {
               envían a servidores externos.
             </li>
             <li>
-              <strong>Sin límites:</strong> Procesa archivos de cualquier tamaño, tantas veces como
-              necesites.
+              <strong>Plan gratuito:</strong> 50 conversiones gratis al día. Upgrade a Premium para
+              uso ilimitado.
             </li>
             <li>
               <strong>Rápido:</strong> Obtén resultados instantáneos sin esperas ni colas de
               procesamiento.
             </li>
             <li>
-              <strong>Gratis:</strong> Todas las herramientas están disponibles sin costo ni
-              registro.
+              <strong>Sin registro:</strong> No necesitas crear cuenta para usar las
+              herramientas básicas.
             </li>
           </ul>
 

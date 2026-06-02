@@ -73,7 +73,7 @@ export function Converter() {
   return (
     <PageLayout
       title={t('actions.convert')}
-      description="Convierte imágenes online gratis entre PNG, JPG, WebP, GIF, SVG, AVIF e ICO. Procesamiento 100% local en tu navegador, sin límites."
+      description="Convierte imágenes online entre PNG, JPG, WebP, GIF, SVG, AVIF e ICO. Procesamiento 100% local en tu navegador. Plan gratuito disponible."
       subtitle={`${converter.remainingConversions === Infinity ? t('limits.premiumUnlimited') : t('limits.remaining', { count: converter.remainingConversions })}`}
       showPrivacyBanner
       breadcrumb={[{ label: tc('nav.home'), to: '/' }, { label: tc('nav.converters.image') }]}
@@ -264,16 +264,16 @@ export function Converter() {
               navegador. No se suben a ningún servidor.
             </li>
             <li>
-              <strong>Sin límites:</strong> Convierte tantas imágenes como necesites, sin
-              restricciones de tamaño o cantidad.
+              <strong>Plan gratuito:</strong> 50 conversiones gratis al día. Upgrade a Premium para
+              conversiones ilimitadas y formatos avanzados.
             </li>
             <li>
               <strong>Rápido y eficiente:</strong> Obtén tus imágenes convertidas en segundos
               gracias al procesamiento moderno del navegador.
             </li>
             <li>
-              <strong>Gratis:</strong> No hay costos ocultos, no se requiere registro y todas las
-              funciones están disponibles.
+              <strong>Sin registro:</strong> No necesitas crear cuenta para usar las
+              herramientas básicas.
             </li>
           </ul>
 

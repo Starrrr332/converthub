@@ -9,7 +9,7 @@ export function AudioConverter() {
   return (
     <PageLayout
       title={t('audio.title')}
-      description="Convierte audio online gratis entre MP3, WAV, OGG, FLAC y AAC. Procesamiento 100% local en tu navegador, sin límites."
+      description="Convierte audio online entre MP3, WAV, OGG, FLAC y AAC. Procesamiento 100% local en tu navegador. Plan gratuito disponible."
       subtitle={t('audio.subtitle')}
       breadcrumb={[{ label: tc('nav.home'), to: '/' }, { label: tc('nav.converters.audio') }]}
     >

@@ -22,7 +22,7 @@ export function Footer() {
               className="inline-flex items-center gap-1.5 mt-5 text-sm font-medium text-accent-600 hover:text-accent-700 transition-colors duration-200"
             >
               <Heart className="w-3.5 h-3.5" />
-              Donar
+              {t('nav.pricing')}
             </Link>
           </div>
 

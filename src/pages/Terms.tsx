@@ -38,7 +38,7 @@ export function Terms() {
             <li>El procesamiento de archivos se realiza 100% localmente en tu navegador</li>
             <li>No se suben archivos a servidores externos</li>
             <li>No se requiere registro para usar las herramientas básicas</li>
-            <li>El servicio es gratuito y no tiene límites de uso</li>
+            <li>El plan gratuito incluye 50 conversiones por día con formatos básicos</li>
           </ul>
         </div>
 

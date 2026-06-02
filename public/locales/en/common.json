@@ -7,7 +7,7 @@
     "home": "Home",
     "convert": "Convert",
     "edit": "Edit",
-    "pricing": "Donate",
+    "pricing": "Go Pro",
     "privacy": "Privacy",
     "favorites": "Favorites",
     "devtools": "DevTools",
@@ -19,7 +19,7 @@
     "skipToContent": "Skip to main content",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "donate": "Donate",
+    "donate": "Go Pro",
     "theme": {
       "title": "Themes",
       "change": "Change theme",
@@ -74,14 +74,14 @@
   "hero": {
     "title": "Convert and edit files",
     "titleHighlight": "without uploading to any server",
-    "subtitle": "Online tools that process everything in your browser. Private, fast and free.",
+    "subtitle": "Online tools that process everything in your browser. Private, fast, with a free plan included.",
     "cta": "Start converting",
-    "donate": "Support the project",
+    "donate": "Go Pro",
     "searchPlaceholder": "Search for a tool…",
-    "badge": "Over 52 free tools",
+    "badge": "Over 52 tools",
     "headline": "Convert and edit files",
     "headlineHighlight": "without servers",
-    "subhead": "Total privacy, no signup, no limits.",
+    "subhead": "Total privacy, no signup. Free plan available.",
     "subheadHighlight": "All in your browser.",
     "exploreTools": "Explore tools",
     "trustServerless": "Serverless",
@@ -107,7 +107,7 @@
     "pdfTools": "PDF tools",
     "pdfToolsDesc": "Quick access to the most used operations",
     "why": "Why ConvertHub?",
-    "whyDesc": "The best free alternative to paid tools.",
+    "whyDesc": "The best alternative to paid tools.",
     "viewAllPdf": "View all PDF tools",
     "allTools": "All",
     "noResults": "No tools match your search",
@@ -120,8 +120,8 @@
     "usefulTools": "Useful tools",
     "toolsCount": "{{count}} tools",
     "readyToStart": "Ready to start?",
-    "readyDesc": "Over 52 free tools. No signup, no limits.",
-    "startNow": "Start now for free",
+    "readyDesc": "Over 52 tools. Free plan with 50 conversions/day. Upgrade for unlimited.",
+    "startNow": "Start now",
     "steps": {
       "upload": {
         "title": "Upload your file",
@@ -146,8 +146,8 @@
         "desc": "Instant conversions without uploading files to servers."
       },
       "free": {
-        "title": "Completely free",
-        "desc": "No limits, no registration, no ads. All free."
+        "title": "Free plan",
+        "desc": "50 free conversions per day. Upgrade to Premium for unlimited use."
       }
     }
   },

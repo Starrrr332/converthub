@@ -1,28 +1,49 @@
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "Organization",
   "name": "ConvertHub",
   "url": "https://converthub.com",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web Browser",
-  "description": "Convierte y edita archivos online gratis. 52+ herramientas para imágenes, PDF, audio, video y más. 100% privado, sin servidores.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
+  "logo": "https://converthub.com/icon-192.png",
+  "description": "Convierte y edita archivos online. 52+ herramientas para imágenes, PDF, audio, video y más. 100% privado, sin servidores.",
+  "foundingDate": "2025",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "hello@converthub.com",
+    "contactType": "support",
+    "url": "https://converthub.com/contact"
   },
-  "featureList": [
-    "Conversión de imágenes (PNG, JPG, WebP, GIF, SVG, AVIF)",
-    "Edición de PDF online (unir, dividir, comprimir)",
-    "Compresión de archivos audio y video",
-    "Herramientas de desarrollo (Base64, Hash, QR, JWT)",
-    "Utilidades (contraseñas, UUID, códigos de barras)",
-    "100% procesamiento local en el navegador",
-    "Sin registro requerido",
-    "Sin límites de uso"
+  "sameAs": [],
+  "slogan": "Procesamiento local, privacidad total",
+  "knowsAbout": [
+    "Conversión de archivos",
+    "Procesamiento de imágenes",
+    "Edición de documentos",
+    "Herramientas online"
   ],
-  "inLanguage": ["es", "en"],
-  "browserRequirements": "Requires a modern browser with JavaScript enabled",
-  "softwareVersion": "1.0",
-  "dateModified": "2026-01-01"
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "ConvertHub Features",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Free Plan",
+          "description": "50 conversions/day, 10MB files, basic formats"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Premium Plan",
+          "description": "Unlimited conversions, 100MB files, all formats"
+        }
+      }
+    ]
+  },
+  "award": [
+    "Sin registro requerido",
+    "Procesamiento 100% local"
+  ]
 }

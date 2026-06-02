@@ -7,7 +7,7 @@
       "name": "¿ConvertHub es realmente gratis?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, ConvertHub es 100% gratuito. No hay límites de uso, no se requiere registro y todas las herramientas funcionan directamente en tu navegador. No hay versiones premium ni funciones bloqueadas."
+        "text": "Sí, ConvertHub ofrece un plan gratuito con 50 conversiones por día, archivos de hasta 10MB y los formatos más populares (PNG, JPEG, WebP, BMP, GIF). También ofrecemos un plan Premium con conversiones ilimitadas, archivos de hasta 100MB y todos los formatos avanzados como SVG, ICO, AVIF, HEIC."
       }
     },
     {
@@ -23,7 +23,7 @@
       "name": "¿Qué formatos de imagen soporta ConvertHub?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "ConvertHub soporta los formatos más populares: PNG, JPG/JPEG, WebP, GIF, SVG, ICO, AVIF y HEIC. Puedes convertir entre todos estos formatos, así como comprimir y editar imágenes."
+        "text": "ConvertHub soporta los formatos más populares: PNG, JPG/JPEG, WebP, GIF, SVG, ICO, AVIF y HEIC. Puedes convertir entre todos estos formatos (los avanzados requieren Premium), así como comprimir y editar imágenes."
       }
     },
     {

@@ -7,7 +7,7 @@
     "home": "Inicio",
     "convert": "Convertir",
     "edit": "Editar",
-    "pricing": "Donar",
+    "pricing": "Pásate a Pro",
     "privacy": "Privacidad",
     "favorites": "Favoritos",
     "devtools": "DevTools",
@@ -19,7 +19,7 @@
     "skipToContent": "Saltar al contenido principal",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
-    "donate": "Donar",
+    "donate": "Pásate a Pro",
     "theme": {
       "title": "Temas",
       "change": "Cambiar tema",
@@ -74,14 +74,14 @@
   "hero": {
     "title": "Convierte y edita archivos",
     "titleHighlight": "sin subirlos a ningún servidor",
-    "subtitle": "Herramientas online que procesan todo en tu navegador. Privado, rápido y gratuito.",
+    "subtitle": "Herramientas online que procesan todo en tu navegador. Privado, rápido y con plan gratuito incluido.",
     "cta": "Empezar a convertir",
-    "donate": "Apoyar el proyecto",
+    "donate": "Pásate a Pro",
     "searchPlaceholder": "Buscar herramienta…",
-    "badge": "Más de 52 herramientas gratuitas",
+    "badge": "Más de 52 herramientas",
     "headline": "Convierte y edita archivos",
     "headlineHighlight": "sin servidores",
-    "subhead": "Privacidad total, sin registro, sin límites.",
+    "subhead": "Privacidad total, sin registro. Plan gratuito disponible.",
     "subheadHighlight": "Todo en tu navegador.",
     "exploreTools": "Explorar herramientas",
     "trustServerless": "Sin servidores",
@@ -107,7 +107,7 @@
     "pdfTools": "Herramientas PDF",
     "pdfToolsDesc": "Acceso rápido a las operaciones más usadas",
     "why": "¿Por qué ConvertHub?",
-    "whyDesc": "La mejor alternativa gratuita a las herramientas de pago.",
+    "whyDesc": "La mejor alternativa a las herramientas de pago.",
     "viewAllPdf": "Ver todas las herramientas PDF",
     "allTools": "Todas",
     "noResults": "No hay herramientas que coincidan con tu búsqueda",
@@ -120,8 +120,8 @@
     "usefulTools": "Herramientas útiles",
     "toolsCount": "{{count}} herramientas",
     "readyToStart": "¿Listo para empezar?",
-    "readyDesc": "Más de 52 herramientas gratuitas. Sin registro, sin límites.",
-    "startNow": "Comienza ahora gratis",
+    "readyDesc": "Más de 52 herramientas. Plan gratuito con 50 conversiones/día. Upgrade para ilimitado.",
+    "startNow": "Comienza ahora",
     "steps": {
       "upload": {
         "title": "Sube tu archivo",
@@ -146,8 +146,8 @@
         "desc": "Conversiones instantáneas sin subir archivos a servidores."
       },
       "free": {
-        "title": "Completamente gratis",
-        "desc": "Sin límites, sin registro, sin anuncios. Todo gratuito."
+        "title": "Plan gratuito",
+        "desc": "50 conversiones gratis al día. Upgrade a Premium para uso ilimitado."
       }
     }
   },
