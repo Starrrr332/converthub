@@ -1,13 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { usePremiumStore } from '../store/premiumStore';
 
 interface ConversionLimitState {
-  // State
   date: string;
   count: number;
   limit: number;
 
-  // Actions
   incrementUsage: () => void;
   resetDaily: () => void;
   getRemaining: () => number;
@@ -23,17 +22,17 @@ function getTodayString(): string {
 export const useConversionLimit = create<ConversionLimitState>()(
   persist(
     (set, get) => ({
-      // Initial state
       date: getTodayString(),
       count: 0,
       limit: FREE_DAILY_LIMIT,
 
-      // Actions
       incrementUsage: () => {
+        const isPremium = usePremiumStore.getState().checkPremium();
+        if (isPremium) return; // Premium users have no limits
+
         const state = get();
         const today = getTodayString();
 
-        // Reset if new day
         if (state.date !== today) {
           set({ date: today, count: 1 });
         } else {
@@ -46,10 +45,12 @@ export const useConversionLimit = create<ConversionLimitState>()(
       },
 
       getRemaining: () => {
+        const isPremium = usePremiumStore.getState().checkPremium();
+        if (isPremium) return Infinity;
+
         const state = get();
         const today = getTodayString();
 
-        // Reset if new day
         if (state.date !== today) {
           return state.limit;
         }
@@ -58,10 +59,12 @@ export const useConversionLimit = create<ConversionLimitState>()(
       },
 
       canConvert: () => {
+        const isPremium = usePremiumStore.getState().checkPremium();
+        if (isPremium) return true;
+
         const state = get();
         const today = getTodayString();
 
-        // Reset if new day
         if (state.date !== today) {
           return true;
         }

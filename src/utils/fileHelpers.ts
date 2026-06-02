@@ -1,14 +1,19 @@
 import type { ValidationResult, ImageFormat } from '../types';
-import { PREMIUM_FORMATS, PREMIUM_MAX_SIZE } from '../types';
+import {
+  FREE_FORMATS,
+  FREE_MAX_SIZE,
+  PREMIUM_FORMATS,
+  PREMIUM_MAX_SIZE,
+} from '../types';
 
-export function validateImageFile(file: File): ValidationResult {
-  const maxSize = PREMIUM_MAX_SIZE;
-  const allowedFormats = PREMIUM_FORMATS;
+export function validateImageFile(file: File, isPremium: boolean = false): ValidationResult {
+  const maxSize = isPremium ? PREMIUM_MAX_SIZE : FREE_MAX_SIZE;
+  const allowedFormats = isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
 
   if (file.size > maxSize) {
     return {
       valid: false,
-      error: `File size exceeds 100MB limit`,
+      error: `File exceeds ${isPremium ? '100MB' : '10MB'} limit. Upgrade to Premium for larger files.`,
       code: 'FILE_TOO_LARGE',
     };
   }
@@ -16,7 +21,9 @@ export function validateImageFile(file: File): ValidationResult {
   if (!allowedFormats.includes(file.type as ImageFormat)) {
     return {
       valid: false,
-      error: 'Unsupported file format',
+      error: isPremium
+        ? 'Unsupported file format'
+        : 'Free plan: PNG, JPEG, WebP, BMP, GIF only. Upgrade to Premium for SVG, ICO, AVIF, HEIC.',
       code: 'UNSUPPORTED_FORMAT',
     };
   }

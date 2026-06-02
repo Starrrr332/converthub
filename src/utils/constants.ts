@@ -1,5 +1,5 @@
 import type { ImageFormat, FileExtension } from '../types';
-import { PREMIUM_FORMATS, PREMIUM_MAX_SIZE } from '../types';
+import { FREE_FORMATS, FREE_MAX_SIZE, PREMIUM_FORMATS, PREMIUM_MAX_SIZE, FREE_DAILY_LIMIT, PREMIUM_DAILY_LIMIT } from '../types';
 
 // Format to extension mapping
 const FORMAT_TO_EXTENSION: Record<ImageFormat, FileExtension> = {
@@ -54,6 +54,14 @@ export const FORMAT_COLORS: Record<ImageFormat, string> = {
   'image/heic': '#F97316',
 };
 
+// Premium format badges
+export const PREMIUM_FORMAT_NAMES: Partial<Record<ImageFormat, string>> = {
+  'image/svg+xml': 'Premium',
+  'image/x-icon': 'Premium',
+  'image/avif': 'Premium',
+  'image/heic': 'Premium',
+};
+
 export function getFileExtension(mimeType: ImageFormat): FileExtension {
   return FORMAT_TO_EXTENSION[mimeType];
 }
@@ -62,16 +70,33 @@ export function getMimeType(extension: FileExtension): ImageFormat {
   return EXTENSION_TO_FORMAT[extension];
 }
 
-export function isFormatSupported(format: string): boolean {
-  return PREMIUM_FORMATS.includes(format as ImageFormat);
+export function isFormatSupported(format: string, isPremium: boolean = false): boolean {
+  if (isPremium) {
+    return PREMIUM_FORMATS.includes(format as ImageFormat);
+  }
+  return FREE_FORMATS.includes(format as ImageFormat);
 }
 
-export function getOutputFormats(inputFormat: string): ImageFormat[] {
-  return PREMIUM_FORMATS.filter((f: ImageFormat) => f !== inputFormat);
+export function getOutputFormats(inputFormat: string, isPremium: boolean = false): ImageFormat[] {
+  const all = PREMIUM_FORMATS.filter((f: ImageFormat) => f !== inputFormat);
+  if (isPremium) return all;
+  return all.filter((f) => FREE_FORMATS.includes(f));
 }
 
-export function getMaxFileSize(): number {
-  return PREMIUM_MAX_SIZE;
+export function getMaxFileSize(isPremium: boolean = false): number {
+  return isPremium ? PREMIUM_MAX_SIZE : FREE_MAX_SIZE;
+}
+
+export function getDailyLimit(isPremium: boolean = false): number {
+  return isPremium ? PREMIUM_DAILY_LIMIT : FREE_DAILY_LIMIT;
+}
+
+export function getAcceptedFormats(isPremium: boolean = false): string[] {
+  return isPremium ? PREMIUM_FORMATS : FREE_FORMATS;
+}
+
+export function isPremiumFormat(format: string): boolean {
+  return !FREE_FORMATS.includes(format as ImageFormat);
 }
 
 export function formatFileSize(bytes: number): string {

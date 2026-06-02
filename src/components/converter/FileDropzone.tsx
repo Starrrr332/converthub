@@ -1,21 +1,21 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Upload, Image as ImageIcon } from 'lucide-react';
-import { PREMIUM_FORMATS } from '../../types';
+import { Upload, Image as ImageIcon, Crown } from 'lucide-react';
+import { getAcceptedFormats, formatFileSize } from '../../utils/constants';
 import type { ImageFormat } from '../../types';
-import { formatFileSize } from '../../utils/constants';
 
 interface FileDropzoneProps {
   onFilesSelected: (files: File[]) => void;
   maxSize: number;
   disabled?: boolean;
+  isPremium?: boolean;
 }
 
-export function FileDropzone({ onFilesSelected, maxSize, disabled = false }: FileDropzoneProps) {
+export function FileDropzone({ onFilesSelected, maxSize, disabled = false, isPremium = false }: FileDropzoneProps) {
   const { t } = useTranslation('converter');
   const [isDragActive, setIsDragActive] = useState(false);
 
-  const acceptedFormats = PREMIUM_FORMATS;
+  const acceptedFormats = getAcceptedFormats(isPremium);
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -119,6 +119,13 @@ export function FileDropzone({ onFilesSelected, maxSize, disabled = false }: Fil
             <p>{t('dropzone.acceptedFormats')}</p>
             <p>{t('dropzone.maxSize', { size: formatFileSize(maxSize) })}</p>
           </div>
+
+          {!isPremium && (
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-700 rounded-full text-xs font-medium">
+              <Crown className="w-3.5 h-3.5" />
+              <span>{t('dropzone.premiumHint')}</span>
+            </div>
+          )}
         </div>
       </label>
     </div>

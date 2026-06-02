@@ -4,12 +4,16 @@
     "subtitle": "o haz clic para seleccionar",
     "acceptedFormats": "Formatos aceptados: PNG, JPEG, WebP, BMP, GIF",
     "maxSize": "Tamaño máximo: {{size}}",
-    "dragActive": "Suelta tus archivos aquí"
+    "dragActive": "Suelta tus archivos aquí",
+    "premiumHint": "Upgrade a Premium para SVG, ICO, AVIF, HEIC y archivos de hasta 100MB"
   },
   "formats": {
     "input": "Formato de entrada",
     "output": "Formato de salida",
-    "premium": "Premium"
+    "premium": "Premium",
+    "locked": "Premium — Upgrade para desbloquear",
+    "premiumNotice": "Los formatos con corona son Premium.",
+    "upgradeLink": "Upgrade aquí"
   },
   "options": {
     "quality": "Calidad",
@@ -32,7 +36,10 @@
     "remaining": "Quedan {{count}} conversiones hoy",
     "limitReached": "Límite diario alcanzado",
     "upgradeToPremium": "Actualiza a Premium para conversiones ilimitadas",
-    "fileTooLarge": "El archivo supera el límite de {{size}}"
+    "fileTooLarge": "El archivo supera el límite de {{size}}",
+    "fewLeft": "Te quedan {{count}} conversiones hoy.",
+    "upgradeLink": "Upgrade a Premium para conversiones ilimitadas.",
+    "premiumUnlimited": "Premium — Sin límite"
   },
   "batch": {
     "title": "Procesamiento múltiple",
@@ -67,6 +74,11 @@
     "annualDeal": "¡Ahorra 33% con plan anual!",
     "cta": "Ver planes Premium",
     "notNow": "Ahora no"
+  },
+  "premiumBanner": {
+    "text": "¿Necesitas más?",
+    "desc": "Upgrade a Premium para formatos avanzados, archivos de 100MB y sin límites.",
+    "cta": "Upgrade"
   },
   "toolInfo": {
     "poweredBy": "Tecnología utilizada",

@@ -1,9 +1,23 @@
 {
   "title": "Elige tu plan",
   "subtitle": "Convierte archivos sin límites con Premium",
+  "alreadyPremium": "Eres Premium",
+  "alreadyPremiumDesc": "Disfruta de todas las funciones Premium. Gracias por tu apoyo.",
+  "activePremium": "Premium Activo",
+  "activePremiumDesc": "Tienes acceso ilimitado a todas las herramientas.",
+  "goToConverter": "Ir al convertidor",
+  "billing": {
+    "monthly": "Mensual",
+    "annual": "Anual",
+    "save": "-33%",
+    "monthPrice": "USD/mes",
+    "yearPrice": "USD/año",
+    "annualSaving": "$5.50/mes — ahorras $22.00 al año"
+  },
   "plans": {
     "free": {
       "name": "Gratis",
+      "desc": "Para empezar sin compromiso",
       "price": "$0",
       "period": "para siempre",
       "cta": "Plan actual",
@@ -11,6 +25,7 @@
         "Conversiones básicas",
         "Tamaño máximo: 10MB",
         "Formatos: PNG, JPEG, WebP, BMP, GIF",
+        "50 conversiones por día",
         "PDF: Solo Unir y crear desde imágenes",
         "Audio: Solo MP3 y WAV",
         "CSV: Solo CSV ↔ XLSX"
@@ -18,12 +33,13 @@
     },
     "premium": {
       "name": "Premium",
+      "desc": "Todo desbloqueado, sin límites",
       "price": "$5.50",
       "period": "USD/mes",
       "annualPrice": "$44.00",
       "annualPeriod": "USD/año",
-      "cta": "Upgrade a Premium",
-      "badge": "Popular",
+      "cta": "Suscribirse a Premium",
+      "badge": "Más popular",
       "features": [
         "Conversiones ilimitadas",
         "Tamaño máximo: 100MB",
@@ -31,39 +47,69 @@
         "PDF: Todas las herramientas",
         "Audio: MP3, WAV, OGG, FLAC, AAC",
         "CSV/Excel: Todas las conversiones",
+        "Batch processing (múltiples archivos)",
+        "Sin anuncios",
         "Soporte prioritario"
       ]
     }
   },
   "checkout": {
-    "title": "Completa tu compra",
+    "title": "Completar suscripción",
     "monthly": "Mensual",
     "annual": "Anual",
     "pay": "Pagar ahora",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "securePayment": "Pago seguro procesado por PayPal. Puedes cancelar en cualquier momento."
   },
   "success": {
     "title": "¡Bienvenido a Premium!",
     "message": "Tu suscripción está activa. Disfruta de todas las funciones sin límites.",
+    "annualMsg": "Tu plan anual es válido por un año.",
+    "monthlyMsg": "Tu plan mensual se renovará automáticamente el mes que viene.",
     "cta": "Empezar a convertir"
   },
   "security": {
     "message": "Pagos seguros procesados por PayPal"
+  },
+  "premiumBanner": {
+    "text": "¿Necesitas más?",
+    "desc": "Upgrade a Premium para formatos avanzados, archivos de 100MB y sin límites.",
+    "cta": "Upgrade"
+  },
+  "limitWarning": {
+    "fewLeft": "Te quedan {{count}} conversiones hoy.",
+    "upgrade": "Upgrade a Premium para conversiones ilimitadas."
+  },
+  "formatLocked": "Premium — Upgrade para desbloquear",
+  "formatPremiumNotice": "Los formatos con corona son Premium.",
+  "featuresGrid": {
+    "privacy": { "title": "Privacidad total", "desc": "Archivos nunca salen de tu navegador" },
+    "unlimited": { "title": "Sin límites", "desc": "Conversiones ilimitadas con Premium" },
+    "formats": { "title": "Todos los formatos", "desc": "PNG a SVG, ICO, AVIF y más" },
+    "allTools": { "title": "PDF + Audio + CSV", "desc": "Todas las herramientas incluidas" }
   },
   "faq": {
     "title": "Preguntas frecuentes",
     "questions": [
       {
         "q": "¿Puedo cancelar en cualquier momento?",
-        "a": "Sí, puedes cancelar tu suscripción en cualquier momento sin penalización."
+        "a": "Sí, puedes cancelar tu suscripción en cualquier momento sin penalización. Seguirás teniendo acceso Premium hasta el final del período facturado."
       },
       {
         "q": "¿Mis archivos están seguros?",
-        "a": "Absolutamente. Tus archivos nunca salen de tu navegador. No tenemos acceso a ellos."
+        "a": "Absolutamente. Todos los archivos se procesan 100% en tu navegador. Nunca se envían a ningún servidor."
       },
       {
-        "q": "¿Qué formatos incluye Premium?",
-        "a": "Premium incluye todos los formatos: SVG, ICO, AVIF, HEIC, OGG, FLAC, AAC, y todas las herramientas de edición."
+        "q": "¿Qué incluye el plan anual?",
+        "a": "El plan anual incluye exactamente las mismas funciones que el mensual, pero con un 33% de descuento."
+      },
+      {
+        "q": "¿Cómo funciona el pago?",
+        "a": "Los pagos son procesados de forma segura por PayPal. No almacenamos información de tarjetas de crédito."
+      },
+      {
+        "q": "¿Qué pasa si llego al límite gratuito?",
+        "a": "Si eres usuario gratuito, tienes 50 conversiones por día y un límite de 10MB por archivo. Al hacer upgrade a Premium, estos límites desaparecen."
       }
     ]
   }

@@ -4,12 +4,16 @@
     "subtitle": "or click to select",
     "acceptedFormats": "Accepted formats: PNG, JPEG, WebP, BMP, GIF",
     "maxSize": "Max size: {{size}}",
-    "dragActive": "Drop your files here"
+    "dragActive": "Drop your files here",
+    "premiumHint": "Upgrade to Premium for SVG, ICO, AVIF, HEIC and files up to 100MB"
   },
   "formats": {
     "input": "Input format",
     "output": "Output format",
-    "premium": "Premium"
+    "premium": "Premium",
+    "locked": "Premium — Upgrade to unlock",
+    "premiumNotice": "Formats with crown are Premium.",
+    "upgradeLink": "Upgrade here"
   },
   "options": {
     "quality": "Quality",
@@ -32,7 +36,10 @@
     "remaining": "{{count}} conversions left today",
     "limitReached": "Daily limit reached",
     "upgradeToPremium": "Upgrade to Premium for unlimited conversions",
-    "fileTooLarge": "File exceeds {{size}} limit"
+    "fileTooLarge": "File exceeds {{size}} limit",
+    "fewLeft": "{{count}} conversions left today.",
+    "upgradeLink": "Upgrade to Premium for unlimited conversions.",
+    "premiumUnlimited": "Premium — Unlimited"
   },
   "batch": {
     "title": "Batch processing",
@@ -67,6 +74,11 @@
     "annualDeal": "Save 33% with annual plan!",
     "cta": "View Premium plans",
     "notNow": "Not now"
+  },
+  "premiumBanner": {
+    "text": "Need more?",
+    "desc": "Upgrade to Premium for advanced formats, 100MB files and no limits.",
+    "cta": "Upgrade"
   },
   "toolInfo": {
     "poweredBy": "Technology used",

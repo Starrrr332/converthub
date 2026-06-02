@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 import { useConversionStore } from '../store/conversionStore';
+import { usePremiumStore } from '../store/premiumStore';
+import { useConversionLimit } from './useConversionLimit';
 import type { ImageFormat } from '../types';
 import type { ConvertOptions } from '../types';
 import { validateImageFile } from '../utils/fileHelpers';
@@ -7,6 +9,10 @@ import { isFormatSupported, getMaxFileSize } from '../utils/constants';
 
 export function useImageConverter() {
   const store = useConversionStore();
+  const isPremium = usePremiumStore((s) => s.checkPremium());
+  const remainingConversions = useConversionLimit((s) => s.getRemaining());
+  const canConvert = useConversionLimit((s) => s.canConvert());
+  const incrementUsage = useConversionLimit((s) => s.incrementUsage);
 
   const addFiles = useCallback(
     (files: File[]) => {
@@ -14,7 +20,7 @@ export function useImageConverter() {
       const errors: string[] = [];
 
       for (const file of files) {
-        const validation = validateImageFile(file);
+        const validation = validateImageFile(file, isPremium);
         if (validation.valid) {
           validFiles.push(file);
         } else {
@@ -23,30 +29,37 @@ export function useImageConverter() {
       }
 
       if (errors.length > 0) {
-        store.addFiles([]);
         console.error('Validation errors:', errors);
+        // Only add valid files instead of clearing all
+        if (validFiles.length > 0) {
+          store.addFiles(validFiles);
+        }
       } else {
         store.addFiles(validFiles);
       }
     },
-    [store],
+    [store, isPremium],
   );
 
   const convert = useCallback(async () => {
+    if (!canConvert) return;
     await store.convert();
-  }, [store]);
+    incrementUsage();
+  }, [store, canConvert, incrementUsage]);
 
   const convertAll = useCallback(async () => {
+    if (!canConvert) return;
     await store.convertAll();
-  }, [store]);
+    incrementUsage();
+  }, [store, canConvert, incrementUsage]);
 
   const setFormat = useCallback(
     (format: ImageFormat) => {
-      if (isFormatSupported(format)) {
+      if (isFormatSupported(format, isPremium)) {
         store.setOptions({ format });
       }
     },
-    [store],
+    [store, isPremium],
   );
 
   const setQuality = useCallback(
@@ -85,10 +98,10 @@ export function useImageConverter() {
     progress: store.progress,
     error: store.error,
 
-    isPremium: true,
-    remainingConversions: Infinity,
-    canConvert: true,
-    maxSize: getMaxFileSize(),
+    isPremium,
+    remainingConversions,
+    canConvert,
+    maxSize: getMaxFileSize(isPremium),
 
     addFiles,
     removeFile: store.removeFile,

@@ -1,9 +1,23 @@
 {
   "title": "Choose your plan",
   "subtitle": "Convert files without limits with Premium",
+  "alreadyPremium": "You're Premium",
+  "alreadyPremiumDesc": "Enjoy all Premium features. Thanks for your support.",
+  "activePremium": "Premium Active",
+  "activePremiumDesc": "You have unlimited access to all tools.",
+  "goToConverter": "Go to converter",
+  "billing": {
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save": "-33%",
+    "monthPrice": "USD/month",
+    "yearPrice": "USD/year",
+    "annualSaving": "$5.50/month — save $22.00 per year"
+  },
   "plans": {
     "free": {
       "name": "Free",
+      "desc": "Start without commitment",
       "price": "$0",
       "period": "forever",
       "cta": "Current plan",
@@ -11,6 +25,7 @@
         "Basic conversions",
         "Max size: 10MB",
         "Formats: PNG, JPEG, WebP, BMP, GIF",
+        "50 conversions per day",
         "PDF: Merge and create from images only",
         "Audio: MP3 and WAV only",
         "CSV: CSV ↔ XLSX only"
@@ -18,12 +33,13 @@
     },
     "premium": {
       "name": "Premium",
+      "desc": "Everything unlocked, no limits",
       "price": "$5.50",
       "period": "USD/month",
       "annualPrice": "$44.00",
       "annualPeriod": "USD/year",
-      "cta": "Upgrade to Premium",
-      "badge": "Popular",
+      "cta": "Subscribe to Premium",
+      "badge": "Most popular",
       "features": [
         "Unlimited conversions",
         "Max size: 100MB",
@@ -31,39 +47,69 @@
         "PDF: All tools",
         "Audio: MP3, WAV, OGG, FLAC, AAC",
         "CSV/Excel: All conversions",
+        "Batch processing (multiple files)",
+        "No ads",
         "Priority support"
       ]
     }
   },
   "checkout": {
-    "title": "Complete your purchase",
+    "title": "Complete your subscription",
     "monthly": "Monthly",
     "annual": "Annual",
     "pay": "Pay now",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "securePayment": "Secure payment powered by PayPal. Cancel anytime."
   },
   "success": {
     "title": "Welcome to Premium!",
     "message": "Your subscription is active. Enjoy all features without limits.",
+    "annualMsg": "Your annual plan is valid for one year.",
+    "monthlyMsg": "Your monthly plan will renew automatically next month.",
     "cta": "Start converting"
   },
   "security": {
     "message": "Secure payments powered by PayPal"
+  },
+  "premiumBanner": {
+    "text": "Need more?",
+    "desc": "Upgrade to Premium for advanced formats, 100MB files and no limits.",
+    "cta": "Upgrade"
+  },
+  "limitWarning": {
+    "fewLeft": "{{count}} conversions left today.",
+    "upgrade": "Upgrade to Premium for unlimited conversions."
+  },
+  "formatLocked": "Premium — Upgrade to unlock",
+  "formatPremiumNotice": "Formats with crown are Premium.",
+  "featuresGrid": {
+    "privacy": { "title": "Total privacy", "desc": "Files never leave your browser" },
+    "unlimited": { "title": "No limits", "desc": "Unlimited conversions with Premium" },
+    "formats": { "title": "All formats", "desc": "PNG to SVG, ICO, AVIF and more" },
+    "allTools": { "title": "PDF + Audio + CSV", "desc": "All tools included" }
   },
   "faq": {
     "title": "Frequently asked questions",
     "questions": [
       {
         "q": "Can I cancel anytime?",
-        "a": "Yes, you can cancel your subscription anytime without penalty."
+        "a": "Yes, you can cancel your subscription anytime without penalty. You'll keep Premium access until the end of the billing period."
       },
       {
         "q": "Are my files safe?",
-        "a": "Absolutely. Your files never leave your browser. We don't have access to them."
+        "a": "Absolutely. All files are processed 100% in your browser. They are never sent to any server."
       },
       {
-        "q": "What formats does Premium include?",
-        "a": "Premium includes all formats: SVG, ICO, AVIF, HEIC, OGG, FLAC, AAC, and all editing tools."
+        "q": "What does the annual plan include?",
+        "a": "The annual plan includes the same features as monthly, but at a 33% discount."
+      },
+      {
+        "q": "How does payment work?",
+        "a": "Payments are securely processed by PayPal. We don't store any credit card information."
+      },
+      {
+        "q": "What happens when I hit the free limit?",
+        "a": "Free users get 50 conversions per day and a 10MB file size limit. Upgrade to Premium to remove these limits."
       }
     ]
   }
