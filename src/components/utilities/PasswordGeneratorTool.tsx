@@ -9,7 +9,9 @@ function generatePassword(len: number, upper: boolean, lower: boolean, digits: b
   if (digits) chars += '0123456789';
   if (special) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
   if (!chars) chars = 'abcdefghijklmnopqrstuvwxyz';
-  return Array.from({ length: len }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  const arr = new Uint32Array(len);
+  crypto.getRandomValues(arr);
+  return Array.from(arr).map(n => chars[n % chars.length]).join('');
 }
 
 export function PasswordGeneratorTool() {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isSafeRegex } from '../../utils/sanitization';
 
 export function RegexTesterTool() {
   const [pattern, setPattern] = useState('');
@@ -9,6 +10,15 @@ export function RegexTesterTool() {
 
   const test = () => {
     try {
+      setError('');
+
+      const safety = isSafeRegex(pattern);
+      if (!safety.safe) {
+        setError(safety.reason || 'Patrón regex inseguro');
+        setMatches([]);
+        return;
+      }
+
       const regex = new RegExp(pattern, flags);
       const found: string[] = [];
       let match;
@@ -16,7 +26,6 @@ export function RegexTesterTool() {
         found.push(match[0]);
       }
       setMatches(found);
-      setError('');
     } catch (e) {
       setError((e as Error).message);
       setMatches([]);

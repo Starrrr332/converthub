@@ -6,6 +6,7 @@ function flattenObject(obj: Record<string, unknown>, prefix = ''): Record<string
   const result: Record<string, string> = {};
   for (const key in obj) {
     if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+    if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
     const newKey = prefix ? `${prefix}.${key}` : key;
     const value = obj[key];
     if (value && typeof value === 'object' && !Array.isArray(value)) {
@@ -19,6 +20,17 @@ function flattenObject(obj: Record<string, unknown>, prefix = ''): Record<string
   return result;
 }
 
+function escapeCsvValue(val: string, delimiter: string): string {
+  const firstChar = val.charAt(0);
+  if (firstChar === '=' || firstChar === '+' || firstChar === '-' || firstChar === '@') {
+    val = `'${val}`;
+  }
+  if (val.includes(delimiter) || val.includes('"') || val.includes('\n')) {
+    return `"${val.replace(/"/g, '""')}"`;
+  }
+  return val;
+}
+
 function arrayToCsv(data: Record<string, unknown>[], delimiter: string): string {
   if (data.length === 0) return '';
   const allKeys = new Set<string>();
@@ -27,17 +39,11 @@ function arrayToCsv(data: Record<string, unknown>[], delimiter: string): string 
     Object.keys(flat).forEach(k => allKeys.add(k));
   });
   const headers = Array.from(allKeys);
-  const escape = (val: string) => {
-    if (val.includes(delimiter) || val.includes('"') || val.includes('\n')) {
-      return `"${val.replace(/"/g, '""')}"`;
-    }
-    return val;
-  };
   const lines = [
-    headers.map(escape).join(delimiter),
+    headers.map(h => escapeCsvValue(h, delimiter)).join(delimiter),
     ...data.map(row => {
       const flat = flattenObject(row as Record<string, unknown>);
-      return headers.map(h => escape(flat[h] || '')).join(delimiter);
+      return headers.map(h => escapeCsvValue(flat[h] || '', delimiter)).join(delimiter);
     }),
   ];
   return lines.join('\n');

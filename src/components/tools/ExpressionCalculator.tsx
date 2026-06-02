@@ -20,17 +20,21 @@ const FUNCTIONS: Record<string, (x: number) => number> = {
   round: Math.round,
 };
 
+function escapeRe(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function evaluate(expr: string): number {
   let cleaned = expr
     .replace(/\s+/g, '')
     .replace(/\^/g, '**');
 
   for (const [name, val] of Object.entries(CONSTANTS)) {
-    cleaned = cleaned.replace(new RegExp(`\\b${name}\\b`, 'g'), `(${val})`);
+    cleaned = cleaned.replace(new RegExp(`\\b${escapeRe(name)}\\b`, 'g'), `(${val})`);
   }
 
   for (const [name, fn] of Object.entries(FUNCTIONS)) {
-    cleaned = cleaned.replace(new RegExp(`${name}\\(([^)]+)\\)`, 'g'), (_, arg) => {
+    cleaned = cleaned.replace(new RegExp(`${escapeRe(name)}\\(([^)]+)\\)`, 'g'), (_, arg) => {
       const val = evaluate(arg);
       return String(fn(val));
     });
@@ -40,7 +44,6 @@ function evaluate(expr: string): number {
   cleaned = cleaned.replace(/\)(\d)/g, ')*$1');
   cleaned = cleaned.replace(/\)\(/g, ')*(');
 
-  // Only allow safe characters
   if (!/^[\d+\-*/().%**]+$/.test(cleaned)) {
     throw new Error('Expresión inválida');
   }

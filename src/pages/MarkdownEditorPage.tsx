@@ -53,7 +53,7 @@ function parseMarkdown(md: string): string {
   html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg my-3 overflow-x-auto text-sm"><code>$2</code></pre>');
   
   html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m: string, text: string, url: string) =>
-    `<a href="${sanitizeUrl(url)}" class="text-blue-600 hover:underline" target="_blank">${text}</a>`);
+    `<a href="${sanitizeUrl(url)}" class="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`);
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_m: string, alt: string, url: string) =>
     `<img src="${sanitizeUrl(url)}" alt="${alt}" class="max-w-full rounded my-2" />`);
   
