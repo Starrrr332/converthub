@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { formatFileSize } from '../../utils/constants';
-import { Download, Eye } from 'lucide-react';
+import { Download, Eye, DownloadCloud } from 'lucide-react';
 import { triggerDownload } from '../../utils/fileHelpers';
+import { downloadAsZip } from '../../utils/zipDownload';
 
 interface ImagePreviewProps {
   originalUrl: string;
@@ -77,25 +78,60 @@ export function ImagePreview({
       )}
 
       {/* Actions */}
-      {convertedUrl && (
-        <div className="mt-4 flex gap-2">
-          <button
-            onClick={handleDownload}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium bg-accent-500 text-white hover:bg-accent-600 transition-colors rounded-md"
-          >
-            <Download className="w-4 h-4" />
-            {t('actions.download')}
-          </button>
-          <a
-            href={convertedUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium border border-border rounded-md hover:bg-accent-50 transition-colors"
-          >
-            <Eye className="w-4 h-4" />
-          </a>
-        </div>
-      )}
+      <div className="mt-4 flex gap-2">
+        {convertedUrl && (
+          <>
+            <button
+              onClick={handleDownload}
+              className="flex-1 flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium bg-accent-500 text-white hover:bg-accent-600 transition-colors rounded-md"
+            >
+              <Download className="w-4 h-4" />
+              {t('actions.download')}
+            </button>
+            <a
+              href={convertedUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium border border-border rounded-md hover:bg-accent-50 transition-colors"
+            >
+              <Eye className="w-4 h-4" />
+            </a>
+          </>
+        )}
+      </div>
     </div>
+  );
+}
+
+export function BulkDownloadButton({
+  files,
+  disabled,
+}: {
+  files: Array<{ url: string; format: string; originalName?: string }>;
+  disabled?: boolean;
+}) {
+  const { t } = useTranslation('converter');
+
+  const handleBulkDownload = async () => {
+    const mapped = files.map((f) => ({
+      url: f.url,
+      name: f.originalName
+        ? f.originalName.replace(/\.[^/.]+$/, `.${f.format.split('/')[1] || 'webp'}`)
+        : `converted.${f.format.split('/')[1] || 'webp'}`,
+    }));
+    await downloadAsZip(mapped, 'converted-files.zip');
+  };
+
+  if (files.length < 2) return null;
+
+  return (
+    <button
+      onClick={handleBulkDownload}
+      disabled={disabled}
+      className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium bg-accent-600 text-white hover:bg-accent-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-colors shadow-sm"
+    >
+      <DownloadCloud className="w-4 h-4" />
+      {t('actions.downloadAll', 'Descargar todo como ZIP')} ({files.length})
+    </button>
   );
 }

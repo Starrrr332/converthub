@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Shield, Heart } from 'lucide-react';
+import { Shield, Heart, Clock, Star, ArrowRight } from 'lucide-react';
+import { useCommandStore } from '../../store/commandStore';
+import { toolRegistry } from '../../config/toolRegistry';
 
 export function Footer() {
   const { t } = useTranslation();
+  const { favorites, recentPaths } = useCommandStore();
+
+  const recentTools = recentPaths
+    .map((path) => toolRegistry.find((t) => t.path === path))
+    .filter((t): t is (typeof toolRegistry)[number] => Boolean(t));
 
   return (
     <footer className="bg-surface border-t border-border mt-auto">
@@ -49,6 +56,43 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Acceso rápido - Herramientas recientes */}
+          <div>
+            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-4 flex items-center gap-1.5">
+              <Clock className="w-3 h-3" />
+              Recientes
+            </h4>
+            {recentTools.length > 0 ? (
+              <ul className="space-y-2">
+                {recentTools.slice(0, 4).map((tool) => (
+                  <li key={tool.path}>
+                    <Link
+                      to={tool.path}
+                      className="flex items-center gap-2 text-sm text-text-secondary hover:text-accent-600 transition-colors duration-200 group"
+                    >
+                      <tool.icon className="w-3.5 h-3.5 shrink-0 text-text-muted group-hover:text-accent-500 transition-colors" />
+                      <span className="truncate">{tool.name}</span>
+                    </Link>
+                  </li>
+                ))}
+                {favorites.length > 0 && (
+                  <li>
+                    <Link
+                      to="/favorites"
+                      className="flex items-center gap-2 text-xs font-medium text-accent-600 hover:text-accent-700 transition-colors mt-2"
+                    >
+                      <Star className="w-3 h-3" />
+                      Favoritos ({favorites.length})
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="text-xs text-text-muted">Las herramientas que uses aparecerán aquí</p>
+            )}
           </div>
 
           {/* Legal */}

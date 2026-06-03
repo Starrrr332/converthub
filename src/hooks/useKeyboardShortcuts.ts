@@ -10,7 +10,7 @@ interface ShortcutConfig {
   description: string;
 }
 
-export function useKeyboardShortcuts() {
+export function useKeyboardShortcuts(onOpenShortcuts?: () => void) {
   const navigate = useNavigate();
   const { favorites } = useCommandStore();
 
@@ -28,6 +28,14 @@ export function useKeyboardShortcuts() {
         },
         description: `Abrir favorito ${i + 1}`,
       })),
+      // ? : Open shortcuts help
+      {
+        key: '?',
+        shift: false,
+        ctrl: false,
+        action: () => onOpenShortcuts?.(),
+        description: 'Abrir ayuda de atajos',
+      },
       // Escape: Close modals (handled by individual components)
     ];
 
@@ -56,11 +64,12 @@ export function useKeyboardShortcuts() {
 
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [navigate, favorites]);
+  }, [navigate, favorites, onOpenShortcuts]);
 }
 
 export const SHORTCUT_HELP = [
   { keys: ['Ctrl', 'K'], description: 'Buscar herramienta' },
   { keys: ['Ctrl', '1-9'], description: 'Ir a favorito N' },
+  { keys: ['?'], description: 'Ayuda de atajos' },
   { keys: ['Esc'], description: 'Cerrar modales' },
 ];

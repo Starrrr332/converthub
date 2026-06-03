@@ -1,11 +1,16 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoadingSkeleton } from './components/ui/LoadingSkeleton';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { CommandPalette } from './components/ui/CommandPalette';
 import { TabBar } from './components/ui/TabBar';
+import { ToastContainer } from './components/ui/ToastContainer';
+import { ShortcutsModal } from './components/ui/ShortcutsModal';
+import { SkipLinks } from './components/ui/Accessibility';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { useAutoTheme } from './hooks/useAutoTheme';
+import { useSmartPreload } from './hooks/useSmartPreload';
 import { toolRegistry } from './config/toolRegistry';
 import { ErrorBoundary, usePageTracking } from './monitoring';
 import './i18n';
@@ -57,8 +62,14 @@ const MetricsDashboard = lazy(() =>
   import('./pages/MetricsDashboard').then((m) => ({ default: m.MetricsDashboard })),
 );
 
-function KeyboardShortcutsProvider({ children }: { children: React.ReactNode }) {
-  useKeyboardShortcuts();
+function KeyboardShortcutsProvider({
+  children,
+  onOpenShortcuts,
+}: {
+  children: React.ReactNode;
+  onOpenShortcuts?: () => void;
+}) {
+  useKeyboardShortcuts(onOpenShortcuts);
   return <>{children}</>;
 }
 
@@ -68,14 +79,40 @@ function PageTracker() {
 }
 
 function App() {
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
+
+  // Init auto theme (system preference)
+  useAutoTheme();
+
+  // Init smart prefetching on hover
+  useSmartPreload();
+
+  // Global listener for '?' key
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === '?' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const target = e.target as HTMLElement;
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
+          return;
+        e.preventDefault();
+        setShortcutsOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   return (
     <Suspense fallback={<LoadingSkeleton />}>
       <Router>
-        <KeyboardShortcutsProvider>
+        <KeyboardShortcutsProvider onOpenShortcuts={() => setShortcutsOpen(true)}>
           <PageTracker />
           <div className="app-shell">
+            <SkipLinks />
             <Header />
             <CommandPalette />
+            <ToastContainer />
+            <ShortcutsModal isOpen={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
             <TabBar />
 
             <main id="main-content" className="flex-1 w-full" tabIndex={-1}>
