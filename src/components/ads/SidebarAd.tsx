@@ -30,27 +30,26 @@ export function SidebarAd({ side }: SidebarAdProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      if (cachedProducts && Date.now() - cacheTimestamp < CACHE_DURATION) {
-        setProduct(getRandomProduct(cachedProducts));
+    if (cachedProducts && Date.now() - cacheTimestamp < CACHE_DURATION) {
+      setProduct(getRandomProduct(cachedProducts));
+      setLoading(false);
+      return;
+    }
+    fetch('/amazon-products.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load');
+        return res.json();
+      })
+      .then((data) => {
+        const products: AmazonProduct[] = data.products || [];
+        if (products.length > 0) {
+          cachedProducts = products;
+          cacheTimestamp = Date.now();
+          setProduct(getRandomProduct(products));
+        }
         setLoading(false);
-        return;
-      }
-      fetch('/amazon-products.json')
-        .then((res) => {
-          if (!res.ok) throw new Error('Failed to load');
-          return res.json();
-        })
-        .then((data) => {
-          const products: AmazonProduct[] = data.products || [];
-          if (products.length > 0) {
-            cachedProducts = products;
-            cacheTimestamp = Date.now();
-            setProduct(getRandomProduct(products));
-          }
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   if (loading) {

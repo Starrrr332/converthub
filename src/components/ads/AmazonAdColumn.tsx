@@ -35,32 +35,31 @@ export function AmazonAdColumn({ className = '' }: AmazonAdColumnProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      // Try cache first
-      if (cachedProducts && Date.now() - cacheTimestamp < CACHE_DURATION) {
-        setProducts(shuffleArray(cachedProducts).slice(0, 3));
-        setLoading(false);
-        return;
-      }
+    // Try cache first
+    if (cachedProducts && Date.now() - cacheTimestamp < CACHE_DURATION) {
+      setProducts(shuffleArray(cachedProducts).slice(0, 3));
+      setLoading(false);
+      return;
+    }
 
-      // Fetch fresh data
-      fetch('/amazon-products.json')
-        .then((res) => {
-          if (!res.ok) throw new Error('Failed to load');
-          return res.json();
-        })
-        .then((data) => {
-          const allProducts: AmazonProduct[] = data.products || [];
-          if (allProducts.length > 0) {
-            cachedProducts = allProducts;
-            cacheTimestamp = Date.now();
-            setProducts(shuffleArray(allProducts).slice(0, 3));
-          }
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
+    // Fetch fresh data
+    fetch('/amazon-products.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load');
+        return res.json();
+      })
+      .then((data) => {
+        const allProducts: AmazonProduct[] = data.products || [];
+        if (allProducts.length > 0) {
+          cachedProducts = allProducts;
+          cacheTimestamp = Date.now();
+          setProducts(shuffleArray(allProducts).slice(0, 3));
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {
