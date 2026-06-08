@@ -95,7 +95,7 @@ export function AmazonAdBanner({ className = '' }: AmazonAdBannerProps) {
               referrerPolicy="no-referrer"
               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
-              onError={(e) => { console.warn("[Anuncio] Imagen fallo:", product.image_url); setImgError(true); }}
+              onError={() => { console.warn("[Anuncio] Imagen fallo:", product.image_url); setImgError(true); }}
             />
           ) : (
             <ShoppingCart className="w-6 h-6 text-gray-300 dark:text-gray-600" />
