@@ -57,7 +57,7 @@ export function AmazonAdColumn({ className = '' }: AmazonAdColumnProps) {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => { console.error("[Anuncio JSON]", e);
         setLoading(false);
       });
   }, []);
@@ -139,7 +139,7 @@ function VerticalAdCard({ product, index }: { product: AmazonProduct; index: num
             src={product.image_url}
             alt={product.title}
             className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
-            onError={() => setImgError(true)}
+            onError={(e) => { console.warn("[Anuncio] Imagen fallo:", product.image_url); setImgError(true); }}
             loading="lazy"
           />
         ) : (

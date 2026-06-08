@@ -28,6 +28,7 @@ function getRandomProduct(products: AmazonProduct[]): AmazonProduct {
 export function SidebarAd({ side }: SidebarAdProps) {
   const [product, setProduct] = useState<AmazonProduct | null>(null);
   const [loading, setLoading] = useState(true);
+  const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
     if (cachedProducts && Date.now() - cacheTimestamp < CACHE_DURATION) {
@@ -49,7 +50,7 @@ export function SidebarAd({ side }: SidebarAdProps) {
         }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch((e) => { console.error("[Anuncio JSON]", e); setLoading(false); });
   }, []);
 
   if (loading) {
@@ -81,12 +82,14 @@ export function SidebarAd({ side }: SidebarAdProps) {
 
           {/* Product image */}
           <div className="aspect-square bg-white dark:bg-gray-800 flex items-center justify-center p-4">
-            {product.image_url ? (
+            {product.image_url && !imgError ? (
               <img
                 src={product.image_url}
                 alt={product.title}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
+                onError={(e) => { console.warn("[Anuncio] Imagen fallo:", product.image_url); setImgError(true); }}
               />
             ) : (
               <ShoppingCart className="w-10 h-10 text-gray-300 dark:text-gray-600" />
