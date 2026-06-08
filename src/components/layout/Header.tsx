@@ -16,7 +16,8 @@ export function Header() {
   const [themeOpen, setThemeOpen] = useState(false);
   const themeRef = useRef<HTMLDivElement>(null);
   const { favorites } = useCommandStore();
-  const { currentTheme, setTheme, darkMode, toggleDarkMode } = useThemeStore();
+  const { currentTheme, setTheme, darkMode, toggleDarkMode, customColor, setCustomColor } =
+    useThemeStore();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -167,6 +168,56 @@ export function Header() {
                       )}
                     </button>
                   ))}
+
+                  {/* Custom color option */}
+                  <hr className="mx-3 my-1.5 border-border" />
+                  <button
+                    onClick={() => {
+                      setTheme('custom');
+                    }}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 transition-all duration-150 text-left ${
+                      currentTheme === 'custom'
+                        ? 'bg-accent-50'
+                        : 'hover:bg-accent-50'
+                    }`}
+                  >
+                    <div className="shrink-0">
+                      <div
+                        className="w-8 h-5 rounded-md ring-1 ring-black/10 shadow-sm"
+                        style={{ backgroundColor: customColor }}
+                      />
+                    </div>
+                    <span className="text-sm text-text-primary">Custom</span>
+                    {currentTheme === 'custom' && (
+                      <span className="ml-auto text-accent-600 text-xs font-bold">✓</span>
+                    )}
+                  </button>
+
+                  {currentTheme === 'custom' && (
+                    <div className="flex items-center gap-2.5 px-3 py-2">
+                      <input
+                        type="color"
+                        value={customColor}
+                        onChange={(e) => {
+                          setCustomColor(e.target.value);
+                        }}
+                        className="w-8 h-8 p-0.5 rounded-lg cursor-pointer border border-border bg-transparent"
+                      />
+                      <input
+                        type="text"
+                        value={customColor.toUpperCase()}
+                        onChange={(e) => {
+                          const val = e.target.value.trim();
+                          if (/^#?[0-9a-fA-F]{6}$/.test(val)) {
+                            setCustomColor(val.startsWith('#') ? val : `#${val}`);
+                          }
+                        }}
+                        className="flex-1 text-xs font-mono bg-surface-secondary border border-border rounded-md px-2 py-1.5 text-text-primary outline-none focus:border-accent-400 transition-colors"
+                        placeholder="#HEX"
+                      />
+                    </div>
+                  )}
+
                   <hr className="mx-3 my-1.5 border-border" />
                   <button
                     onClick={() => {

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "cd \"C:/Users/Star/Desktop/Scraper amazon mercado libre pinteres agente\" && python export_products.py || echo \"[WARN] Scraping fallo, continuando build...\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -15,7 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "scrape-products": "cd \"C:/Users/Star/Desktop/Scraper amazon mercado libre pinteres agente\" && python export_products.py"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

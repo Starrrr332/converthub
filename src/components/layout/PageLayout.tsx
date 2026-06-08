@@ -1,3 +1,5 @@
+import { SidebarAd } from '../ads/SidebarAd';
+import { AmazonAdBanner } from '../ads/AmazonAdBanner';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight, Home, ExternalLink } from 'lucide-react';
 import { PrivacyBanner } from '../converter/PrivacyBanner';
@@ -113,7 +115,14 @@ export function PageLayout({
           </div>
         )}
 
-        {children}
+        <div className="flex gap-4 items-start">
+          <SidebarAd side="left" />
+          <div className="flex-1 min-w-0">
+            {children}
+            <AmazonAdBanner position="bottom" className="mt-8" />
+          </div>
+          <SidebarAd side="right" />
+        </div>
       </div>
     </>
   );
